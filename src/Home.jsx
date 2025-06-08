@@ -3,7 +3,8 @@ import NavMenu from './NavMenu';
 import ExhibitionItem from './Components/ExhibitionItem';
 import { NavLink } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
-
+import { getDocs, collection } from "firebase/firestore";
+import {  db } from "./firebase.js"; 
 
 import 'leaflet/dist/leaflet.css';
 import {  useEffect, useState } from 'react';
@@ -31,17 +32,22 @@ function LocationMarker({ setPosition }) {
  const [locations, setLocations] = useState([]);
 
   useEffect(() => {
+    const fetchBusinesses = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, "businesses"));
+        const data = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-    fetch('http://localhost:5001/api/businesses')
-      .then(res => res.json())
-      .then(async (data) => {
         setBusinesses(data);
 
-      
         const coords = await Promise.all(
           data.map(async (biz) => {
             const address = `${biz.location}, ${biz.postcode}`;
-            const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`);
+            const res = await fetch(
+              `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`
+            );
             const geo = await res.json();
             if (geo[0]) {
               return {
@@ -54,10 +60,13 @@ function LocationMarker({ setPosition }) {
           })
         );
 
-  
         setLocations(coords.filter(Boolean));
-      })
-      .catch(err => console.error('Failed to load businesses:', err));
+      } catch (error) {
+        console.error("Failed to load businesses:", error);
+      }
+    };
+
+    fetchBusinesses();
   }, []);
 
 
@@ -101,25 +110,23 @@ function LocationMarker({ setPosition }) {
   
 
  
-    <MapContainer className='rounded-md' style={{ height: '100%', width: '100%' }} center={[51.505, -0.09]} zoom={15} scrollWheelZoom={true}>
+<MapContainer className='rounded-md' style={{ height: '100%', width: '100%' }}
+     center={ [51.505, -0.09]} zoom={15} scrollWheelZoom={true}>
   <TileLayer
     detectRetina={true}
     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
   />
 
-  {/* Add the location finder */}
 <LocationMarker setPosition={setPosition} />
-
-
   {position && (
     <Marker position={position}>
       <Popup>You are here</Popup>
     </Marker>
   )}
-    {locations.map((biz, idx) => (
+ {locations.map((biz, idx) => (
         <Marker key={idx} position={[biz.lat, biz.lon]}>
-          <Popup>{biz.name}</Popup>
+          <Popup>{biz.businessName}</Popup>
         </Marker>
       ))}
 </MapContainer>

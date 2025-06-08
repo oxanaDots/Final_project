@@ -4,36 +4,57 @@ import { useForm } from 'react-hook-form';
 import {  useBusinessForm } from './BusinessFormContext';
 import { useNavigate } from 'react-router-dom';
 import services from '../services.json'
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../firebase.js"; 
 
 function BusinessSignup() {
       const {handleSubmit, register, watch, formState: {errors}} = useForm({shouldUseNativeValidation: false})
     const {businessFormData, setbusinessFormData} = useBusinessForm()
     const navigate = useNavigate()
-      const onSubmit =(data)=>{
-           const newData = {
-            ...data,
-            role: 'business'
-           }
-           setbusinessFormData(newData)
-           fetch('http://localhost:5001/api/business_signup', {
-            method: 'POST',
-             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newData),
-            credentials: 'include', 
-         })
-           .then(async (res) => {
-             const response = await res.json();
-             if (res.ok) {
-               console.log('✅ Bsuiness registered:', response);
-               navigate('/home');
-             } else {
-               console.error(' Signup error:', response.error || response);
-             }
-           })
-           .catch((err) => {
-             console.error('Network error:', err);
-           });
-      }
+  
+
+const onSubmit = async (data) => {
+  const newData = {
+    ...data,
+    role: "business",
+  };
+
+  setbusinessFormData(newData);
+
+  try {
+    // 1. Create account with Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      newData.email,
+      newData.password
+    );
+    const business = userCredential.user;
+
+    // 2. Save additional business profile details in Firestore
+    await setDoc(doc(db, "businesses", business.uid), {
+      businessName: newData.businessName,
+      firstName: newData.firstName,
+      lastName: newData.lastName,
+      email: newData.email,
+      location: newData.location,
+      postcode: newData.postcode,
+      phoneNumber: newData.phoneNumber,
+      business_type: newData.business_type,
+      password: newData.password,
+      role: newData.role,
+      createdAt: new Date()
+    });
+
+    console.log("✅ Business user created and stored in Firestore");
+    navigate("/home"); // redirect user to home/dashboard
+  } catch (error) {
+    console.error("Error during signup:", error.message);
+    alert(error.message); // optional user feedback
+  }
+};
+
+
       console.log(businessFormData)
   return (
     <div className=" flex flex-col p-4 justify-center text-center items-center">
