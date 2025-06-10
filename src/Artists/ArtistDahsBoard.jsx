@@ -27,9 +27,9 @@ function ArtistDashboard() {
     <h2 className='pb-4 font-semibold' >Next steps:</h2>
       <p className='text-xs py-2' >Upload your art and receive your exhibition schedule on the spot:</p>
     <div className='grid grid-cols-[50%_50%] gap-10 justify-between text-xs py-2 px-4 '>
-     <div className='border border-ternary-medium border-dashed rounded-md col-span-1 justify-center items-center align-middle text-center py-6 bg-ternary-light'>
-   <FontAwesomeIcon className='text-2xl self-center text-center py-4' icon={faArrowUpFromBracket} />
-   <p className='text-center py-2 bg-ternary-medium flex rounded-full w-auto self-center' >Browse Files</p>
+     <div className='border border-ternary-medium border-dashed flex flex-col rounded-md col-span-1 justify-center items-center text-center py-6 bg-ternary-light'>
+   <FontAwesomeIcon className='text-2xl text-ternary-dark self-center text-center pb-8 pt-4' icon={faArrowUpFromBracket} />
+   <button className='text-center py-2 my-2 bg-primary-dark text-secondary-light flex flex-col px-4 rounded-full w-auto self-center' >Browse Files</button>
    <p className='text-center py-2 text-ternary-medium'>Max size: 200Mb</p>
      </div>
      
