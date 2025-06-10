@@ -23,7 +23,7 @@ const onSubmit = async (data) => {
   setbusinessFormData(newData);
 
   try {
-    // 1. Create account with Firebase Auth
+  //  this info will be stored in Firebase Auth 
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       newData.email,
@@ -31,8 +31,8 @@ const onSubmit = async (data) => {
     );
     const business = userCredential.user;
 
-    // 2. Save additional business profile details in Firestore
     await setDoc(doc(db, "businesses", business.uid), {
+      // this info will be stored on Firestore database
       businessName: newData.businessName,
       firstName: newData.firstName,
       lastName: newData.lastName,
@@ -41,16 +41,15 @@ const onSubmit = async (data) => {
       postcode: newData.postcode,
       phoneNumber: newData.phoneNumber,
       business_type: newData.business_type,
-      password: newData.password,
       role: newData.role,
       createdAt: new Date()
     });
 
-    console.log("✅ Business user created and stored in Firestore");
-    navigate("/home"); // redirect user to home/dashboard
+    console.log("Business user created and stored in Firestore");
+    navigate("/sigin");
   } catch (error) {
     console.error("Error during signup:", error.message);
-    alert(error.message); // optional user feedback
+    
   }
 };
 

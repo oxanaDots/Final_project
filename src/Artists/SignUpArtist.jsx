@@ -3,6 +3,9 @@ import InputField from '../Components/InputField';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../firebase.js"; 
 
 function SignUpArtist() {
     const navigate = useNavigate()
@@ -14,7 +17,7 @@ const [links, setLinks] = useState([])
 
     const {handleSubmit, register, watch, formState: {errors}} = useForm({shouldUseNativeValidation: false})
 
-    function onSubmit(data){
+    async function onSubmit(data){
            const linksArray = links.length > 0 && links
         .split(',')
         .map(link => link.trim())
@@ -26,24 +29,25 @@ const [links, setLinks] = useState([])
           };        
           setArtistFormData(updatedData);
 
-          fetch('http://localhost:5001/api/artist_signup', {
-             method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-             body: JSON.stringify(updatedData),
-             credentials: 'include', 
-          })
-            .then(async (res) => {
-              const response = await res.json();
-              if (res.ok) {
-                console.log('✅ Artist registered:', response);
-                navigate('/artist_dashboard');
-              } else {
-                console.error(' Signup error:', response.error || response);
-              }
-            })
-            .catch((err) => {
-              console.error('Network error:', err);
-            });
+         try{
+         const  userCredentials = await createUserWithEmailAndPassword(
+          auth, updatedData.email, updatedData.password)
+          const artist = userCredentials.user
+          await setDoc(doc(db, 'artists', artist.uid), {
+            firstName: updatedData.firstName,
+            lastName: updatedData.lastName,
+            email: updatedData.email,
+            location: updatedData.location,
+            postcode: updatedData.postcode,
+            phoneNumber: updatedData.phoneNumber,
+            links: updatedData.links,
+            role: updatedData.role,
+            createdAt: new Date()
+          });
+           navigate("/signin"); 
+         }catch (error){
+            console.error('Artist account could not be created:', error.message)
+         }
     }
  
     
