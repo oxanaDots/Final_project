@@ -12,6 +12,7 @@ import SignIn from './Forms/SignIn'
 import ProtectedRoute from './Forms/ProtectedRoute'
 import { AuthProvider } from './Forms/UserAuthContext'
 import BusinessDashboard from './Business/BusinessDashboard'
+import UploadExhibition from './Artists/UploadExhibition'
 function App() {
 
 
@@ -39,10 +40,17 @@ function App() {
     },
     {
       path: '/artist_dashboard',
-      element: <ProtectedRoute>
+      element: (<ProtectedRoute>
         <ArtistDashboard/>
-        </ProtectedRoute>
+        </ProtectedRoute>),
+          children: [
+      {
+        path: 'add_exhibition',
+        element: <UploadExhibition />
+      }
+    ]
     },
+  
     {
       path: '/business_dashboard',
       element: <ProtectedRoute>
