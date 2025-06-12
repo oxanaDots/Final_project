@@ -84,7 +84,7 @@ function addFiles(event){
   </div>
 </section>
 }
-<Outlet/>
+<Outlet context={{files, user}}/>
     </div>
   );
 }
