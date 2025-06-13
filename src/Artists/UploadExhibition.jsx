@@ -5,12 +5,12 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
-
+import { useNavigate } from 'react-router-dom';
 function UploadExhibition() {
-    const {files} = useOutletContext()
-    const {user} = useOutletContext()
-    const [uploadStatus, setUploadStatus] = useState(false)
-    const [uploaded, setUploaded ] = useState(false)
+    const {files, user, uploadStatus, setUploadStatus} = useOutletContext()
+    const nav = useNavigate()
+      const [uploaded, setUploaded ] = useState(false)
+    
     const [exhibitionDetails, setExhibitionDetails] = useState({
         title:'',
         descr:'',
@@ -24,6 +24,8 @@ function UploadExhibition() {
     async function handleUpload(){
         try{
             setUploadStatus(true)
+     
+
              const uploadedImageURLs = await Promise.all(
             files.map(async (file) => {
           const storageRef = ref(storage, `exhibitions/${Date.now()}-${file.name}`);
@@ -41,14 +43,14 @@ function UploadExhibition() {
         } catch(err){
             console.error(err)
         }finally{
-            setUploadStatus(false)
+            setUploadStatus(true)
             setUploaded(true)
         }
     }
 
-    async function calcDate(){
+    // async function calcDate(){
 
-    }
+    // }
 
   return (
 <>
@@ -75,10 +77,11 @@ function UploadExhibition() {
       </div>
      </section>
     </div> ): 
-    <div className='flex p-8 flex-col bg-ternary-light mt-10 items-center'>
-        <FontAwesomeIcon className='text-2xl pb-4 text-emerald-600' icon={faCheck}/>
+    <div className='flex p-8 flex-col border border-ternary-light rounded-md mt-10 items-center'>
+        <FontAwesomeIcon className='text-2xl pb-4 text-green-600' icon={faCheck}/>
         <h2 className='font-semibold'>Your files have been uploaded!</h2>
         <p className='text-xs py-8'>Your exhibition will take place on</p>
+        <button onClick={()=> nav('/artist_dashboard')} className='py-2 px-4 text-xs bg-green-600 text-secondary-light border rounded-full'>Return to your Dashboard</button>
         </div>}
     </>
   );

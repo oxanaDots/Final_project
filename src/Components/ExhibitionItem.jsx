@@ -1,24 +1,27 @@
 import React from 'react';
 
-function ExhibitionItem({status = 'current'}) {
+function ExhibitionItem({status = 'current',links =['www.website.com', '@insta_name'], artistName='Artist Name', title='Title', medium='Medium', descr=''}) {
   return (
    
       <div className='flex flex-col  text-[0.7rem]' >
        
-        <section className='grid border-ternary-medium h-[27rem] bg-ternary-light  gap-2  p-8 text-left justify-between items-baseline'>
-         <div className='flex items-baseline justify-between'>
-            <div className='row-1 text-left flex flex-col justify-between items-left py-6'>
-                <p className='font-[700]'>Artist Name</p>
+        <section className='grid w-full justify-between grid-cols-[70%_30%] border-ternary-medium h-[27rem] bg-ternary-light  gap-2  p-8 text-left  items-baseline'>
+         <div className=' w-full row-1 items-baseline'>
+                <p className='font-[700]'>{artistName}</p>
                <span className=' flex gap-1'>
-               <p className='font-semibold italic'>Artist Name, </p>
-               <p>year</p>
+               <p className='font-semibold italic'>{title} </p>
                </span>
-                <p>Medium</p>
-         </div>
-         {status ==='upcoming'? <p>Jan 23</p> : 'Ends on Jan 30th'}
+                <p className=''>{medium}</p>
             </div>
-            <p className=' row-3 '>Whispers of the Horizon captures a quiet moment at twilight, where the last blush of sunlight brushes over distant hills. Using a blend of warm gradients and layered textures, the piece evokes a sense of calm and subtle introspection. The silhouette of a lone figure stands in contrast with the boundless sky, inviting viewers to pause and reflect on the beauty of stillness and solitude. This digital work blends realism with impressionistic tones, making it a meditative exploration of light, space, and emotion.</p>
-            <p className='row-2  self-end'>www.website.com</p>
+            <div className='col-2 row-1  text-right'>
+              {status ==='upcoming'? <p className=''>Jan 23</p> : 'Ends on Jan 30th'}
+
+            </div>
+            <p className=' col-1 col-span-2 '>{descr}</p>
+            <div className='flex flex-col col-1 row-3 self-end'>
+            {links.map(link => <p className=' '>{link}</p>)}
+
+            </div>
 
         </section>
       </div>
