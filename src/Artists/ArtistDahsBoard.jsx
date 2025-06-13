@@ -32,12 +32,13 @@ function ArtistDashboard() {
       if (!querySnapshot.empty) {
         const doc = querySnapshot.docs[0];
         setExhibition(doc.data());
+         setUploadStatus(true)
       }
      
       }catch(err){
         console.error(err)
       } finally{
-
+       
         setLoading(false)
       }
    
@@ -76,7 +77,7 @@ function addFiles(event){
       </div>
   </div>
  
-  {!exhibition || uploadStatus? <div className='flex flex-col'>
+  {!exhibition && !uploadStatus? <div className='flex flex-col'>
    
     <h2 className='pb-4 font-semibold' >Next steps:</h2>
       <p className='text-xs py-2' >Upload your art and receive your exhibition schedule on the spot:</p>
