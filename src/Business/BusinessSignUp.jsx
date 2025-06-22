@@ -46,7 +46,7 @@ const onSubmit = async (data) => {
     });
 
     console.log("Business user created and stored in Firestore");
-    navigate("/sigin");
+    navigate("/signin");
   } catch (error) {
     console.error("Error during signup:", error.message);
     

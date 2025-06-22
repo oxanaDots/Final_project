@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import {db, storage} from '../firebase'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, Timestamp, getDocs } from "firebase/firestore";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
@@ -33,12 +33,20 @@ function UploadExhibition() {
           return await getDownloadURL(storageRef);
         })
       );
-         await addDoc(collection(db, "exhibitions"), {
+
+     const exhibitions = await getDocs(collection(db, 'exhibitions'))
+     console.log(exhibitions.size)
+
+     for (let i = 0; i <= exhibitions.size; i++)
+      {   
+        await addDoc(collection(db, "exhibitions"), {
         ...exhibitionDetails,
         images: uploadedImageURLs,
         artists_id: user.id,
-        createdAt: new Date()
+        createdAt: new Date(),
+        expireAt: Timestamp.fromDate(new Date(Date.now() + (24 * 7 * 60 * 60 * 1000) * (i + 1)))
       });
+    }
 
         } catch(err){
             console.error(err)

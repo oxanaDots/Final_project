@@ -10,7 +10,7 @@ function Roles() {
       <div className='flex gap-8'>
     
         <span onClick={()=> navigate('/artist_signup')} className='bg-ternary-light rounded-md cursor-pointer py-4 px-5'>Artist</span>
-        <span onClick={()=> navigate('/business_signup')} className='bg-ternary-light rounded-md cursor-pointer py-4 px-5'>Bsuiness Owner</span>
+        <span onClick={()=> navigate('/business_signup')} className='bg-ternary-light rounded-md cursor-pointer py-4 px-5'>Business Owner</span>
       </div>
     </div>
     </section>
