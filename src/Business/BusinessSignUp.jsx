@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import InputField from '../Components/InputField';
 import { useForm } from 'react-hook-form';
 import {  useBusinessForm } from './BusinessFormContext';
@@ -13,13 +13,40 @@ function BusinessSignup() {
     const {businessFormData, setbusinessFormData} = useBusinessForm()
     const navigate = useNavigate()
   
+async function logLink(){
+  const link = 'https://api.companieshouse.gov.uk/'
+ const apiKey = '7276d036-85a0-4318-8b7d-8fbec8beaa01';
 
-const onSubmit = async (data) => {
+
+const requestOptions = {
+  method: 'GET',
+  headers: {
+    'Authorization': `Bearer ${apiKey}`,
+  },
+};
+  try{
+
+    const response = await fetch(link, requestOptions)
+ 
+   const data = await response.json()
+     console.log(data)
+
+  } catch(err){
+    console.error(err)
+  }
+}
+
+useEffect(()=>{
+  logLink()
+}, [])
+
+async function onSubmit (data) {
   const newData = {
     ...data,
     role: "business",
   };
 
+  
   setbusinessFormData(newData);
 
   try {

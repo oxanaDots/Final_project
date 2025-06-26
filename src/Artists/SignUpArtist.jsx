@@ -143,7 +143,7 @@ const [links, setLinks] = useState([])
 <InputField
   name="confirmPassword"
   placeholder="confirm password"
-  type="confirmPassword"
+  type="password"
   register={register}
   validationRules={{
     required: 'Please confirm your password',

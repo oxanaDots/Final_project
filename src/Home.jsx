@@ -26,43 +26,44 @@ function LocationMarker({ setPosition }) {
  function Home() {
   const [ businesses,  setBusinesses] = useState([]);
 
-   const [position, setPosition] = useState(null)
+//    const [position, setPosition] = useState(null)
    
 
- const [locations, setLocations] = useState([]);
+//  const [locations, setLocations] = useState([]);
 
   useEffect(() => {
     const fetchBusinesses = async () => {
       try {
         const snapshot = await getDocs(collection(db, "businesses"));
         const data = snapshot.docs.map(doc => ({
-          id: doc.id,
+          businessId: doc.id,
           ...doc.data(),
         }));
 
         setBusinesses(data);
+        console.log(data)
 
-        const coords = await Promise.all(
-          data.map(async (biz) => {
-            const address = `${biz.location}, ${biz.postcode}`;
-            const res = await fetch(
-              `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`
-            );
-            const geo = await res.json();
-            if (geo[0]) {
-              return {
-                name: biz.businessName,
-                lat: parseFloat(geo[0].lat),
-                lon: parseFloat(geo[0].lon),
-              };
-            }
-            return null;
-          })
-        );
+        // const coords = await Promise.all(
+        //   data.map(async (biz) => {
+        //     const address = `${biz.location}, ${biz.postcode}`;
+        //     const res = await fetch(
+        //       `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`
+        //     );
+        //     const geo = await res.json();
+        //     if (geo[0]) {
+        //       return {
+        //         name: biz.businessName,
+        //         lat: parseFloat(geo[0].lat),
+        //         lon: parseFloat(geo[0].lon),
+        //       };
+        //     }
+        //     return null;
+        //   })
+        // );
 
-        setLocations(coords.filter(Boolean));
+        // setLocations(coords.filter(Boolean));
       } catch (error) {
-        console.error("Failed to load businesses:", error);
+        console.error( error);
       }
     };
 
@@ -71,13 +72,6 @@ function LocationMarker({ setPosition }) {
 
 
 
-
-
-
-//   const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=YOUR_API_KEY`);
-// const data = await res.json();
-
-// const { lat, lng } = data.results[0].geometry.location;
 
   return (
     <div className='flex w-full flex-col justify-center items-center'>
@@ -94,7 +88,7 @@ function LocationMarker({ setPosition }) {
    </div>
    </section>
 
-<div className='bg-primary-medium w-[80vw] pt-10 w-full px-[10vw] flex-col justify-center flex justify-center'>
+<div className='bg-primary-medium w-[80vw] pt-10 w-full px-[10vw] flex-col flex justify-center'>
 <div className=' flex justify-between  gap-10   '>
   <div className='flex flex-col justify-between w-[50vw]'>
   <div>
@@ -110,7 +104,7 @@ function LocationMarker({ setPosition }) {
   
 
  
-<MapContainer className='rounded-md' style={{ height: '100%', width: '100%' }}
+{/* <MapContainer className='rounded-md' style={{ height: '100%', width: '100%' }}
      center={ [51.505, -0.09]} zoom={15} scrollWheelZoom={true}>
   <TileLayer
     detectRetina={true}
@@ -129,7 +123,7 @@ function LocationMarker({ setPosition }) {
           <Popup>{biz.businessName}</Popup>
         </Marker>
       ))}
-</MapContainer>
+</MapContainer> */}
    <div className='col-2 grid  w-full pr-4'>
    <div >
     <h2 className='text-sm font-semibold pb-4'>Art Hosts in your area:</h2>

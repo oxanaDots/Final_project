@@ -25,7 +25,7 @@ function ArtistDashboard() {
  useEffect(() => {
     async function getExhibition() {
       try{
-              if (!user?.id) return;
+      if (!user?.id) return;
       const q = query(collection(db, "exhibitions"), where("artists_id", "==", user.id));
       const querySnapshot = await getDocs(q);
 
