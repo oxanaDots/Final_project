@@ -87,7 +87,7 @@ async function onSubmit (data) {
 
 
     <div className=' flex  w-[40rem] justify-center items-center'>
-        <form className=' flex flex-col w-[90vw] flex items-left p-4 justify-center text-center '  onSubmit={handleSubmit(onSubmit)}>
+        <form className=' flex flex-col w-[90vw] items-left p-4 justify-center text-center '  onSubmit={handleSubmit(onSubmit)}>
               <legend className="text-xl text-center font-semibold mb-4">Create an Account</legend>
     
               <InputField

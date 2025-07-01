@@ -4,7 +4,7 @@ import './App.css'
 import './index.css' 
 import SignUpArtist from './Artists/SignUpArtist'
 import { ArtistFormProvider } from './Artists/ArtistFormContext'
-import Roles from './Artists/Roles'
+import Roles from './Forms/Roles'
 import BusinessSignup from './Business/BusinessSignUp'
 import { BusinessFormProvider } from './Business/BusinessFormContext'
 import ArtistDashboard from './Artists/ArtistDahsBoard'
@@ -13,6 +13,8 @@ import ProtectedRoute from './Forms/ProtectedRoute'
 import { AuthProvider } from './Forms/UserAuthContext'
 import BusinessDashboard from './Business/BusinessDashboard'
 import UploadExhibition from './Artists/UploadExhibition'
+import AdminDashboard from './Admin/Admin'
+import ExhibitionSubmission from './Admin/ExhibitionSubmission'
 function App() {
 
 
@@ -61,6 +63,18 @@ function App() {
       path: '/signin',
       element: <SignIn/>
     },
+    {
+      path: '/admin',
+      element: <AdminDashboard/>,
+      children: [
+        {
+          path: 'exhibition_submission/:id',
+          element: 
+            <ExhibitionSubmission/>
+          
+        }
+      ]
+    }
   ])
 
   return (

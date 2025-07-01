@@ -32,8 +32,12 @@ function SignIn() {
     } else if (businessDoc.exists()) {
       userData = businessDoc.data();
       setUser({ ...userData, id: user.uid });
+
       navigate('/business_dashboard');
-    } 
+    }  else  if (user.email === 'admin1234@test.com'){
+        navigate('/admin')
+      }
+    console.log(user)
     
   } catch (err) {
     

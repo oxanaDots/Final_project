@@ -44,7 +44,8 @@ function UploadExhibition() {
         images: uploadedImageURLs,
         artists_id: user.id,
         createdAt: new Date(),
-        expireAt: Timestamp.fromDate(new Date(Date.now() + (24 * 7 * 60 * 60 * 1000) * (i + 1)))
+        expireAt: Timestamp.fromDate(new Date(Date.now() + (24 * 7 * 60 * 60 * 1000) * (i + 1))),
+        status: 'pending'
       });
     }
 
