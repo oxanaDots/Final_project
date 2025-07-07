@@ -35,19 +35,21 @@ function UploadExhibition() {
       );
 
      const exhibitions = await getDocs(collection(db, 'exhibitions'))
-     console.log(exhibitions.size)
+     const size = exhibitions.size
 
-     for (let i = 0; i <= exhibitions.size; i++)
-      {   
+     
         await addDoc(collection(db, "exhibitions"), {
         ...exhibitionDetails,
         images: uploadedImageURLs,
         artists_id: user.id,
+        artistFirstName: user.firstName,
+        artistLastName: user.lastName,
+        links: user.links,
         createdAt: new Date(),
-        expireAt: Timestamp.fromDate(new Date(Date.now() + (24 * 7 * 60 * 60 * 1000) * (i + 1))),
+        expireAt: Timestamp.fromDate(new Date(Date.now() + (24 * 7 * 60 * 60 * 1000) * (size + 1))),
         status: 'pending'
       });
-    }
+   
 
         } catch(err){
             console.error(err)

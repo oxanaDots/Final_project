@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useMatch } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
-
+import { useMatch } from 'react-router-dom';
 function AdminDashboard() {
 
   const [exhibitions, setExhibition] = useState([])
   const navigate = useNavigate()
-const exhibitionItem = useMatch('/admin/exhibition_submission/:id');
+  const exhibitionItem = useMatch('/admin/exhibition_submission/:id');
 
-
-  useEffect(()=>{
-    async function fetchExhibition (){
+ async function fetchExhibition (){
       try{
 
         const snapshot = await getDocs(collection(db, 'exhibitions'))
@@ -28,6 +25,10 @@ const exhibitionItem = useMatch('/admin/exhibition_submission/:id');
         console.error(err)
       }
     }
+
+
+  useEffect(()=>{
+   
     fetchExhibition()
   }, [])
 
@@ -47,19 +48,20 @@ const exhibitionItem = useMatch('/admin/exhibition_submission/:id');
       <div className='flex flex-col py-4'>
       <h2 className='font-semibold py-4'> Exhibition submissions</h2>
       <div className=' flex flex-col cursor-pointer w-[30vw]'>
-        {exhibitions.map((item, id)=>{
+        {exhibitions && exhibitions.map((item, id)=>{
           return (
-            <div  onClick={()=> navigateToExhibition(item.id)} className='flex p-2 flex-col'>
+            <div key={id} onClick={()=> navigateToExhibition(item.id)} className='flex p-2 flex-col'>
           <div className='flex justify-between w-full  text-[0.6rem] text-opacity-60 '>
             <p>#{id + 1}</p>
             <p>{item.createdAt.toDate().toLocaleDateString()}</p>
            </div>
            <div className='flex justify-between text-xs font-semibold p-2 border border-primary-medium rounded-sm'>
             <p >{item.title}</p>
+
             <p className={`
               ${item.status === 'pending'&& 'text-amber-500'}
-               ${item.status === 'accepted'&& 'text-red-600'}
-               ${item.status === 'rejected'&& 'text-green-600'}
+               ${item.status === 'accepted'&& 'text-green-600'}
+               ${item.status === 'rejected'&& 'text-red-600'}
 
               `}>{item.status}</p>
             </div>

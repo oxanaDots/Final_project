@@ -71,8 +71,34 @@ function LocationMarker({ setPosition }) {
   }, []);
 
 
+  let obj =[
+
+    {status: 'accepted'},
+    {status: 'accepted'},
+    {status: 'rejected'},
+    {status: 'rejected'},
+    {status: 'accepted'},
+    {status: 'rejected'},
+    {status: 'accepted'},
+  ]
+
+  function updateDate (){
 
 
+    let expiry = 7
+   let flag = 0
+    for (let i = 0; i < obj.length; i++){
+       if(obj[i].status === 'accepted'){
+       obj[i] = { ...obj[i], expiry: expiry * (flag + 1)}
+       flag ++
+       }
+    }
+  }
+
+  updateDate()
+  obj = [...obj, {status: 'rejected'}, {status: 'accepted'}]
+  console.log(obj)
+ updateDate()
   return (
     <div className='flex w-full flex-col justify-center items-center'>
 
