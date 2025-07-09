@@ -10,35 +10,18 @@ import { auth, db } from "../firebase.js";
 
 function BusinessSignup() {
       const {handleSubmit, register, watch, formState: {errors}} = useForm({shouldUseNativeValidation: false})
-    const {businessFormData, setbusinessFormData} = useBusinessForm()
-    const navigate = useNavigate()
+  const [businessFormData, setbusinessFormData] = useState({
+    firstName: '',
+    lastName:'',
+    businessName: '',
+    companyID:'',
+     email: '',
+    phoneNumber:'',
+    business_type:'',
+    location:'',
+    postcode:''
+  });    const navigate = useNavigate()
   
-async function logLink(){
-  const link = 'https://api.companieshouse.gov.uk/'
- const apiKey = '7276d036-85a0-4318-8b7d-8fbec8beaa01';
-
-
-const requestOptions = {
-  method: 'GET',
-  headers: {
-    'Authorization': `Bearer ${apiKey}`,
-  },
-};
-  try{
-
-    const response = await fetch(link, requestOptions)
- 
-   const data = await response.json()
-     console.log(data)
-
-  } catch(err){
-    console.error(err)
-  }
-}
-
-useEffect(()=>{
-  logLink()
-}, [])
 
 async function onSubmit (data) {
   const newData = {
@@ -58,22 +41,30 @@ async function onSubmit (data) {
     );
     const business = userCredential.user;
 
-    await setDoc(doc(db, "businesses", business.uid), {
-      // this info will be stored on Firestore database
-      businessName: newData.businessName,
-      firstName: newData.firstName,
-      lastName: newData.lastName,
-      email: newData.email,
-      location: newData.location,
-      postcode: newData.postcode,
-      phoneNumber: newData.phoneNumber,
-      business_type: newData.business_type,
-      role: newData.role,
-      createdAt: new Date()
-    });
+    const res = await fetch('http://localhost:3000/api/enterprises')
+    const enterprisesData = await res.json()
+   console.log(enterprisesData)
 
-    console.log("Business user created and stored in Firestore");
-    navigate("/signin");
+
+   if (newData.email === enterprisesData.emailAdress && newData.companyID === enterprisesData.companyID){
+
+     await setDoc(doc(db, "businesses", business.uid), {
+       // this info will be stored on Firestore database
+       businessName: newData.businessName,
+       firstName: newData.firstName,
+       lastName: newData.lastName,
+       email: newData.email,
+       location: newData.location,
+       postcode: newData.postcode,
+       phoneNumber: newData.phoneNumber,
+       business_type: newData.business_type,
+       role: newData.role,
+       createdAt: new Date()
+      });
+      console.log("Business user created and stored in Firestore");
+      navigate("/signin");
+    }
+
   } catch (error) {
     console.error("Error during signup:", error.message);
     
@@ -81,7 +72,7 @@ async function onSubmit (data) {
 };
 
 
-      console.log(businessFormData)
+  
   return (
     <div className=" flex flex-col p-4 justify-center text-center items-center">
 

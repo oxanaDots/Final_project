@@ -1,0 +1,22 @@
+[
+    {"emailAdress": "test_1@mail.com", "companyID": "RF234E2"},
+     {"emailAdress": "test_2@mail.com", "companyID": "YI294P7"},
+       {"emailAdress":"test_3@mail.com","companyID":"AB587Q4"},
+  {"emailAdress":"test_4@mail.com","companyID":"LK407V6"},
+  {"emailAdress":"test_5@mail.com","companyID":"ZX120M9"},
+  {"emailAdress":"test_6@mail.com","companyID":"QP673L2"},
+  {"emailAdress":"test_7@mail.com","companyID":"MV849J8"},
+  {"emailAdress":"test_8@mail.com","companyID":"TB195Q3"},
+  {"emailAdress":"test_9@mail.com","companyID":"HN320W7"},
+  {"emailAdress":"test_10@mail.com","companyID":"CY248D5"},
+  {"emailAdress":"test_11@mail.com","companyID":"KR561F1"},
+  {"emailAdress":"test_12@mail.com","companyID":"DW784G9"},
+  {"emailAdress":"test_13@mail.com","companyID":"XP412H6"},
+  {"emailAdress":"test_14@mail.com","companyID":"VS935K4"},
+  {"emailAdress":"test_15@mail.com","companyID":"JL607M2"},
+  {"emailAdress":"test_16@mail.com","companyID":"BQ731N8"},
+  {"emailAdress":"test_17@mail.com","companyID":"UG254P3"},
+  {"emailAdress":"test_18@mail.com","companyID":"NV468R7"},
+  {"emailAdress":"test_19@mail.com","companyID":"WS519T5"},
+  {"emailAdress":"test_20@mail.com","companyID":"EZ642V1"}
+]
