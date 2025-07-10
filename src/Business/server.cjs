@@ -1,8 +1,11 @@
-import express from 'express';
+const express = require('express')
 const app = express()
 const PORT = 3000
+const cors = require('cors');
 
-import enterprises from './enterprises.json';
+app.use(cors());
+
+const enterprises = require('./enterprises.json');
 app.get('/api/enterprises', (req, res)=>{
     res.json(enterprises)
 })

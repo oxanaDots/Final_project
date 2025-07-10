@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import InputField from '../Components/InputField';
 import { useForm } from 'react-hook-form';
-import {  useBusinessForm } from './BusinessFormContext';
 import { useNavigate } from 'react-router-dom';
 import services from '../services.json'
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -9,32 +8,33 @@ import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase.js"; 
 
 function BusinessSignup() {
-      const {handleSubmit, register, watch, formState: {errors}} = useForm({shouldUseNativeValidation: false})
-  const [businessFormData, setbusinessFormData] = useState({
+  const {handleSubmit, register, isSubmitting, watch, formState: {errors}} = useForm({shouldUseNativeValidation: false})
+  const [ businessFormData, setbusinessFormData] = useState({
     firstName: '',
     lastName:'',
     businessName: '',
     companyID:'',
-     email: '',
+    email: '',
     phoneNumber:'',
     business_type:'',
     location:'',
     postcode:''
-  });    const navigate = useNavigate()
-  
+  });   
+  const [signUpError, setSignUpError] = useState('')
+  const navigate = useNavigate()
 
-async function onSubmit (data) {
+
+  async function onSubmit (data) {
   const newData = {
     ...data,
     role: "business",
   };
 
-  
+  console.log(businessFormData)
   setbusinessFormData(newData);
 
   try {
-  //  this info will be stored in Firebase Auth 
-    const userCredential = await createUserWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
       auth,
       newData.email,
       newData.password
@@ -45,8 +45,9 @@ async function onSubmit (data) {
     const enterprisesData = await res.json()
    console.log(enterprisesData)
 
+   const foundEnterprise = enterprisesData.filter(item => item.emailAdress === newData.email && item.companyID === newData.companyID)
 
-   if (newData.email === enterprisesData.emailAdress && newData.companyID === enterprisesData.companyID){
+   if (foundEnterprise.length !== 0){
 
      await setDoc(doc(db, "businesses", business.uid), {
        // this info will be stored on Firestore database
@@ -63,6 +64,8 @@ async function onSubmit (data) {
       });
       console.log("Business user created and stored in Firestore");
       navigate("/signin");
+    } else{
+        setSignUpError('No record of your company has been found. Try again.')
     }
 
   } catch (error) {
@@ -74,13 +77,20 @@ async function onSubmit (data) {
 
   
   return (
-    <div className=" flex flex-col p-4 justify-center text-center items-center">
+    <div className=" flex flex-col  p-4 justify-center text-center items-center">
 
 
     <div className=' flex  w-[40rem] justify-center items-center'>
         <form className=' flex flex-col w-[90vw] items-left p-4 justify-center text-center '  onSubmit={handleSubmit(onSubmit)}>
               <legend className="text-xl text-center font-semibold mb-4">Create an Account</legend>
-    
+                 { signUpError.length > 0 && 
+                
+                 <p className='text-red-500 flex my-4 justify-center rounded-md text-xs bg-red-50 border-red-400 self  text-center border py-4'>{signUpError}</p>
+                
+                 }
+
+        <div className=' w-100 flex justify-between w-full gap-4 '>
+
               <InputField
                 name="businessName"
                 placeholder="business name"
@@ -92,6 +102,17 @@ async function onSubmit (data) {
                 }}
                 error={errors.businessName}
               />
+
+                <InputField
+                name="companyID"
+                placeholder="company ID"
+                register={register}
+                validationRules={{
+                  required: "Enter your company ID",
+                }}
+                error={errors.companyID}
+              />
+              </div>
               <div className=' w-100 flex justify-between w-full gap-4 '>
             
               <InputField
@@ -198,8 +219,11 @@ async function onSubmit (data) {
       error={errors.confirmPassword}
     />
     
+
+
+
    
-        <button className='submit-btn'>Submit</button>
+        <button className='submit-btn'>{isSubmitting? "Checking your company details":'Submit'}</button>
       </form>
     </div>
     </div>
