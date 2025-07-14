@@ -15,6 +15,7 @@ import BusinessDashboard from './Business/BusinessDashboard'
 import UploadExhibition from './Artists/UploadExhibition'
 import AdminDashboard from './Admin/Admin'
 import ExhibitionSubmission from './Admin/ExhibitionSubmission'
+import Practice from './Practice'
 function App() {
 
 
@@ -62,6 +63,10 @@ function App() {
     {
       path: '/signin',
       element: <SignIn/>
+    },
+     {
+      path: '/practice',
+      element: <Practice/>
     },
     {
       path: '/admin',

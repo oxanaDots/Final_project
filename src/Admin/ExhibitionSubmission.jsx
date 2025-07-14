@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useMatch } from 'react-router-dom';
 import ExhibitionItem from '../Components/ExhibitionItem';
-// import { getDoc, doc,  } from 'firebase/firestore';
-// import { db } from '../firebase';
+import {  doc,collection, Timestamp, updateDoc, where, getDocs, query, orderBy  } from 'firebase/firestore';
+import { db } from '../firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faXmark, faCheck} from '@fortawesome/free-solid-svg-icons';
 function ExhibitionSubmission() {
@@ -13,37 +13,48 @@ function ExhibitionSubmission() {
   const currentExhibition = exhibitions.find((item)=> item.id === currentId['id'])
    const [statusB, setstatus] = useState(false)
   const navigate = useNavigate()
-//   async function fetchArtistDetails(){
-//     try{
 
-//         const docRef= doc(db, 'artists', currentExhibition.artists_id)
-//         const snapShot = await getDoc(docRef)
-//         const data = {id: snapShot.id, ...snapShot.data()}
-//         if (!snapShot.empty){
-//             setArtistInfo(data)
-//         }
-//     }catch(err){
-//         console.error(err)
-//     }
-//   }
-//   useEffect(()=>{
-//     fetchArtistDetails()
-//   }, [currentExhibition])
   
-   async function reviewSubmission(){
+   async function reviewSubmission(status){
     try{
-    //     let flag = 0
-    //     const exhibitionDocRef = doc(db, 'exhibitions', currentExhibition.id);
-    //     const exhibitionSize = collection(db, 'exhibitions');
-    //    const size = await getCountFromServer(exhibitionSize);
-    //    const count = size.data().count
-//        if (status === 'accepted'){
-//         await updateDoc(exhibitionDocRef, {
-//         status: status,
-//         expireAt: Timestamp.fromDate(new Date(Date.now() + (24 * 7 * 60 * 60 * 1000)))
-       
-// })
-//        }
+        // let flag = 0
+        const exhibitionDocRef = doc(db, 'exhibitions', currentExhibition.id);
+
+       const allPendingExhibitionsQuery = query(
+      collection(db,'exhibitions'),
+       where ('status', '==', 'pending'),
+       orderBy('createdAt'))
+         const allNonPendingExhibitionsQuery = query(
+      collection(db,'exhibitions'),
+       where ('status', '==', 'accepted'),
+       orderBy('createdAt'))
+       const allPendingExhibitionsSnapshot= await getDocs(allPendingExhibitionsQuery)
+        const allAcceptedExhibitionsSnapshot= await getDocs(allNonPendingExhibitionsQuery)
+
+    const pendingExhibitionsList = allPendingExhibitionsSnapshot.docs.map(doc =>({...doc.data(), docId:doc.id}))
+     const acceptedExhibitionsList = allAcceptedExhibitionsSnapshot.docs.map(doc =>({...doc.data(), docId:doc.id}))
+
+      console.log('STATUS', status)
+      console.log('Current exhibition ref', exhibitionDocRef)
+      console.log('all pending exhibitions', pendingExhibitionsList)
+      console.log('all accepted exhibitions', acceptedExhibitionsList)
+
+const startDate = Timestamp.fromDate(new Date('2025-07-14T12:30:00'))
+const increment = (24 * 7 * 60 * 60 * 1000) * (allAcceptedExhibitionsSnapshot.size + 1)
+console.log(increment)
+
+          if (status === 'accepted'){
+        await updateDoc(exhibitionDocRef, {
+        status: status,
+        expireAt: Timestamp.fromDate(new Date(startDate.toDate().getTime() + increment))  
+       })} else if (status=== 'rejected'){
+          await updateDoc(exhibitionDocRef, {
+            status: status,
+
+          })
+
+       }
+
    
       setstatus(true)
     } catch(err){
@@ -61,7 +72,7 @@ function ExhibitionSubmission() {
        
       <ExhibitionItem 
      status = 'current'
-     links={currentExhibition.links}
+    //  links={currentExhibition.links}
      artistName={`${currentExhibition.artistFirstName} ${currentExhibition.artistLastName}`}
      title={currentExhibition.title}
      medium={currentExhibition.medium}
