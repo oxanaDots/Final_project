@@ -41,12 +41,14 @@ function ExhibitionSubmission() {
 
 const startDate = Timestamp.fromDate(new Date('2025-07-14T12:30:00'))
 const increment = (24 * 7 * 60 * 60 * 1000) * (allAcceptedExhibitionsSnapshot.size + 1)
+const expireAt = Timestamp.fromDate(new Date(startDate.toDate().getTime() + increment)) 
 console.log(increment)
 
           if (status === 'accepted'){
         await updateDoc(exhibitionDocRef, {
         status: status,
-        expireAt: Timestamp.fromDate(new Date(startDate.toDate().getTime() + increment))  
+        startsAt:  Timestamp.fromDate(new Date(expireAt.toDate().getTime() - (24 * 7 * 60 * 60 * 1000))) ,
+        expireAt: expireAt,  
        })} else if (status=== 'rejected'){
           await updateDoc(exhibitionDocRef, {
             status: status,

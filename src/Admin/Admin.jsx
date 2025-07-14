@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { useMatch } from 'react-router-dom';
@@ -13,12 +13,13 @@ function AdminDashboard() {
  async function fetchExhibition (){
       try{
 
-        const snapshot = await getDocs(collection(db, 'exhibitions'))
-        const data = snapshot.docs.map(doc=> ({   
-          id: doc.id,
-         ...doc.data()
-        } ))
-        
+ const allExhibitionsQuery = query(
+      collection(db,'exhibitions'),
+       orderBy('createdAt'))       
+      
+  const exhibitionsSnapshot =  await getDocs(allExhibitionsQuery)
+  const data = exhibitionsSnapshot.docs.map(doc=> ({...doc.data(), docId: doc.id}))
+
         setExhibition(data)
         
       } catch(err){
