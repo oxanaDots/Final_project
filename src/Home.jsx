@@ -2,72 +2,58 @@ import React from 'react';
 import NavMenu from './NavMenu';
 import ExhibitionItem from './Components/ExhibitionItem';
 import { NavLink } from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
-import { getDocs, collection } from "firebase/firestore";
+import { getDocs, collection, query, Timestamp, where } from "firebase/firestore";
 import {  db } from "./firebase.js"; 
-
-import 'leaflet/dist/leaflet.css';
 import {  useEffect, useState } from 'react';
-
-function LocationMarker({ setPosition }) {
-  const map = useMapEvents({
-    click() {
-      map.locate();
-    },
-    locationfound(e) {
-      setPosition(e.latlng);
-      map.flyTo(e.latlng, map.getZoom());
-    },
-  });
-
-  return null;
-}
-
+import {getDate} from './utilities/getDate.js'
+import { fetchBusinesses } from './utilities/fetchBusinesses.js';
+import Spiner from './Components/Spiner.jsx';
  function Home() {
   const [ businesses,  setBusinesses] = useState([]);
+  const [exhibitions, setExhibitions] = useState([])
+  const [currentExhibition, setCurrentExhibition] = useState({})
+  const [loading, setLoading] = useState(false)
+const currentDay = Timestamp.fromDate(new Date());
 
-//    const [position, setPosition] = useState(null)
-   
+console.log('current', currentExhibition)
+console.log('all', exhibitions)
+console.log('current day', currentDay)
 
-//  const [locations, setLocations] = useState([]);
+const expire = getDate(currentExhibition)
 
   useEffect(() => {
-    const fetchBusinesses = async () => {
-      try {
-        const snapshot = await getDocs(collection(db, "businesses"));
+   setLoading(true)
+  
+    async function helper(){
+      
+      try{
+
+
+         const businessesData = await fetchBusinesses()
+         setBusinesses( businessesData)
+        const snapshot = await getDocs(collection(db, 'exhibitions'))
         const data = snapshot.docs.map(doc => ({
-          businessId: doc.id,
-          ...doc.data(),
-        }));
+          ...doc.data(), docId: doc.id
+        }))
 
-        setBusinesses(data);
-        console.log(data)
-
-        // const coords = await Promise.all(
-        //   data.map(async (biz) => {
-        //     const address = `${biz.location}, ${biz.postcode}`;
-        //     const res = await fetch(
-        //       `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`
-        //     );
-        //     const geo = await res.json();
-        //     if (geo[0]) {
-        //       return {
-        //         name: biz.businessName,
-        //         lat: parseFloat(geo[0].lat),
-        //         lon: parseFloat(geo[0].lon),
-        //       };
-        //     }
-        //     return null;
-        //   })
-        // );
-
-        // setLocations(coords.filter(Boolean));
-      } catch (error) {
-        console.error( error);
+        const querry = query(
+          collection(db, 'exhibitions'),
+          where('startsAt', '<=', currentDay),
+          where('expireAt', '>', currentDay))
+          const currentExhibitionSnapShot = await getDocs(querry)
+          const currentExhibition = currentExhibitionSnapShot.docs.map(doc => ({...doc.data(), docId: doc.id}))
+          setCurrentExhibition(currentExhibition&& currentExhibition[0])
+          setExhibitions(data)
+       
+      }catch(err){
+        console.error(err)
+      } finally{
+        setLoading(false)
       }
-    };
+    }
 
-    fetchBusinesses();
+
+    helper()
   }, []);
 
 
@@ -99,59 +85,43 @@ function LocationMarker({ setPosition }) {
   obj = [...obj, {status: 'rejected'}, {status: 'accepted'}]
   console.log(obj)
  updateDate()
-  return (
-    <div className='flex w-full flex-col justify-center items-center'>
 
+
+
+
+
+
+ return (
+   <>
+    {loading ? <Spiner/>:
+    <div className='flex  m-0 flex-col justify-center items-center bg-primary-medium'>
     <NavMenu/>
 
-   <section className='flex flex-col  w-[50vw] h-[100vh]  pt-20 items-center'>
-<h1 className='text-5xl py-3 font-semibold'>Main Heading</h1>
-<h3 className='text-2xl py-3'>Subheading</h3>
-<p className='text-sm py-3'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+<h1 className='text-3xl  font-semibold'>Main Heading</h1>
+   <section className='grid grid-cols-[20%_30%_20%] pt-10 justify-center items-baseline  gap-20'>
 
-</p>
+
+    <div className='grid-cols-1'>
+<h3 className='text-xl py-3'>Subheading</h3>
+<p className='text-xs py-3'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
    <div>   <NavLink to='/specify_role'><button className='submit-btn'>Create an Account</button></NavLink>
    </div>
-   </section>
-
-<div className='bg-primary-medium w-[80vw] pt-10 w-full px-[10vw] flex-col flex justify-center'>
-<div className=' flex justify-between  gap-10   '>
-  <div className='flex flex-col justify-between w-[50vw]'>
-  <div>
-    <h2  className='p-5 font-semibold text-left'>Current exhibition:</h2>
-    <ExhibitionItem/>
-  </div>
-  
    </div>
- 
 
-
-   <section className='grid grid-cols-[70%_30%] gap-4 border border-1 border-ternary-medium  w-full justify-between rounded-md py-6 px-4'>
+  <div className='grid-cols-2'> 
+    <ExhibitionItem 
   
+  artistName={currentExhibition.artistFirstName + currentExhibition.artistLastName}
+  title={currentExhibition.title}
+  medium={currentExhibition.medium}
+   descr={currentExhibition.descr}
+   links={currentExhibition.links}
+   date={expire}
+   
+    />
+  </div>
 
- 
-{/* <MapContainer className='rounded-md' style={{ height: '100%', width: '100%' }}
-     center={ [51.505, -0.09]} zoom={15} scrollWheelZoom={true}>
-  <TileLayer
-    detectRetina={true}
-    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  />
-
-<LocationMarker setPosition={setPosition} />
-  {position && (
-    <Marker position={position}>
-      <Popup>You are here</Popup>
-    </Marker>
-  )}
- {locations.map((biz, idx) => (
-        <Marker key={idx} position={[biz.lat, biz.lon]}>
-          <Popup>{biz.businessName}</Popup>
-        </Marker>
-      ))}
-</MapContainer> */}
-   <div className='col-2 grid  w-full pr-4'>
-   <div >
+<div >
     <h2 className='text-sm font-semibold pb-4'>Art Hosts in your area:</h2>
     <div className='overflow-y-scroll h-[25rem]'>
     {businesses.map(item=> (
@@ -166,6 +136,25 @@ function LocationMarker({ setPosition }) {
 
  
      </div>
+
+
+   </section>
+
+<div className='bg-primary-medium  pt-10  px-[10vw] flex-col flex justify-center'>
+<div className=' flex justify-between  gap-10   '>
+  <div className='flex flex-col justify-between w-[50vw]'>
+
+  
+   </div>
+ 
+
+
+   <section className='grid grid-cols-[70%_30%] gap-4 border border-1 border-ternary-medium  w-full justify-between rounded-md py-6 px-4'>
+  
+
+ 
+   <div className='col-2 grid  w-full pr-4'>
+   
     </div>
 
    </section>
@@ -185,7 +174,9 @@ function LocationMarker({ setPosition }) {
 
 </section>
    </div>
-   </div>
+  </div>
+  }
+  </>
   );
 }
 
