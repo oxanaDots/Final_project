@@ -6,20 +6,24 @@ import { getDocs, collection, query, Timestamp, where } from "firebase/firestore
 import {  db } from "./firebase.js"; 
 import {  useEffect, useState } from 'react';
 import {getDate} from './utilities/getDate.js'
-import { fetchBusinesses } from './utilities/fetchBusinesses.js';
+import { fetchBusinesses, fetchUpcomingExhibitions} from './utilities/fetchBusinesses.js';
 import Spiner from './Components/Spiner.jsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faArrowRight, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+
+
  function Home() {
   const [ businesses,  setBusinesses] = useState([]);
   const [exhibitions, setExhibitions] = useState([])
   const [currentExhibition, setCurrentExhibition] = useState({})
   const [loading, setLoading] = useState(false)
+ 
+
 const currentDay = Timestamp.fromDate(new Date());
 
-console.log('current', currentExhibition)
-console.log('all', exhibitions)
-console.log('current day', currentDay)
+const expireFormatted = getDate(currentExhibition)
 
-const expire = getDate(currentExhibition)
+ const expireDate = currentExhibition.expireAt
 
   useEffect(() => {
    setLoading(true)
@@ -27,23 +31,19 @@ const expire = getDate(currentExhibition)
     async function helper(){
       
       try{
-
-
          const businessesData = await fetchBusinesses()
          setBusinesses( businessesData)
-        const snapshot = await getDocs(collection(db, 'exhibitions'))
-        const data = snapshot.docs.map(doc => ({
-          ...doc.data(), docId: doc.id
-        }))
-
+         
         const querry = query(
           collection(db, 'exhibitions'),
           where('startsAt', '<=', currentDay),
+          where ('status', '==', 'accepted'),
           where('expireAt', '>', currentDay))
+          
           const currentExhibitionSnapShot = await getDocs(querry)
           const currentExhibition = currentExhibitionSnapShot.docs.map(doc => ({...doc.data(), docId: doc.id}))
           setCurrentExhibition(currentExhibition&& currentExhibition[0])
-          setExhibitions(data)
+     
        
       }catch(err){
         console.error(err)
@@ -57,39 +57,33 @@ const expire = getDate(currentExhibition)
   }, []);
 
 
-  let obj =[
-
-    {status: 'accepted'},
-    {status: 'accepted'},
-    {status: 'rejected'},
-    {status: 'rejected'},
-    {status: 'accepted'},
-    {status: 'rejected'},
-    {status: 'accepted'},
-  ]
-
-  function updateDate (){
+  
 
 
-    let expiry = 7
-   let flag = 0
-    for (let i = 0; i < obj.length; i++){
-       if(obj[i].status === 'accepted'){
-       obj[i] = { ...obj[i], expiry: expiry * (flag + 1)}
-       flag ++
-       }
+  useEffect(()=>{
+
+    async function helper(){
+
+      try{
+  
+      if( expireDate  ){
+        const upcomingExhibitions = await fetchUpcomingExhibitions(expireDate)
+        setExhibitions(upcomingExhibitions)
+      } else{
+        console.log(false)
+        throw new Error('Error is......')
+      }
+         
+      } catch(err){
+        console.error(err)
+      }
     }
-  }
 
-  updateDate()
-  obj = [...obj, {status: 'rejected'}, {status: 'accepted'}]
-  console.log(obj)
- updateDate()
+    helper()
+  }, [currentExhibition])
 
 
-
-
-
+console.log(exhibitions)
 
  return (
    <>
@@ -109,6 +103,11 @@ const expire = getDate(currentExhibition)
    </div>
 
   <div className='grid-cols-2'> 
+    <div className='flex text-xs items-center m-0 p-2 bg-white justify-between text-ternary-medium'>
+     <FontAwesomeIcon icon={faArrowLeft}/>
+     <p>current</p>
+     <FontAwesomeIcon icon={faArrowRight}/>
+    </div>
     <ExhibitionItem 
   
   artistName={currentExhibition.artistFirstName + currentExhibition.artistLastName}
@@ -116,21 +115,20 @@ const expire = getDate(currentExhibition)
   medium={currentExhibition.medium}
    descr={currentExhibition.descr}
    links={currentExhibition.links}
-   date={expire}
+   date={expireFormatted}
    
     />
   </div>
 
-<div >
+<div className='text-xs'>
     <h2 className='text-sm font-semibold pb-4'>Art Hosts in your area:</h2>
     <div className='overflow-y-scroll h-[25rem]'>
     {businesses.map(item=> (
       <div className='text-xs flex justify-between bg-white px-2 py-2 my-2'>
-     <h2>{item.businessName}</h2>
-    <h2> 0.5 miles</h2>
+     <h2 className='text-xs'>{item.businessName}</h2>
+    <h2 className='text-xs'> 0.5 miles</h2>
     </div>
  ) )}
- <button></button>
   </div>
    
 

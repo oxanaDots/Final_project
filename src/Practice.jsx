@@ -1,34 +1,34 @@
-import React, {  useEffect, useState } from 'react';
+// import React, {  useEffect, useState } from 'react';
 
 
 // function Practice() {
-//     // const fruits = [
-//     //     'Apple', 'Banana', 'Apricot', 'Strawberry', 'Orange', 'Mango', 'Melon'
-//     // ]
-//     // const [input, setInput] = useState('')
-//     // const [target, setTarget] = useState([])
-//     // function onChange(e){
-//     //     setInput(e.target.value)
-//     //     const matches = fruits.filter(item => item.startsWith(e.target.value))
+//     const fruits = [
+//         'Apple', 'Banana', 'Apricot', 'Strawberry', 'Orange', 'Mango', 'Melon'
+//     ]
+//     const [input, setInput] = useState('')
+//     const [target, setTarget] = useState([])
+//     function onChange(e){
+//         setInput(e.target.value)
+//         const matches = fruits.filter(item => item.startsWith(e.target.value))
         
-//     //     setTarget(matches.length >= 0 ? matches: fruits)
-//     //     console.log(target)
-//     // }
+//         setTarget(matches.length >= 0 ? matches: fruits)
+//         console.log(target)
+//     }
 
 //     const [input, setInput] = useState('')
-//     // const finalValue = useDebouncer(input, 2000)
-//     // function useDebouncer(value, delay){
-//     //   const [output, setOutput] = useState('')
-//     //     useEffect(()=>{
-//     //         const timer = setTimeout(()=>{
-//     //             setOutput(value)
+//     const finalValue = useDebouncer(input, 2000)
+//     function useDebouncer(value, delay){
+//       const [output, setOutput] = useState('')
+//         useEffect(()=>{
+//             const timer = setTimeout(()=>{
+//                 setOutput(value)
                
-//     //         }, delay)
+//             }, delay)
 
-//     //         return ()=> clearTimeout(timer)
-//     //     }, [value, delay])
-//     //     return output
-//     // }
+//             return ()=> clearTimeout(timer)
+//         }, [value, delay])
+//         return output
+//     }
 //    function onChange(e) {
 //   // Remove anything that's not 0-9
 //   const digits = e.target.value.replace(/\D/g, '');
@@ -119,62 +119,62 @@ import React, {  useEffect, useState } from 'react';
 //   );
 // }
 
-// import words from 'an-array-of-english-words';
-const words = ["HELLO", "WORLD", "CAT", "DOG"];
+// // import words from 'an-array-of-english-words';
+// const words = ["HELLO", "WORLD", "CAT", "DOG"];
 
-function Practice() {
+// function Practice() {
 
-   const letters = [
-  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 
-  'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 
-  'U', 'V', 'W', 'X', 'Y', 'Z'
-];
+//    const letters = [
+//   'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 
+//   'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 
+//   'U', 'V', 'W', 'X', 'Y', 'Z'
+// ];
 
-const [word, updateWord]= useState('')
-const [finalWord, setFinalWord] = useState(false)
-const [guessed, setGuessesd] = useState([])
+// const [word, updateWord]= useState('')
+// const [finalWord, setFinalWord] = useState(false)
+// const [guessed, setGuessesd] = useState([])
 
 
 
-function checkWord(word){
-    for (let i=0; i < words.length; i++ ){
-        if (words[i] === word){
-          setFinalWord(true)
+// function checkWord(word){
+//     for (let i=0; i < words.length; i++ ){
+//         if (words[i] === word){
+//           setFinalWord(true)
         
-           setGuessesd((prev)=> [...prev, words[i]])
-           updateWord('')
+//            setGuessesd((prev)=> [...prev, words[i]])
+//            updateWord('')
          
-        }
-    }
-}
-function handleUpdate(i){ 
-         updateWord((prev)=> prev + letters[i])
+//         }
+//     }
+// }
+// function handleUpdate(i){ 
+//          updateWord((prev)=> prev + letters[i])
   
-}
+// }
 
-useEffect(()=>{
-        checkWord(word)
+// useEffect(()=>{
+//         checkWord(word)
 
-}, [word])
-  console.log(guessed)
+// }, [word])
+//   console.log(guessed)
 
-  return (
-    <div className='flex flex-col justify-center items-center gap-4'>
-    <div className='flex p-2 gap-2 justify-center' >
-      {letters.map((letter, i) => 
-      <div className='py-2 px-4 cursor-pointer bg-emerald-300 flex gap-2 justify-center' onClick={()=> handleUpdate(i)}>
-        <p>{letter}</p>
-      </div>)}
-    </div>
+//   return (
+//     <div className='flex flex-col justify-center items-center gap-4'>
+//     <div className='flex p-2 gap-2 justify-center' >
+//       {letters.map((letter, i) => 
+//       <div className='py-2 px-4 cursor-pointer bg-emerald-300 flex gap-2 justify-center' onClick={()=> handleUpdate(i)}>
+//         <p>{letter}</p>
+//       </div>)}
+//     </div>
 
-       <p className='text-4xl'>{word}</p>
-       {finalWord && <p>Well done! Keep going...</p>}
-       <div className='flex px-8 flex-col self-start'>
-        <p>Guesses words:</p>
-        {guessed.map(word=> <p>{word}</p>)}
-       </div>
-    </div>
-  );
-}
+//        <p className='text-4xl'>{word}</p>
+//        {finalWord && <p>Well done! Keep going...</p>}
+//        <div className='flex px-8 flex-col self-start'>
+//         <p>Guesses words:</p>
+//         {guessed.map(word=> <p>{word}</p>)}
+//        </div>
+//     </div>
+//   );
+// }
 
-export default Practice;
+// export default Practice;

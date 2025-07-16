@@ -1,15 +1,26 @@
- export function getDate(date){
-
-
-
+ export function getDate(data){
   const options ={
   month:'long',
   day: 'numeric',
   year:'numeric'
 }
-const expireObj = date.expireAt
-const ts = (expireObj?.seconds + expireObj?.nanoseconds/1000000000)*1000
+const expireObj = data?.expireAt
+const ts = (expireObj?.seconds + expireObj?.nanoseconds/1000000000)*1000;
 const expire = new Date(ts).toLocaleString("en-GB", options)
-return expire
+if (data){
+
+    return expire
+}
+
+
+
  }
 
+export function getFirebaseTimestamp(data){
+const expireObj = data?.expireAt
+const ts = (expireObj?.seconds + expireObj?.nanoseconds/1000000000)*1000;
+if (data){
+
+    return ts
+}
+}
