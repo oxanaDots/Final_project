@@ -6,24 +6,48 @@ import { getDocs, collection, query, Timestamp, where } from "firebase/firestore
 import {  db } from "./firebase.js"; 
 import {  useEffect, useState } from 'react';
 import {getDate} from './utilities/getDate.js'
-import { fetchBusinesses, fetchUpcomingExhibitions} from './utilities/fetchBusinesses.js';
+import { 
+  fetchBusinesses, 
+  fetchUpcomingExhibitions
+}from './utilities/fetchBusinesses.js';
 import Spiner from './Components/Spiner.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faArrowRight, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
 
  function Home() {
-  const [ businesses,  setBusinesses] = useState([]);
+  const [businesses,  setBusinesses] = useState([]);
   const [exhibitions, setExhibitions] = useState([])
-  const [currentExhibition, setCurrentExhibition] = useState({})
+  const [currentExhibition, setCurrentExhibition] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [index, setIndex] = useState(0)
+
+  function handleExhibitiob(direction){
+      if (direction === 'next'){
+        setIndex((prev)=> prev <= exhibitions.length -2? prev+1: prev )
+      } else if (direction === 'prev'){
+       setIndex((prev)=> prev > 0? prev-1: prev)
+      } else{
+        setIndex(0)
+      }
+  }
  
+console.log(currentExhibition)
 
 const currentDay = Timestamp.fromDate(new Date());
 
-const expireFormatted = getDate(currentExhibition)
+// const expireFormatted = getDate(currentExhibition?.expireAt)
 
- const expireDate = currentExhibition.expireAt
+
+ const expireDate = currentExhibition? currentExhibition.expireAt: null
+
+ useEffect(()=>{
+  async function helper(){
+      const businessesData = await fetchBusinesses()
+         setBusinesses( businessesData)
+  }
+      helper()
+ }, [])
 
   useEffect(() => {
    setLoading(true)
@@ -31,8 +55,7 @@ const expireFormatted = getDate(currentExhibition)
     async function helper(){
       
       try{
-         const businessesData = await fetchBusinesses()
-         setBusinesses( businessesData)
+    
          
         const querry = query(
           collection(db, 'exhibitions'),
@@ -42,8 +65,10 @@ const expireFormatted = getDate(currentExhibition)
           
           const currentExhibitionSnapShot = await getDocs(querry)
           const currentExhibition = currentExhibitionSnapShot.docs.map(doc => ({...doc.data(), docId: doc.id}))
-          setCurrentExhibition(currentExhibition&& currentExhibition[0])
-     
+        
+          setCurrentExhibition(currentExhibition[0])
+           setExhibitions([currentExhibition[0]])
+
        
       }catch(err){
         console.error(err)
@@ -57,7 +82,7 @@ const expireFormatted = getDate(currentExhibition)
   }, []);
 
 
-  
+ 
 
 
   useEffect(()=>{
@@ -66,14 +91,16 @@ const expireFormatted = getDate(currentExhibition)
 
       try{
   
-      if( expireDate  ){
-        const upcomingExhibitions = await fetchUpcomingExhibitions(expireDate)
-        setExhibitions(upcomingExhibitions)
-      } else{
-        console.log(false)
-        throw new Error('Error is......')
-      }
-         
+
+        if (currentExhibition && exhibitions.length> 0){
+          
+          const upcomingExhibitions = await fetchUpcomingExhibitions(expireDate)
+          setExhibitions((prev)=>  [...prev, ...upcomingExhibitions])
+        }
+      
+
+
+    
       } catch(err){
         console.error(err)
       }
@@ -86,13 +113,13 @@ const expireFormatted = getDate(currentExhibition)
 console.log(exhibitions)
 
  return (
-   <>
+   <div className='m-0'>
     {loading ? <Spiner/>:
     <div className='flex  m-0 flex-col justify-center items-center bg-primary-medium'>
     <NavMenu/>
 
 <h1 className='text-3xl  font-semibold'>Main Heading</h1>
-   <section className='grid grid-cols-[20%_30%_20%] pt-10 justify-center items-baseline  gap-20'>
+   <section className='grid grid-cols-[20%_30%_20%] pt-6 pb-20 justify-center items-baseline  gap-20'>
 
 
     <div className='grid-cols-1'>
@@ -103,21 +130,29 @@ console.log(exhibitions)
    </div>
 
   <div className='grid-cols-2'> 
-    <div className='flex text-xs items-center m-0 p-2 bg-white justify-between text-ternary-medium'>
-     <FontAwesomeIcon icon={faArrowLeft}/>
-     <p>current</p>
-     <FontAwesomeIcon icon={faArrowRight}/>
-    </div>
-    <ExhibitionItem 
-  
-  artistName={currentExhibition.artistFirstName + currentExhibition.artistLastName}
-  title={currentExhibition.title}
-  medium={currentExhibition.medium}
-   descr={currentExhibition.descr}
-   links={currentExhibition.links}
-   date={expireFormatted}
    
-    />
+    <div className='flex text-xs items-center align-middle  p-2 bg-white justify-between text-ternary-medium'>
+      <div className='cursor-pointer'>
+          <FontAwesomeIcon icon={faArrowLeft} onClick={()=> handleExhibitiob('prev')}/>
+      </div>
+      <div className='cursor-pointer'>
+      <p className={`${index === 0 && 'underline-offset-2 underline text-ternary-dark'}  m-0`} onClick={()=> handleExhibitiob('current')}>current</p>
+      </div>
+      <div  className='cursor-pointer'>
+     <FontAwesomeIcon icon={faArrowRight} onClick={()=> handleExhibitiob('next')}/>
+      </div>
+    </div>
+          {exhibitions.length > 0 && <ExhibitionItem 
+          artistName={exhibitions[index].artistFirstName + exhibitions[index].artistLastName}
+          title={exhibitions[index].title}
+          medium={exhibitions[index].medium}
+            descr={exhibitions[index].descr}
+            links={exhibitions[index].links}
+            date={index === 0 ? getDate(exhibitions[index].expireAt): getDate(exhibitions[index].startsAt)}
+            dateMessage={index ===0? 'Ends on': 'Starts on '}
+    />}
+  
+ 
   </div>
 
 <div className='text-xs'>
@@ -129,52 +164,27 @@ console.log(exhibitions)
     <h2 className='text-xs'> 0.5 miles</h2>
     </div>
  ) )}
-  </div>
+  </div> 
    
 
  
-     </div>
+     </div> 
 
 
    </section>
 
-<div className='bg-primary-medium  pt-10  px-[10vw] flex-col flex justify-center'>
-<div className=' flex justify-between  gap-10   '>
-  <div className='flex flex-col justify-between w-[50vw]'>
-
-  
-   </div>
- 
-
-
-   <section className='grid grid-cols-[70%_30%] gap-4 border border-1 border-ternary-medium  w-full justify-between rounded-md py-6 px-4'>
-  
 
  
-   <div className='col-2 grid  w-full pr-4'>
-   
-    </div>
 
-   </section>
+
    
 
    </div>
  
-   <section className="pt-20 pb-10 w-full ">
-   <h3 className='p-5 font-semibold text-left'>Explore upcoming exhibitions:</h3>
-<div className=' grid grid-cols-3 scroll border-y border-ternary-medium gap-8 p-8' >
-      <ExhibitionItem status='upcoming'/>
-      <ExhibitionItem status='upcoming'/>
-      <ExhibitionItem status='upcoming'/>
-      <ExhibitionItem status='upcoming'/>
-      <ExhibitionItem status='upcoming'/>
-</div>
+   
 
-</section>
-   </div>
-  </div>
   }
-  </>
+  </div>
   );
 }
 

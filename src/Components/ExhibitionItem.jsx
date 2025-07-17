@@ -6,12 +6,13 @@ function ExhibitionItem({
   title='Untitled', 
   medium='unknown',
    descr='',
-  date=''}) {
+  date='',
+dateMessage=''}) {
   return (
    
       <div className='flex flex-col  text-[0.7rem]' >
        
-        <section className='grid w-full justify-between grid-cols-[60%_40%] border-ternary-medium  bg-white shadow-md gap-2 px-10 py-8 text-left  items-baseline'>
+        <section className='grid w-full justify-between grid-cols-[60%_40%] h-[60vh] border-ternary-medium  bg-white shadow-md gap-2 px-10 py-8 text-left  items-baseline'>
          <div className=' w-full row-1 mb-10 items-baseline'>
                 <p className='font-[700]  mb-0'>{artistName}</p>
                <span className=' flex '>
@@ -19,7 +20,7 @@ function ExhibitionItem({
                </span>
                 <p className=''>{medium}</p>
             </div>
-              <p cl className='place-items-end text-right'>{date}</p> 
+              <p cl className='place-items-end text-right'>{dateMessage} {date}</p> 
 
             <p className='  col-span-2 my-10'>{descr}</p>
             <div className='flex flex-col col-1 row-3 items-baseline' >
