@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import {db, storage} from '../firebase'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { collection, addDoc, Timestamp, getDocs } from "firebase/firestore";
+import { collection, addDoc} from "firebase/firestore";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
@@ -34,8 +34,6 @@ function UploadExhibition() {
         })
       );
 
-     const exhibitions = await getDocs(collection(db, 'exhibitions'))
-     const size = exhibitions.size
 
      
         await addDoc(collection(db, "exhibitions"), {
@@ -46,7 +44,6 @@ function UploadExhibition() {
         artistLastName: user.lastName,
         links: user.links,
         createdAt: new Date(),
-        expireAt: Timestamp.fromDate(new Date(Date.now() + (24 * 7 * 60 * 60 * 1000) * (size + 1))),
         status: 'pending'
       });
    

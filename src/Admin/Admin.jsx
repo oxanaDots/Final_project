@@ -51,7 +51,7 @@ function AdminDashboard() {
       <div className=' flex flex-col cursor-pointer w-[30vw]'>
         {exhibitions && exhibitions.map((item, id)=>{
           return (
-            <div key={id} onClick={()=> navigateToExhibition(item.id)} className='flex p-2 flex-col'>
+            <div key={id} onClick={()=> navigateToExhibition(item.docId)} className='flex p-2 flex-col'>
           <div className='flex justify-between w-full  text-[0.6rem] text-opacity-60 '>
             <p>#{id + 1}</p>
             <p>{item.createdAt.toDate().toLocaleDateString()}</p>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useMatch } from 'react-router-dom';
 import ExhibitionItem from '../Components/ExhibitionItem';
@@ -10,15 +10,14 @@ function ExhibitionSubmission() {
   const linkParams = useMatch('/admin/exhibition_submission/:id');
   const currentId = linkParams.params
   const {exhibitions} = useOutletContext()
-  const currentExhibition = exhibitions.find((item)=> item.id === currentId['id'])
+  const currentExhibition = exhibitions.find((item)=> item.docId === currentId['id'])
    const [statusB, setstatus] = useState(false)
   const navigate = useNavigate()
 
-  
+
    async function reviewSubmission(status){
     try{
-        // let flag = 0
-        const exhibitionDocRef = doc(db, 'exhibitions', currentExhibition.id);
+        const exhibitionDocRef = doc(db, 'exhibitions', currentExhibition.docId);
 
        const allPendingExhibitionsQuery = query(
       collection(db,'exhibitions'),
@@ -38,7 +37,7 @@ function ExhibitionSubmission() {
       console.log('Current exhibition ref', exhibitionDocRef)
       console.log('all pending exhibitions', pendingExhibitionsList)
       console.log('all accepted exhibitions', acceptedExhibitionsList)
-
+      console.log(exhibitions)
 const startDate = Timestamp.fromDate(new Date('2025-07-14T12:30:00'))
 const increment = (24 * 7 * 60 * 60 * 1000) * (allAcceptedExhibitionsSnapshot.size + 1)
 const expireAt = Timestamp.fromDate(new Date(startDate.toDate().getTime() + increment)) 
