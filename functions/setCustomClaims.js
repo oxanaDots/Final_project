@@ -1,29 +1,28 @@
 
 import * as functions from 'firebase-functions';
 import { auth, db } from './firebase.js'
-
-
+import { getDatabase } from 'firebase-admin/database';
 export const processSignUp = functions.auth.user().onCreate(async (user) => {
 
-  const userId = user.uid
-  const enterpriseDoc = await db.collection('businesses').doc(userId).get()
-    const artistDoc = await db.collection('artists').doc(userId).get()
+  const enterpriseDoc = await db.collection('businesses').doc( user.uid).get()
+    const artistDoc = await db.collection('artists').doc( user.uid).get()
 
 
     try {
  let customClaims={}
 
-          if (user.email && enterpriseDoc.exists && enterpriseDoc.data().role === 'business') {
+     if (user.email && enterpriseDoc.exists && enterpriseDoc.data().role === 'business') {
      customClaims = {
       business: true,
       }
-    } else if (user.email && artistDoc.exists && artistDoc.data().role === 'artist') {
+    } 
+     if (user.email && artistDoc.exists && artistDoc.data().role === 'artist') {
      customClaims = {
       artist: true,
       
-    }};
+    }}
       // Set custom user claims on this newly created user.
-      await getAuth().setCustomUserClaims(user.uid, customClaims);
+      await auth.setCustomUserClaims(user.uid, customClaims);
 
       // Update real-time database to notify client to force refresh.
       const metadataRef = getDatabase().ref('metadata/' + user.uid);

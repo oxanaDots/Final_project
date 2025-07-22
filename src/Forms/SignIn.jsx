@@ -6,7 +6,6 @@ import { UserAuthContext } from './UserAuthContext';
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
-
 function SignIn() {
     const {setUser} = UserAuthContext()
     const {handleSubmit, register, setError, reset, clearErrors, formState: {errors}} = useForm({shouldUseNativeValidation: false,  mode: "onTouched",})
@@ -38,6 +37,8 @@ function SignIn() {
         navigate('/admin')
       }
     console.log(user)
+    
+  
     
   } catch (err) {
     
@@ -124,6 +125,7 @@ function SignIn() {
     <button className='submit-btn'>Submit</button>
   </form>
 </div>
+
 </div>
   );
 

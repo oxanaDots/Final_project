@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import {db, storage} from '../firebase'
+import {db, storage, auth} from '../firebase'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc} from "firebase/firestore";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 function UploadExhibition() {
-    const {files, user, uploadStatus, setUploadStatus} = useOutletContext()
+  
+    const {files, user,  uploadStatus, setUploadStatus} = useOutletContext()
     const nav = useNavigate()
       const [uploaded, setUploaded ] = useState(false)
     
@@ -16,26 +17,37 @@ function UploadExhibition() {
         descr:'',
         medium:''
     })
+
+
+
     function handleChange(e){
         const { name, value } = e.target;
          setExhibitionDetails(prev => ({ ...prev, [name]: value }));
     }
 
     async function handleUpload(){
-        try{
-            setUploadStatus(true)
-     
+ 
+  try{
+           
+  setUploadStatus(true)
+  const uploadedImageURLs = await Promise.all(
+    files.map(async (file) => {
+      const storageRef = ref(storage, `exhibitions/${Date.now()}-${file.name}`);
+      await uploadBytes(storageRef, file);
+      return await getDownloadURL(storageRef);
+    })
+  );
 
-             const uploadedImageURLs = await Promise.all(
-            files.map(async (file) => {
-          const storageRef = ref(storage, `exhibitions/${Date.now()}-${file.name}`);
-          await uploadBytes(storageRef, file);
-          return await getDownloadURL(storageRef);
-        })
-      );
 
+  const userr = auth.currentUser;
+if (!userr) {
+  console.error("No user is signed in.");
+  
+} else{
+  console.log('auth!')
+}
 
-     
+ 
         await addDoc(collection(db, "exhibitions"), {
         ...exhibitionDetails,
         images: uploadedImageURLs,
@@ -46,7 +58,7 @@ function UploadExhibition() {
         createdAt: new Date(),
         status: 'pending'
       });
-   
+ 
 
         } catch(err){
             console.error(err)
@@ -54,11 +66,10 @@ function UploadExhibition() {
             setUploadStatus(true)
             setUploaded(true)
         }
+     
     }
 
-    // async function calcDate(){
-
-    // }
+ 
 
   return (
 <>

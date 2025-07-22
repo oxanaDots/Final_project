@@ -23,6 +23,8 @@
     "enlist": "^0.1.0",
     "express": "^5.1.0",
     "firebase": "^11.9.0",
+    "firebase-admin": "^11.11.1",
+    "firebase-functions": "^4.9.0",
     "leaflet": "^1.9.4",
     "mongoose": "^8.15.1",
     "react": "^19.0.0-rc.1",

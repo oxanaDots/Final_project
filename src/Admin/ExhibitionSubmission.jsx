@@ -26,35 +26,45 @@ function ExhibitionSubmission() {
          const allNonPendingExhibitionsQuery = query(
       collection(db,'exhibitions'),
        where ('status', '==', 'accepted'),
-       orderBy('createdAt'))
+       orderBy('startsAt'))
        const allPendingExhibitionsSnapshot= await getDocs(allPendingExhibitionsQuery)
         const allAcceptedExhibitionsSnapshot= await getDocs(allNonPendingExhibitionsQuery)
 
-    const pendingExhibitionsList = allPendingExhibitionsSnapshot.docs.map(doc =>({...doc.data(), docId:doc.id}))
-     const acceptedExhibitionsList = allAcceptedExhibitionsSnapshot.docs.map(doc =>({...doc.data(), docId:doc.id}))
+      const pendingExhibitionsList = allPendingExhibitionsSnapshot.docs.map(doc =>({...doc.data(), docId:doc.id}))
+      const acceptedExhibitionsList = allAcceptedExhibitionsSnapshot.docs.map(doc =>({...doc.data(), docId:doc.id}))
 
       console.log('STATUS', status)
       console.log('Current exhibition ref', exhibitionDocRef)
       console.log('all pending exhibitions', pendingExhibitionsList)
       console.log('all accepted exhibitions', acceptedExhibitionsList)
       console.log(exhibitions)
-const startDate = Timestamp.fromDate(new Date('2025-07-14T12:30:00'))
-const increment = (24 * 7 * 60 * 60 * 1000) * (allAcceptedExhibitionsSnapshot.size + 1)
-const expireAt = Timestamp.fromDate(new Date(startDate.toDate().getTime() + increment)) 
-console.log(increment)
+      // const startDate = Timestamp.fromDate(new Date('2025-07-14T12:30:00'))
+     
+      let startDate  
+      if (allAcceptedExhibitionsSnapshot.size === 0){
+        startDate = Timestamp.fromDate(new Date())
+      } else {
+        startDate = acceptedExhibitionsList[acceptedExhibitionsList.length-1].expireAt
+      }
 
-          if (status === 'accepted'){
+      const sevenDays = (24 * 7 * 60 * 60 * 1000)
+      const expireAt = Timestamp.fromDate(new Date(startDate.toDate().getTime() + sevenDays)) 
+     
+
+        if (status === 'accepted'){
         await updateDoc(exhibitionDocRef, {
         status: status,
-        startsAt:  Timestamp.fromDate(new Date(expireAt.toDate().getTime() - (24 * 7 * 60 * 60 * 1000))) ,
+        // startsAt:  Timestamp.fromDate(new Date(expireAt.toDate().getTime() - (24 * 7 * 60 * 60 * 1000))) ,
+        // expireAt: expireAt,  
+         startsAt:  Timestamp.fromDate(new Date(startDate.toDate().getTime())),
         expireAt: expireAt,  
-       })} else if (status=== 'rejected'){
+       })} else if (status === 'rejected'){
           await updateDoc(exhibitionDocRef, {
             status: status,
 
           })
 
-       }
+       } 
 
    
       setstatus(true)

@@ -8,16 +8,15 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from '../firebase';
 import ExhibitionItem from '../Components/ExhibitionItem';
-
 // import { useMap } from 'https://cdn.esm.sh/react-leaflet/hooks'
 
 function ArtistDashboard() {
-  const {user}= UserAuthContext()
+
   const [files, setFiles]=useState([])
   const [exhibition, setExhibition]  = useState(false)
     const [loading, setLoading] = useState(true);
      const [uploadStatus, setUploadStatus] = useState(false)
- 
+const {user} = UserAuthContext()
  const nav = useNavigate()
  const location = useLocation()
 

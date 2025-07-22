@@ -18,7 +18,8 @@ function BusinessSignup() {
     phoneNumber:'',
     business_type:'',
     location:'',
-    postcode:''
+    postcode:'',
+   
   });   
   const [signUpError, setSignUpError] = useState('')
   const navigate = useNavigate()
