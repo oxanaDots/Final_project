@@ -2,7 +2,7 @@ import {  onDocumentUpdated } from "firebase-functions/v2/firestore";
 import * as logger from "firebase-functions/logger";
 import { createTransport } from "nodemailer";
 import { getDate } from "./utility/getDate.js";
-
+import {  db } from './firebase.js'
 
 const transporter = createTransport({
   service: "gmail",
@@ -46,8 +46,9 @@ const transporter = createTransport({
 export const notifyArtists = onDocumentUpdated('exhibitions/{docId}', async(event)=> {
 try{
    const newValue = event.data.after.data();
-     const artistsSnapshot = await admin.firestore().collection("artists").get();
-    const emails = artistsSnapshot.docs.map(doc => doc.data().email);
+   const artistsId = newValue.artists_id
+     const artistsSnapshot = await db.collection("artists").doc(artistsId).get();
+    const email = artistsSnapshot.data().email
 
 
     let text = ''
@@ -56,9 +57,12 @@ try{
     } else if (newValue.status == 'rejected'){
         text = 'We are sorry to inform you that your exhibition submission has been rejected 😔.'
     }
+    else {
+      return
+    }
     const mailOptions = {
     from: "noreply@art-hosting.firebaseapp.com",
-    to: emails,
+    to: email,
     subject: "Exhibition submission update",
     text: text
   };
@@ -70,3 +74,5 @@ try{
 }
 
 })
+
+// firebase deploy --only functions:notifyArtists --project art-hosting

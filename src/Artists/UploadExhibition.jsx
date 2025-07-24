@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import {db, storage, auth} from '../firebase'
+import {db, storage, } from '../firebase'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc} from "firebase/firestore";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,7 +18,10 @@ function UploadExhibition() {
         medium:''
     })
 
+// useEffect(()=>{
+//   const userr = auth.currentUser;
 
+// }, [])
 
     function handleChange(e){
         const { name, value } = e.target;
@@ -37,17 +40,6 @@ function UploadExhibition() {
       return await getDownloadURL(storageRef);
     })
   );
-
-
-  const userr = auth.currentUser;
-if (!userr) {
-  console.error("No user is signed in.");
-  
-} else{
-  console.log('auth!')
-}
-
- 
         await addDoc(collection(db, "exhibitions"), {
         ...exhibitionDetails,
         images: uploadedImageURLs,

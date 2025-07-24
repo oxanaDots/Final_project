@@ -38,7 +38,6 @@ function ExhibitionSubmission() {
       console.log('all pending exhibitions', pendingExhibitionsList)
       console.log('all accepted exhibitions', acceptedExhibitionsList)
       console.log(exhibitions)
-      // const startDate = Timestamp.fromDate(new Date('2025-07-14T12:30:00'))
      
       let startDate  
       if (allAcceptedExhibitionsSnapshot.size === 0){
@@ -54,8 +53,6 @@ function ExhibitionSubmission() {
         if (status === 'accepted'){
         await updateDoc(exhibitionDocRef, {
         status: status,
-        // startsAt:  Timestamp.fromDate(new Date(expireAt.toDate().getTime() - (24 * 7 * 60 * 60 * 1000))) ,
-        // expireAt: expireAt,  
          startsAt:  Timestamp.fromDate(new Date(startDate.toDate().getTime())),
         expireAt: expireAt,  
        })} else if (status === 'rejected'){

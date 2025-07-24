@@ -6,35 +6,27 @@ import services from '../services.json'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase.js"; 
+import { fetchData } from '../utilities/fetchData.js';
 
 function BusinessSignup() {
   const {handleSubmit, register, isSubmitting, watch, formState: {errors}} = useForm({shouldUseNativeValidation: false})
-  const [ businessFormData, setbusinessFormData] = useState({
-    firstName: '',
-    lastName:'',
-    businessName: '',
-    companyID:'',
-    email: '',
-    phoneNumber:'',
-    business_type:'',
-    location:'',
-    postcode:'',
-   
-  });   
+  
   const [signUpError, setSignUpError] = useState('')
   const navigate = useNavigate()
 
 
   async function onSubmit (data) {
-  const newData = {
+
+
+  try {
+    const enterprisesData = await fetchData()
+      const newData = {
     ...data,
     role: "business",
   };
 
-  console.log(businessFormData)
-  setbusinessFormData(newData);
+  
 
-  try {
       const userCredential = await createUserWithEmailAndPassword(
       auth,
       newData.email,
@@ -42,11 +34,10 @@ function BusinessSignup() {
     );
     const business = userCredential.user;
 
-    const res = await fetch('http://localhost:3000/api/enterprises')
-    const enterprisesData = await res.json()
-   console.log(enterprisesData)
+    
+     
 
-   const foundEnterprise = enterprisesData.filter(item => item.emailAdress === newData.email && item.companyID === newData.companyID)
+   const foundEnterprise = enterprisesData && enterprisesData.filter(item => item.emailAdress === newData.email && item.companyID === newData.companyID)
 
    if (foundEnterprise.length !== 0){
 
@@ -82,7 +73,7 @@ function BusinessSignup() {
 
 
     <div className=' flex  w-[40rem] justify-center items-center'>
-        <form className=' flex flex-col w-[90vw] items-left p-4 justify-center text-center '  onSubmit={handleSubmit(onSubmit)}>
+        <form data-testid="signupForm" className=' flex flex-col w-[90vw] items-left p-4 justify-center text-center '  onSubmit={handleSubmit(onSubmit)}>
               <legend className="text-xl text-center font-semibold mb-4">Create an Account</legend>
                  { signUpError.length > 0 && 
                 
@@ -224,7 +215,7 @@ function BusinessSignup() {
 
 
    
-        <button className='submit-btn'>{isSubmitting? "Checking your company details":'Submit'}</button>
+        <button type='submit' className='submit-btn'>{isSubmitting? "Checking your company details":'Submit'}</button>
       </form>
     </div>
     </div>
