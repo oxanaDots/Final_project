@@ -1,19 +1,24 @@
-import BusinessSignup from "../Business/BusinessSignUp";
-import { render, screen, waitFor, fireEvent } from "@testing-library/react";
+jest.mock('firebase/app', () => {
+  return {
+    auth: jest.fn(),
+  };
+});
+
+jest.mock("firebase/auth", () => ({
+  getAuth: () => ({}),
+  createUserWithEmailAndPassword: jest.fn().mockResolvedValue({ user: { uid: "123", email:'test@mail.com', password:'Password123' }}),
+}));
+
+
+jest.mock("../firebase.js");
+jest.mock("../utilities/fetchData", () => ({ fetchData: jest.fn() }));
+
+import "@testing-library/jest-dom";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
-
- 
-jest.mock('../firebase.js');
-// mock data returned by fetchData fucntion
-import { fetchData } from '../utilities/fetchData.js';
-jest.mock('../utilities/fetchData');
-
-  jest.mock('firebase/auth', () => ({
-  createUserWithEmailAndPassword: jest.fn(() =>
-    Promise.resolve({ user: { uid:'123', email:'test@mail.com', password:'Password123' } })
-  )
-}));
+import { fetchData } from "../utilities/fetchData";
+import BusinessSignup from "../Business/BusinessSignUp";
 
 
 async function fillInForm(){
@@ -91,10 +96,13 @@ it(' signUpError state change', async()=>{
 
       await fillInForm();
       await submit();
+     
       await waitFor(()=>{
-       
+        
+      const errorNode =  screen.findByTestId('signup-error');
        expect(fetchData).toHaveBeenCalled();
-       expect(screen.getByText(/No record of your company has been found/i)).toBeInTheDocument();
+      expect(errorNode).toHaveTextContent('No record of your company has been found. Try again.');
+
 
     })
 })

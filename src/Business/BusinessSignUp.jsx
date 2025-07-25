@@ -68,7 +68,7 @@ function BusinessSignup() {
               <legend className="text-xl text-center font-semibold mb-4">Create an Account</legend>
                  { signUpError.length !== 0 && 
                 
-                 <p className='text-red-500 flex my-4 justify-center rounded-md text-xs bg-red-50 border-red-400 self  text-center border py-4'>{signUpError}</p>
+                 <p data-testid="signup-error"  className='text-red-500 flex my-4 justify-center rounded-md text-xs bg-red-50 border-red-400 self  text-center border py-4'>{signUpError}</p>
                 
                  }
 
@@ -79,7 +79,7 @@ function BusinessSignup() {
                 placeholder="business name"
                 register={register}
                 validationRules={{
-                  required: "Enter your the name of your business",
+                  required: "Enter the name of your business",
                   validate: (value) =>
                     /^[a-zA-Z]+$/.test(value) || "Your input can only contain alpahbetic letters",
                 }}

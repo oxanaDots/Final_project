@@ -132,14 +132,27 @@ console.log(exhibitions)
   <div className='grid-cols-2'> 
    
     <div className='flex text-xs items-center align-middle  p-2 bg-white justify-between text-ternary-medium'>
-      <div className='cursor-pointer'>
-          <FontAwesomeIcon icon={faArrowLeft} onClick={()=> handleExhibitiob('prev')}/>
+      <div  
+      data-testid="prev"
+            onClick={()=> handleExhibitiob('prev')}
+            className='cursor-pointer'>
+          <FontAwesomeIcon icon={faArrowLeft} />
       </div>
-      <div className='cursor-pointer'>
-      <p className={`${index === 0 && 'underline-offset-2 underline text-ternary-dark'}  m-0`} onClick={()=> handleExhibitiob('current')}>current</p>
+
+
+      <div className='cursor-pointer'
+       data-testid="current"
+      onClick={()=> handleExhibitiob('current')}
+      >
+      <p className={`${index === 0 && 'underline-offset-2 underline text-ternary-dark'}  m-0`} >current</p>
       </div>
-      <div  className='cursor-pointer'>
-     <FontAwesomeIcon icon={faArrowRight} onClick={()=> handleExhibitiob('next')}/>
+
+
+      <div  className='cursor-pointer'
+      data-testid="next"
+        onClick={()=> handleExhibitiob('next')}
+      >
+     <FontAwesomeIcon icon={faArrowRight} />
       </div>
     </div>
           {exhibitions.length > 0 && <ExhibitionItem 
