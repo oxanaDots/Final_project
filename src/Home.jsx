@@ -143,12 +143,12 @@ console.log(exhibitions)
       </div>
     </div>
           {exhibitions.length > 0 && <ExhibitionItem 
-          artistName={exhibitions[index].artistFirstName + exhibitions[index].artistLastName}
-          title={exhibitions[index].title}
-          medium={exhibitions[index].medium}
-            descr={exhibitions[index].descr}
-            links={exhibitions[index].links}
-            date={index === 0 ? getDate(exhibitions[index].expireAt): getDate(exhibitions[index].startsAt)}
+          artistName={exhibitions[index]?.artistFirstName + exhibitions[index]?.artistLastName}
+          title={exhibitions[index]?.title}
+          medium={exhibitions[index]?.medium}
+            descr={exhibitions[index]?.descr}
+            links={exhibitions[index]?.links}
+            date={index === 0 ? getDate(exhibitions[index]?.expireAt): getDate(exhibitions[index]?.startsAt)}
             dateMessage={index ===0? 'Ends on': 'Starts on '}
     />}
   

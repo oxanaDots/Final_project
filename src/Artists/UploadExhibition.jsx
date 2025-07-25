@@ -1,11 +1,12 @@
 import React, {  useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import {db, storage, } from '../firebase'
+import {db, storage, auth } from '../firebase'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc} from "firebase/firestore";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+
 function UploadExhibition() {
   
     const {files, user,  uploadStatus, setUploadStatus} = useOutletContext()
@@ -18,8 +19,13 @@ function UploadExhibition() {
         medium:''
     })
 
-// useEffect(()=>{
-//   const userr = auth.currentUser;
+// useEffect(async ()=>{
+//   const fetchToken = async () => {
+//     await auth.currentUser.getIdToken(true);
+//     const tokenResult = await auth.currentUser.getIdTokenResult(true);
+//     console.log(tokenResult.claims);
+//   };
+//   fetchToken();
 
 // }, [])
 
@@ -31,15 +37,23 @@ function UploadExhibition() {
     async function handleUpload(){
  
   try{
-           
+   await auth.currentUser.getIdToken(true); 
+  const userToken = await auth.currentUser.getIdTokenResult(); 
+  console.log(userToken)
+  console.log(userToken.claims)
   setUploadStatus(true)
+
+
   const uploadedImageURLs = await Promise.all(
     files.map(async (file) => {
       const storageRef = ref(storage, `exhibitions/${Date.now()}-${file.name}`);
       await uploadBytes(storageRef, file);
+ 
       return await getDownloadURL(storageRef);
     })
   );
+
+
         await addDoc(collection(db, "exhibitions"), {
         ...exhibitionDetails,
         images: uploadedImageURLs,

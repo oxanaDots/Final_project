@@ -20,42 +20,33 @@ function BusinessSignup() {
 
   try {
     const enterprisesData = await fetchData()
-      const newData = {
-    ...data,
-    role: "business",
-  };
-
-  
-
+ 
       const userCredential = await createUserWithEmailAndPassword(
       auth,
-      newData.email,
-      newData.password
+      data.email,
+      data.password
     );
     const business = userCredential.user;
 
-    
-     
-
-   const foundEnterprise = enterprisesData && enterprisesData.filter(item => item.emailAdress === newData.email && item.companyID === newData.companyID)
+   const foundEnterprise = enterprisesData && enterprisesData.filter(item => item.email === data.email && item.companyID === data.companyID)
 
    if (foundEnterprise.length !== 0){
 
      await setDoc(doc(db, "businesses", business.uid), {
-       // this info will be stored on Firestore database
-       businessName: newData.businessName,
-       firstName: newData.firstName,
-       lastName: newData.lastName,
-       email: newData.email,
-       location: newData.location,
-       postcode: newData.postcode,
-       phoneNumber: newData.phoneNumber,
-       business_type: newData.business_type,
-       role: newData.role,
+       businessName: data.businessName,
+       firstName: data.firstName,
+       lastName: data.lastName,
+       email: data.email,
+       location: data.location,
+       postcode: data.postcode,
+       phoneNumber: data.phoneNumber,
+       business_type: data.business_type,
+       role: 'business',
        createdAt: new Date()
       });
       console.log("Business user created and stored in Firestore");
       navigate("/signin");
+      
     } else{
         setSignUpError('No record of your company has been found. Try again.')
     }
@@ -75,7 +66,7 @@ function BusinessSignup() {
     <div className=' flex  w-[40rem] justify-center items-center'>
         <form data-testid="signupForm" className=' flex flex-col w-[90vw] items-left p-4 justify-center text-center '  onSubmit={handleSubmit(onSubmit)}>
               <legend className="text-xl text-center font-semibold mb-4">Create an Account</legend>
-                 { signUpError.length > 0 && 
+                 { signUpError.length !== 0 && 
                 
                  <p className='text-red-500 flex my-4 justify-center rounded-md text-xs bg-red-50 border-red-400 self  text-center border py-4'>{signUpError}</p>
                 
