@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../Components/InputField';
 import { UserAuthContext } from './UserAuthContext';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { browserSessionPersistence, setPersistence, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 function SignIn() {
@@ -12,11 +12,15 @@ function SignIn() {
     const navigate = useNavigate()
     const onSubmit = async (data) => {
          try {
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      data.email,
-      data.password
-    );
+        
+        await setPersistence(auth, browserSessionPersistence)
+
+        const  userCredential = await signInWithEmailAndPassword(
+            auth,
+            data.email,
+            data.password
+          );
+         
     const user = userCredential.user;
 
     const artistDoc = await getDoc(doc(db, 'artists', user.uid));
@@ -65,7 +69,7 @@ function SignIn() {
                  default:
                    customMessage = err.message || "Signin failed.";
                   }
-                  await signOut(auth)
+                  
                   reset({ email: '', password: '' }, { keepErrors: true }); 
                   setError("firebase", {
                     type: "manual",

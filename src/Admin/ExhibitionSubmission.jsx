@@ -86,7 +86,7 @@ function ExhibitionSubmission() {
      medium={currentExhibition.medium}
      descr={currentExhibition.descr}/>
     <section className='grid grid-cols-2 justify-center   col-1 gap-4 px-6 '>
-    {currentExhibition.images.map((link, index)=> (
+    {currentExhibition.images && currentExhibition.images.map((link, index)=> (
             <div className='  aspect-square overflow-hidden  justify-center place-self-center rounded-sm border ' key={index}>
                 <img
                 className='object-cover w-full h-full border-ternary-medium'
@@ -96,7 +96,7 @@ function ExhibitionSubmission() {
         ))}
     </section>
     </div >
-    <div className='flex  justify-center items-center py-10 text-3xl'>
+    <div  data-testid="submission-outcome" className='flex  justify-center items-center py-10 text-3xl'>
         
     <button onClick={()=>reviewSubmission('accepted')} className=' text-green-600 flex'>
         <FontAwesomeIcon icon={faCheck}/>

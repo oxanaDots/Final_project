@@ -8,7 +8,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from '../firebase';
 import ExhibitionItem from '../Components/ExhibitionItem';
-// import { useMap } from 'https://cdn.esm.sh/react-leaflet/hooks'
 
 function ArtistDashboard() {
 
