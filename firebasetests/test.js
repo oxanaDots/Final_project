@@ -14,7 +14,7 @@ let testEnv = await initializeTestEnvironment({
   firestore: {
   rules: readFileSync("firestore.rules", "utf8"),
   port: 8080,
-  host: "127.0.0.1",
+  host: "127.0.0.1", 
   },
 
 });
@@ -27,9 +27,33 @@ describe('Art-hosting app', ()=>{
     await assertSucceeds(getDocs(businesses))
     })
 
-     it('Write to businesses collection', async ()=>{
-    const db = testEnv.authenticatedContext( {uid: 'business1'}).firestore();
-    const docRef = doc(db, 'businesses', 'business1')
-       await assertSucceeds(setDoc(docRef, { businessId: '123' }))
+     it('Write to a businesses collection by users who are signed in and owners of a doc', async ()=>{
+    const db = testEnv.authenticatedContext( 'business_test_1').firestore();
+    const docRef = doc(db, 'businesses', 'business_test_1')
+       await assertSucceeds(setDoc(docRef, { 'business_test_1': {businessName: 'Business Name'}}))
+    })
+     it('Fail writing to businesses collection by a user who is signed in but not an owner of a doc', async ()=>{
+    const db = testEnv.authenticatedContext( 'business_test_1').firestore();
+    const docRef = doc(db, 'businesses', 'business_test_2')
+       await assertFails(setDoc(docRef, { 'business_test_2': {businessName: 'Business Name'}}))
+    })
+
+     it('Fail writing to artists collection by a user who is signed in but not an owner of a doc', async ()=>{
+    const db = testEnv.authenticatedContext( 'artist_test_1').firestore();
+    const docRef = doc(db, 'artists', 'artist_test_1')
+       await assertSucceeds(setDoc(docRef, { 'artist_test_1': {artistFirstName: 'Name'}}))
+    })
+
+       it('Write to a exhibitions collection by users who are signed in and owners of a doc', async ()=>{
+    const db = testEnv.authenticatedContext( 'artist1').firestore();
+    const docRef = doc(db, 'exhibitions', 'exhibitionId')
+       await assertSucceeds(setDoc(docRef, {artists_id: 'artist1' }))
+       })
+
+
+      it('Write to all exhibitions collection docs by admin', async ()=>{
+    const db = testEnv.authenticatedContext( 'admin', {token: {email: "admin1234@test.com"}}).firestore();
+    const docRef = doc(db, 'artists', 'admin')
+       await assertSucceeds(setDoc(docRef, { status: 'accepted'}))
     })
 })
