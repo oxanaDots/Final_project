@@ -32,7 +32,7 @@ import {faArrowRight, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
       }
   }
  
-console.log(currentExhibition)
+console.log(exhibitions)
 
 const currentDay = Timestamp.fromDate(new Date());
 
@@ -48,6 +48,9 @@ const currentDay = Timestamp.fromDate(new Date());
   }
       helper()
  }, [])
+
+
+
 
   useEffect(() => {
    setLoading(true)
@@ -156,7 +159,7 @@ console.log(exhibitions)
       </div>
     </div>
           {exhibitions.length > 0 && <ExhibitionItem 
-          artistName={exhibitions[index]?.artistFirstName + exhibitions[index]?.artistLastName}
+          artistName={`${exhibitions[index]?.artistFirstName} ${exhibitions[index]?.artistLastName}`}
           title={exhibitions[index]?.title}
           medium={exhibitions[index]?.medium}
             descr={exhibitions[index]?.descr}

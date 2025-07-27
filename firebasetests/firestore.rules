@@ -16,7 +16,7 @@ service cloud.firestore {
     
     match /businesses/{userId} {
       allow write: if request.auth != null && request.auth.uid == userId;
-      allow read;
+      allow read: if true;
     }
 
     match /artists/{userId} {
