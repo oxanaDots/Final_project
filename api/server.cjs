@@ -5,7 +5,7 @@ const cors = require('cors');
 
 app.use(cors());
 
-const enterprises = require('./enterprises.json');
+const enterprises = require('../src/Business/enterprises.json');
 app.get('/api/enterprises', (req, res)=>{
     res.json(enterprises)
 })

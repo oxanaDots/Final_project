@@ -1,12 +1,13 @@
 {
+  "version": 2,
   "outputDirectory": "dist",
+  "builds": [
+    { "src": "api/server.js", "use": "@vercel/node" }
+  ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
-  ],
-   "builds": [
-    { "src": "api/index.js", "use": "@vercel/node" }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "api/index.js" }
+    // 1) Run the function for /api/*
+    { "source": "/api/(.*)",    "destination": "/api/server.js" },
+    // 2) Serve your SPA for _everything else_
+    { "source": "/(.*)",         "destination": "/" }
   ]
 }
