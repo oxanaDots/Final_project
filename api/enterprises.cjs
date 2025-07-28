@@ -1,15 +1,13 @@
-const express = require('express')
-const app = express()
-const PORT = 3000
-const cors = require('cors');
 
+const express = require('express');
+const cors    = require('cors');
+const data    = require('./enterprises.json'); // relative path
+
+const app = express();
 app.use(cors());
 
-const enterprises = require('/api/enterprises.json');
-app.get('/api/enterprises', (req, res)=>{
-    res.json(enterprises)
-})
+app.get('/', (req, res) => {
+  res.json(data);
+});
 
-
-
-module.exports = app; 
+module.exports = app;
