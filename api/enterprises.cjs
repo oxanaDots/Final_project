@@ -1,7 +1,7 @@
 
 const express = require('express');
 const cors    = require('cors');
-const data    = require('./enterprises.json'); // relative path
+const data    = require('./enterprises.json');
 
 const app = express();
 app.use(cors());
