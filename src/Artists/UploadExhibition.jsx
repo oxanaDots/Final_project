@@ -34,6 +34,7 @@ function UploadExhibition() {
          setExhibitionDetails(prev => ({ ...prev, [name]: value }));
     }
 
+    console.log(user.id)
     async function handleUpload(){
  
   try{
@@ -46,7 +47,7 @@ function UploadExhibition() {
 
   const uploadedImageURLs = await Promise.all(
     files.map(async (file) => {
-      const storageRef = ref(storage, `exhibitions/${Date.now()}-${file.name}`);
+      const storageRef = ref(storage, `exhibitions/${user.id}/${Date.now()}-${file.name}`);
       await uploadBytes(storageRef, file);
  
       return await getDownloadURL(storageRef);

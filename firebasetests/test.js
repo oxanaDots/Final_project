@@ -1,4 +1,5 @@
 import * as firebase from '@firebase/rules-unit-testing';
+import { notifyArtists, processSignUp } from '../functions';
 import { readFileSync } from 'fs';
 import {
   assertFails,
@@ -27,6 +28,8 @@ let testStorageEnv = await initializeTestEnvironment({
      }
 })
 
+const wrappedProcessSignUp =test.wrap(processSignUp)
+const snap = test.firestore.exampleDocumentSnapshot();
 
 
 describe('Art-hosting app', ()=>{
@@ -68,16 +71,39 @@ describe('Art-hosting app', ()=>{
 
        it('Write to exhibitions storage by authenticated (signed in) artists', async ()=>{
     const db = testStorageEnv.authenticatedContext('artist1', {artist: true}).storage();
-    const imageRef = ref(db, 'exhibitions/image1.jpg')
+    const imageRef = ref(db, 'exhibitions/artist1/image1.jpg')
    
        await assertSucceeds(uploadBytes(imageRef))
     })
 
-       it('Read exhibitions storage by authenticated (signed in) business users', async ()=>{
+       it('Read exhibitions storage by authenticated (signed in) enterprises', async ()=>{
     const db = testStorageEnv.authenticatedContext('business1', {business: true}).storage();
     const imageRef = ref(db, 'exhibitions/image1.jpg')
    
        await assertSucceeds(getDownloadURL(imageRef))
+    })
+
+        it('Read files in exhibitions storage by authenticated artists who own those files', async ()=>{
+    const db = testStorageEnv.authenticatedContext('artist1', {artist: true}).storage();
+    const imageRef = ref(db, 'exhibitions/artist1/image1.jpg')
+   
+       await assertSucceeds(getDownloadURL(imageRef))
+    })
+
+       it('Fail read exhibitions storage by unauthenticated users', async ()=>{
+    const db = testStorageEnv.unauthenticatedContext().storage();
+    const imageRef = ref(db, 'exhibitions/artist1/image1.jpg')
+   
+       await assertFails(getDownloadURL(imageRef))
+    })
+    it('Setting custom claim on user sign up', async()=>{
+        return wrappedProcessSignUp(snap).then(()=>{
+            admin.initializeApp()
+            return admin.database().ref('artists/artist1/role').once('artist').then((createdSnap)=>{
+            
+                assert.equal(createdSnap.val())
+            })
+        })
     })
 
 })

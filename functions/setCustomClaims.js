@@ -2,6 +2,8 @@
 import * as functions from 'firebase-functions';
 import { auth, db } from './firebase.js'
 import { getDatabase } from 'firebase-admin/database';
+
+
 export const processSignUp = functions.auth.user().onCreate(async (user) => {
 
   const enterpriseDoc = await db.collection('businesses').doc( user.uid).get()

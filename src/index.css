@@ -10,7 +10,10 @@ font-family: Verdana, Geneva, Tahoma, sans-serif;}
 .submit-btn{
     @apply  w-full py-3 px-6 mt-8 self-center rounded-full bg-violet-950 text-orange-50
 }
-
+@keyframes onAutoFillStart { to {} }
+input:-webkit-autofill {
+  animation-name: onAutoFillStart;
+}
 .save-btn{
   @apply  py-2 px-4 text-xs mt-8 self-center rounded-full bg-violet-950 text-orange-50
 }
