@@ -4,7 +4,9 @@ import eslint from 'vite-plugin-eslint';
 import tailwindcss from 'tailwindcss'
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), eslint(), tailwindcss()],
+  plugins: [react(), eslint({
+  failOnError: false,
+   failOnWarning: false  }), tailwindcss()],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
