@@ -42,17 +42,22 @@ const currentDay = Timestamp.fromDate(new Date());
  const expireDate = currentExhibition? currentExhibition.expireAt: null
 
  useEffect(()=>{
+  let isMounted = true
   async function helper(){
       const businessesData = await fetchBusinesses()
          setBusinesses( businessesData)
   }
       helper()
+      return()=>{
+        isMounted = false
+      }
  }, [])
 
 
 
 
   useEffect(() => {
+  let isMounted = true
    setLoading(true)
   
     async function helper(){
@@ -79,9 +84,10 @@ const currentDay = Timestamp.fromDate(new Date());
         setLoading(false)
       }
     }
-
-
     helper()
+     return()=>{
+        isMounted = false
+      }
   }, []);
 
 
@@ -89,6 +95,7 @@ const currentDay = Timestamp.fromDate(new Date());
 
 
   useEffect(()=>{
+  let isMounted = true
 
     async function helper(){
 
@@ -110,6 +117,9 @@ const currentDay = Timestamp.fromDate(new Date());
     }
 
     helper()
+     return()=>{
+        isMounted = false
+      }
   }, [currentExhibition])
 
 

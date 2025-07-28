@@ -29,8 +29,12 @@ function AdminDashboard() {
 
 
   useEffect(()=>{
-   
+     let isMounted = true
+
     fetchExhibition()
+    return()=>{
+      isMounted = false
+    }
   }, [])
 
   console.log(exhibitions)

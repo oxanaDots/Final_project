@@ -20,7 +20,7 @@ service cloud.firestore {
     }
 
     match /artists/{userId} {
-      allow read, write: ifrequest.auth != null && request.auth.uid == userId;
+      allow read, write: if request.auth != null && request.auth.uid == userId;
     }
     
      match /exhibitions/{exhibitionId} {

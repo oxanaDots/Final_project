@@ -53,7 +53,9 @@ describe('Art-hosting app', ()=>{
 
       it('Write to all exhibitions collection docs by admin', async ()=>{
     const db = testEnv.authenticatedContext( 'admin', {token: {email: "admin1234@test.com"}}).firestore();
-    const docRef = doc(db, 'artists', 'admin')
+    const docRef = doc(db, 'exhibitions', 'admin')
        await assertSucceeds(setDoc(docRef, { status: 'accepted'}))
     })
+
+    
 })
