@@ -5,9 +5,7 @@
     { "src": "api/server.js", "use": "@vercel/node" }
   ],
   "rewrites": [
-    // 1) Run the function for /api/*
     { "source": "/api/(.*)",    "destination": "/api/server.js" },
-    // 2) Serve your SPA for _everything else_
     { "source": "/(.*)",         "destination": "/" }
   ]
 }
