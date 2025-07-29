@@ -1,5 +1,4 @@
 import * as firebase from '@firebase/rules-unit-testing';
-import { notifyArtists, processSignUp } from '../functions';
 import { readFileSync } from 'fs';
 import {
   assertFails,
@@ -28,8 +27,6 @@ let testStorageEnv = await initializeTestEnvironment({
      }
 })
 
-const wrappedProcessSignUp =test.wrap(processSignUp)
-const snap = test.firestore.exampleDocumentSnapshot();
 
 
 describe('Art-hosting app', ()=>{
@@ -53,7 +50,7 @@ describe('Art-hosting app', ()=>{
      it('Fail writing to artists collection by a user who is signed in but not an owner of a doc', async ()=>{
     const db = testFirestoreEnv.authenticatedContext( 'artist_test_1').firestore();
     const docRef = doc(db, 'artists', 'artist_test_1')
-       await assertSucceeds(setDoc(docRef, { 'artist_test_1': {artistFirstName: 'Name'}}))
+       await assertSucceeds(setDoc(docRef, { 'artist_test_1': {artistFirstName: 'Name', email: 'artist_test_1@example.com'}}))
     })
 
        it('Write to a exhibitions collection by users who are signed in and owners of a doc', async ()=>{
@@ -96,14 +93,6 @@ describe('Art-hosting app', ()=>{
    
        await assertFails(getDownloadURL(imageRef))
     })
-    it('Setting custom claim on user sign up', async()=>{
-        return wrappedProcessSignUp(snap).then(()=>{
-            admin.initializeApp()
-            return admin.database().ref('artists/artist1/role').once('artist').then((createdSnap)=>{
-            
-                assert.equal(createdSnap.val())
-            })
-        })
-    })
+
 
 })

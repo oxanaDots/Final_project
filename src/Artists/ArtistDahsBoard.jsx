@@ -7,6 +7,8 @@ import { Outlet } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from '../firebase';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 import ExhibitionItem from '../Components/ExhibitionItem';
 
 function ArtistDashboard() {
@@ -18,8 +20,18 @@ function ArtistDashboard() {
 const {user} = UserAuthContext()
  const nav = useNavigate()
  const location = useLocation()
-
- const artists_dash = location.pathname === '/artist_dashboard'
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log('Current user:', user);
+    // if you just want the token claims:
+    user.getIdTokenResult().then(tokenResult => {
+      console.log('Custom claims:', tokenResult.claims);
+    });
+  } else {
+    console.log('No user is signed in');
+  }
+}); const artists_dash = location.pathname === '/artist_dashboard'
  useEffect(() => {
     async function getExhibition() {
       try{
