@@ -1,3 +1,4 @@
+import React from 'react';
 jest.mock("../firebase.js");
 jest.mock('firebase/firestore', () => ({
   getDocs: jest.fn(),

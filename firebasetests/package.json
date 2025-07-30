@@ -4,21 +4,26 @@
   "description": "unit testing for art-hosting",
   "license": "ISC",
   "author": "",
-  "type": "module",
-  "main": "test.js",
+  "main": "securityRules.test.mjs",
   "scripts": {
-    "test": "mocha --exit"
+    "test": "mocha \"*.test.mjs\" --exit",
+    "coverage": "nyc --reporter=lcov --reporter=text mocha \"*.test.mjs\""
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^5.0.0",
+    "@sinonjs/referee-sinon": "^12.0.0",
+    "@types/chai": "^5.2.2",
     "@types/sinon": "^17.0.4",
     "chai": "^5.2.1",
     "firebase-functions-test": "^3.4.1",
     "mocha": "^11.7.1",
+    "mochawesome": "^7.1.3",
     "mockery": "^2.1.0",
-    "nodemailer-mock": "^2.0.9"
+    "nodemailer-mock": "^2.0.9",
+    "nyc": "^17.1.0"
   },
   "dependencies": {
+    "@types/mockery": "^1.4.33",
     "sinon": "^21.0.0"
   }
 }

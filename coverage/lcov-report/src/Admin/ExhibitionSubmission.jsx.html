@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">21.05% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/38</span>
+                <span class='fraction'>8/38</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>2/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">22.22% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>2/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">20% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/35</span>
+                <span class='fraction'>7/35</span>
             </div>
         
             
@@ -190,12 +190,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -255,7 +255,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -307,13 +307,13 @@ import {  doc,collection, Timestamp, updateDoc, where, getDocs, query, orderBy  
 import { db } from '../firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faXmark, faCheck} from '@fortawesome/free-solid-svg-icons';
-function <span class="fstat-no" title="function not covered" >ExhibitionSubmission(</span>) {
-  const linkParams = <span class="cstat-no" title="statement not covered" >useMatch('/admin/exhibition_submission/:id');</span>
-  const currentId = <span class="cstat-no" title="statement not covered" >linkParams.params</span>
-  const {exhibitions} = <span class="cstat-no" title="statement not covered" >useOutletContext()</span>
-  const currentExhibition = <span class="cstat-no" title="statement not covered" >exhibitions.find(<span class="fstat-no" title="function not covered" >(i</span>tem)=&gt; <span class="cstat-no" title="statement not covered" >item.docId === currentId['id'])</span></span>
-   const [statusB, setstatus] = <span class="cstat-no" title="statement not covered" >useState(false)</span>
-  const navigate = <span class="cstat-no" title="statement not covered" >useNavigate()</span>
+function ExhibitionSubmission() {
+  const linkParams = useMatch('/admin/exhibition_submission/:id');
+  const currentId = linkParams.params
+  const {exhibitions} = useOutletContext()
+  const currentExhibition = exhibitions.find((item)=&gt; item.docId === currentId['id'])
+   const [statusB, setstatus] = useState(false)
+  const navigate = useNavigate()
 &nbsp;
 &nbsp;
    async function <span class="fstat-no" title="function not covered" >reviewSubmission(</span>status){
@@ -373,7 +373,7 @@ function <span class="fstat-no" title="function not covered" >ExhibitionSubmissi
 &nbsp;
    }
  
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;div className='grid justify-center py-8'&gt;
     {!statusB ? 
     &lt;&gt;
@@ -387,7 +387,7 @@ function <span class="fstat-no" title="function not covered" >ExhibitionSubmissi
      medium={currentExhibition.medium}
      descr={currentExhibition.descr}/&gt;
     &lt;section className='grid grid-cols-2 justify-center   col-1 gap-4 px-6 '&gt;
-    {currentExhibition.images.map(<span class="fstat-no" title="function not covered" >(l</span>ink, index)=&gt; (
+    {currentExhibition.images &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >currentExhibition.images.map(<span class="fstat-no" title="function not covered" >(l</span>ink, index)=&gt; (</span>
 <span class="cstat-no" title="statement not covered" >            &lt;div className='  aspect-square overflow-hidden  justify-center place-self-center rounded-sm border ' key={index}&gt;</span>
                 &lt;img
                 className='object-cover w-full h-full border-ternary-medium'
@@ -397,7 +397,7 @@ function <span class="fstat-no" title="function not covered" >ExhibitionSubmissi
         ))}
     &lt;/section&gt;
     &lt;/div &gt;
-    &lt;div className='flex  justify-center items-center py-10 text-3xl'&gt;
+    &lt;div  data-testid="submission-outcome" className='flex  justify-center items-center py-10 text-3xl'&gt;
         
     &lt;button onClick={<span class="fstat-no" title="function not covered" >()</span>=&gt;<span class="cstat-no" title="statement not covered" >reviewSubmission('accepted')}</span> className=' text-green-600 flex'&gt;
         &lt;FontAwesomeIcon icon={faCheck}/&gt;
@@ -407,7 +407,7 @@ function <span class="fstat-no" title="function not covered" >ExhibitionSubmissi
     &lt;/button&gt;
     &lt;/div&gt;
     &lt;/&gt;
-     : &lt;div className='bg-ternary-light px-8 py-6'&gt;
+     : <span class="branch-1 cbranch-no" title="branch not covered" >&lt;div className='bg-ternary-light px-8 py-6'&gt;</span>
         &lt;h2 className='py-6 text-ternary-dark font-semibold text-lg'&gt;Submission updated!&lt;/h2&gt;
         &lt;button onClick={<span class="fstat-no" title="function not covered" >()</span>=&gt; <span class="cstat-no" title="statement not covered" >navigate('/admin')}</span> className='submit-btn'&gt;Return to my dashboard&lt;/button&gt;
      &lt;/div&gt;
@@ -424,7 +424,7 @@ export default ExhibitionSubmission;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-23T15:40:57.851Z
+                at 2025-07-30T19:16:20.072Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

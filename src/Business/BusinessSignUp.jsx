@@ -74,7 +74,7 @@ function BusinessSignup() {
       }}
         data-testid="signupForm" className=' flex flex-col w-[90vw] items-left p-4 justify-center text-center '  onSubmit={handleSubmit(onSubmit)}>
               <legend className="text-xl text-center font-semibold mb-4">Create an Account</legend>
-                 { signUpError.length !== 0 && 
+                 { signUpError.length > 0 &&
                 
                  <p data-testid="signup-error"  className='text-red-500 flex my-4 justify-center rounded-md text-xs bg-red-50 border-red-400 self  text-center border py-4'>{signUpError}</p>
                 

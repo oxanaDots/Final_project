@@ -9,7 +9,7 @@ const assert = require('assert');
 
 const test = require('firebase-functions-test')({
   projectId: 'art-hosting',
-}, './service-account-key.json');
+});
 
 //dependencies for email noitfication
 const nodemailermock = require('nodemailer-mock');
@@ -92,4 +92,3 @@ let myFunctions
    
   
 })
-

@@ -36,9 +36,6 @@ console.log(exhibitions)
 
 const currentDay = Timestamp.fromDate(new Date());
 
-// const expireFormatted = getDate(currentExhibition?.expireAt)
-
-
  const expireDate = currentExhibition? currentExhibition.expireAt: null
 
  useEffect(()=>{
@@ -73,7 +70,7 @@ const currentDay = Timestamp.fromDate(new Date());
           
           const currentExhibitionSnapShot = await getDocs(querry)
           const currentExhibition = currentExhibitionSnapShot.docs.map(doc => ({...doc.data(), docId: doc.id}))
-        
+        console.log(currentExhibition)
           setCurrentExhibition(currentExhibition[0])
            setExhibitions([currentExhibition[0]])
 

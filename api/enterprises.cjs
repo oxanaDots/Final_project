@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const PORT = 3000
+const PORT = 3001
 const cors = require('cors');
 
 app.use(cors());
@@ -11,7 +11,7 @@ app.get('/api/enterprises', (req, res)=>{
 })
 
 
-app.listen(PORT, () => console.log("Server ready on port 3000."));
+app.listen(PORT, () => console.log(`Server ready on port ${PORT}.`));
 
 module.exports = app; // api/enterprises.js
 // import data from './enterprises.json';

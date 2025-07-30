@@ -1,0 +1,24 @@
+{
+  "name": "cloudfucntionstest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha \"*.test.cjs\" --exit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@babel/register": "^7.27.1",
+    "@types/chai": "^5.2.2",
+    "@types/mockery": "^1.4.33",
+    "chai": "^5.2.1",
+    "firebase-functions-test": "^3.4.1",
+    "mocha": "^11.7.1",
+    "mockery": "^2.1.0",
+    "nodemailer-mock": "^2.0.9",
+    "nyc": "^17.1.0"
+  }
+}

@@ -1,25 +1,30 @@
+import React from 'react';
 jest.mock('firebase/app', () => {
   return {
     auth: jest.fn(),
+    currentUser:{
+   email: "test@mail.com",
+   uid: "123"
+    }
   };
 });
 
-jest.mock("firebase/auth", () => ({
-  getAuth: () => ({}),
-  createUserWithEmailAndPassword: jest.fn().mockResolvedValue({ user: { uid: "123", email:'test@mail.com', password:'Password123' }}),
-}));
+
 
 
 jest.mock("../firebase.js");
 jest.mock("../utilities/fetchData", () => ({ fetchData: jest.fn() }));
-
+jest.mock("firebase/auth", () => ({
+  getAuth: jest.fn(),
+  createUserWithEmailAndPassword: jest.fn()
+}));
 import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { fetchData } from "../utilities/fetchData";
 import BusinessSignup from "../Business/BusinessSignUp";
-
+import * as firebaseAuth from "firebase/auth";
 
 async function fillInForm(){
    await userEvent.type(screen.getByPlaceholderText(/business name/i), "test");
@@ -41,6 +46,19 @@ async function submit(){
 
 }
 describe('Sign up form for enterprises', ()=>{
+  beforeEach(()=>{
+ 
+    firebaseAuth.createUserWithEmailAndPassword.mockResolvedValue({
+      user: {
+        uid:   "123",
+        email: "test@mail.com"
+      }
+    });
+  })
+
+   afterEach(() => {
+    jest.restoreAllMocks();
+  });
     
     it('form fields', async ()=>{
     render(
@@ -90,20 +108,20 @@ it(' signUpError state change', async()=>{
  
      render(
     <MemoryRouter>
-      <BusinessSignup />
+      <BusinessSignup/>
     </MemoryRouter>);
     
 
       await fillInForm();
       await submit();
      
-      await waitFor(()=>{
+      await waitFor(async ()=>{
         
-      const errorNode =  screen.findByTestId('signup-error');
+      const error =  await screen.findByTestId('signup-error');
        expect(fetchData).toHaveBeenCalled();
-      expect(errorNode).toHaveTextContent('No record of your company has been found. Try again.');
-
+       
+       expect(error).toHaveTextContent('No record of your company has been found. Try again.');
 
     })
-})
+  })
 })

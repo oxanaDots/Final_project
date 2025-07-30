@@ -1,15 +1,15 @@
-import * as firebase from '@firebase/rules-unit-testing';
+
 import { readFileSync } from 'fs';
-import {
-  assertFails,
-  assertSucceeds,
-  initializeTestEnvironment
-} from "@firebase/rules-unit-testing"
+
+import { assertFails, assertSucceeds, initializeTestEnvironment } from '@firebase/rules-unit-testing';
+
 import { getDoc, doc, getDocs, collection, setDoc } from 'firebase/firestore';
-import { getStorage, ref, deleteObject, uploadBytes, getDownloadURL } from 'firebase/storage';
+
+import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
 
 
-let testFirestoreEnv = await initializeTestEnvironment({
+
+let testFirestoreEnv= await initializeTestEnvironment({
   projectId: "art-hosting",
   firestore: {
   rules: readFileSync("firestore.rules", "utf8"),
