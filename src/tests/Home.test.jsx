@@ -3,11 +3,15 @@ import '@testing-library/jest-dom'
 
 jest.mock('../firebase.js')
 
-jest.mock('../utilities/fetchBusinesses', () => ({
+jest.mock('../utilities/fetchBusinesses.js', () => ({
   fetchBusinesses: jest.fn().mockResolvedValue([
     { businessName: 'TestBusiness1',  }
   ]),
-  fetchUpcomingExhibitions: jest.fn().mockResolvedValue([
+}))
+
+jest.mock('../utilities/fetchUpcomingExhibitions.js', ()=>({
+   fetchUpcomingExhibitions: jest.fn().mockResolvedValue([
+   
   ]),
 }))
 
@@ -20,43 +24,26 @@ jest.mock('firebase/firestore', () => ({
 }))
 
 
-
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { fetchBusinesses, fetchUpcomingExhibitions } from '../utilities/fetchBusinesses'
+import { fetchBusinesses } from '../utilities/fetchBusinesses'
+import { fetchUpcomingExhibitions } from '../utilities/fetchUpcomingExhibitions';
 import Home from '../Home'
-import * as firestore from 'firebase/firestore'
+
+
+
 
 describe('Home Screen', () => {
 
-    const currentEx = {
-    title: 'TestOne',
-   
-  }
-  const upcomingExs = [
-   
-     {
-      title: 'TestTwo',
-    },
-    {
-      title: 'TestThree',
-     
-    },
-  ]
    beforeEach(() => {
 
     fetchBusinesses.mockResolvedValue([
       { businessName: 'TestBusiness1' }
     ])
 
-firestore.getDocs.mockResolvedValue({
-  docs: [
-    { id: currentEx.docId, data: () => currentEx }
-  ]
-})
-
-
- fetchUpcomingExhibitions.mockResolvedValue(upcomingExs)
+ fetchUpcomingExhibitions.mockResolvedValue(
+  [{title: 'TestTwo',}, { title: 'TestThree'}]
+ )
 })
 
 
@@ -74,15 +61,17 @@ firestore.getDocs.mockResolvedValue({
     expect(await screen.findByText('TestBusiness1')).toBeInTheDocument()
     expect(await screen.findByText('TestOne')).toBeInTheDocument()
 
-  await waitFor(() =>
-  expect(fetchUpcomingExhibitions).toHaveBeenCalled(),
+    await waitFor(() =>
+    expect(fetchUpcomingExhibitions).toHaveBeenCalled(),
 );
-fireEvent.click(screen.getByTestId('next'))
-await expect(screen.getByText('TestTwo')).toBeInTheDocument()
-fireEvent.click(screen.getByTestId('prev'))
-expect(await screen.findByText('TestOne')).toBeInTheDocument()
-fireEvent.click(screen.getByTestId('current'))
-expect(await screen.findByText('TestOne')).toBeInTheDocument()
+
+
+    fireEvent.click(screen.getByTestId('next'))
+    await expect(screen.getByText('TestTwo')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('prev'))
+    expect(await screen.findByText('TestOne')).toBeInTheDocument()
+    fireEvent.click(screen.getByTestId('current'))
+    expect(await screen.findByText('TestOne')).toBeInTheDocument()
 
   })
 })

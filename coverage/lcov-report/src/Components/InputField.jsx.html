@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">63.63% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/11</span>
+                <span class='fraction'>0/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -108,21 +108,9 @@
 <a name='L43'></a><a href='#L43'>43</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">88x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">80x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -134,9 +122,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">252x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -150,21 +150,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
 &nbsp;
 &nbsp;
-const InputField= ({ name, placeholder, onChange,  type = "text", register, validationRules, error, options }) =&gt; {
+const InputField= <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> name, placeholder, onChange,  type = <span class="branch-0 cbranch-no" title="branch not covered" >"text",</span> register, validationRules, error, options }) =&gt; {</span>
 &nbsp;
-  return (
+<span class="cstat-no" title="statement not covered" >  return (</span>
     &lt;div className="flex w-full  flex-col mb-4 "&gt;
         {type === 'select'?(
               &lt;select
               {...register(name, validationRules)}
             
               className={`w-full rounded-[0.3rem] px-3 text-sm py-[0.7rem] bg-zinc-100 outline-blue-600 ${
-                error ? <span class="branch-0 cbranch-no" title="branch not covered" >"border border-red-600 outline-red-600" </span>: ""
+                error ? "border border-red-600 outline-red-600" : ""
               }`}
             &gt;
               &lt;option className='text-ternary-medium' value=""&gt;select a your business category&lt;/option&gt;
-              {options?.map((opt, idx) =&gt; (
-                &lt;option key={idx} value={opt.category}&gt;
+              {options?.map(<span class="fstat-no" title="function not covered" >(o</span>pt, idx) =&gt; (
+<span class="cstat-no" title="statement not covered" >                &lt;option key={idx} value={opt.category}&gt;</span>
                   {opt.category}
                 &lt;/option&gt;
               ))}
@@ -175,15 +175,15 @@ const InputField= ({ name, placeholder, onChange,  type = "text", register, vali
     
        
         className={`w-full flex rounded-[0.3rem] px-3 text-sm py-[0.7rem] bg-zinc-100 outline-blue-600 focus:ring-red-500
-           ${error ? <span class="branch-0 cbranch-no" title="branch not covered" >"border border-red-600 outline-red-600 focus:ring-red-500" </span>: ""}`}
+           ${error ? "border border-red-600 outline-red-600 focus:ring-red-500" : ""}`}
         {...register(name, validationRules)}
-         onChange={(e) =&gt; {
-            <span class="missing-if-branch" title="if path not taken" >I</span>if (onChange) <span class="cstat-no" title="statement not covered" >onChange(e); </span>// call your prop
+         onChange={<span class="fstat-no" title="function not covered" >(e</span>) =&gt; {
+<span class="cstat-no" title="statement not covered" >            if (onChange) <span class="cstat-no" title="statement not covered" >onChange(e); </span></span>// call your prop
           }}
         
       /&gt; }
      
-      {error &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;p className="text-xs text-red-600 py-1 px-3  text-left"&gt;{error.message}&lt;/p&gt;}</span>
+      {error &amp;&amp; &lt;p className="text-xs text-red-600 py-1 px-3  text-left"&gt;{error.message}&lt;/p&gt;}
     &lt;/div&gt;
   );
 };
@@ -196,7 +196,7 @@ export default InputField;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-30T19:10:06.680Z
+                at 2025-07-31T01:31:16.999Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

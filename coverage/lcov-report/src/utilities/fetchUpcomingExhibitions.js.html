@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/utilities/getDate.js</title>
+    <title>Code coverage report for src/utilities/fetchUpcomingExhibitions.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,20 +19,20 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/utilities</a> getDate.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/utilities</a> fetchUpcomingExhibitions.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>0/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
@@ -83,13 +83,12 @@
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
 <a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a>
-<a name='L24'></a><a href='#L24'>24</a>
-<a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L21'></a><a href='#L21'>21</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -98,49 +97,32 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"> export function <span class="fstat-no" title="function not covered" >getDate(</span>timestamp){
-  const options =<span class="cstat-no" title="statement not covered" >{</span>
-  month:'long',
-  day: 'numeric',
-  year: 'numeric'
-  
-}
-const expireObj = <span class="cstat-no" title="statement not covered" >timestamp</span>
-const ts = <span class="cstat-no" title="statement not covered" >(expireObj?.seconds + expireObj?.nanoseconds/1000000000)*1000;</span>
-const expire = <span class="cstat-no" title="statement not covered" >new Date(ts).toLocaleString("en-GB", options)</span>
-<span class="cstat-no" title="statement not covered" >if (timestamp){</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"> import { getDocs, collection, query, where, orderBy} from "firebase/firestore";
+ import { db } from "../firebase";
+export async function  <span class="fstat-no" title="function not covered" >fetchUpcomingExhibitions(</span>expireDate){
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return expire</span>
-}
+<span class="cstat-no" title="statement not covered" >    try{</span>
 &nbsp;
+         const querry = <span class="cstat-no" title="statement not covered" >query(</span>
+        collection(db, 'exhibitions'),
+        where('startsAt', '&gt;=', expireDate),
+        where('status', '==', 'accepted'),
+        orderBy('createdAt'))
 &nbsp;
+         const acceptedExhibitionsSnap = <span class="cstat-no" title="statement not covered" >await getDocs(querry)</span>
+        const acceptedExhibitions = <span class="cstat-no" title="statement not covered" >acceptedExhibitionsSnap.docs.map(<span class="fstat-no" title="function not covered" >do</span>c =&gt; (<span class="cstat-no" title="statement not covered" >{...doc.data(), docId: doc.id})</span>)</span>
 &nbsp;
- }
+<span class="cstat-no" title="statement not covered" >        return acceptedExhibitions</span>
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >getFirebaseTimestamp(</span>data){
-const expireObj = <span class="cstat-no" title="statement not covered" >data?.expireAt</span>
-const ts = <span class="cstat-no" title="statement not covered" >(expireObj?.seconds + expireObj?.nanoseconds/1000000000)*1000;</span>
-<span class="cstat-no" title="statement not covered" >if (data){</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >    return ts</span>
-}
+    } catch (err){
+<span class="cstat-no" title="statement not covered" >  console.error(err)</span>
+    }
 }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -148,7 +130,7 @@ const ts = <span class="cstat-no" title="statement not covered" >(expireObj?.sec
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-31T01:31:16.999Z
+                at 2025-07-31T02:25:21.225Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

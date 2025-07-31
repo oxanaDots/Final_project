@@ -8,8 +8,8 @@ import {  useEffect, useState } from 'react';
 import {getDate} from './utilities/getDate.js'
 import { 
   fetchBusinesses, 
-  fetchUpcomingExhibitions
 }from './utilities/fetchBusinesses.js';
+import { fetchUpcomingExhibitions } from './utilities/fetchUpcomingExhibitions.js';
 import Spiner from './Components/Spiner.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faArrowRight, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
