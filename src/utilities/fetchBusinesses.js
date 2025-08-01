@@ -8,13 +8,17 @@
           collection(db, 'businesses'),
           where('currentlyDisplaying', '==', true)
         )
+         const myMap = new Map()
         const snapshot = await getDocs(querry);
+
         const data = snapshot.docs.map(doc => ({
           businessId: doc.id,
           ...doc.data(),
         }));
+            data.forEach(item=> myMap.set(item.geoLocation, item))
+             return myMap
+    
 
-        return data
       } catch (error) {
         console.error( error);
       }

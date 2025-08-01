@@ -11,8 +11,7 @@ import Spiner from './Components/Spiner.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faArrowRight, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import orderByDistance from 'geolib/es/orderByDistance';
-import getDistance from 'geolib/es/getDistance';
-import { geoCode } from './utilities/geoCode.js';
+
 
 
 // const address = '47 Addison road, BR2 9RS'
@@ -20,6 +19,7 @@ import { geoCode } from './utilities/geoCode.js';
 // console.log(convert)
  function Home() {
   const [businesses,  setBusinesses] = useState([]);
+  const [sortedBusinesses, setSortedBusinesses] = useState([])
   const [exhibitions, setExhibitions] = useState([])
   const [currentExhibition, setCurrentExhibition] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -27,33 +27,37 @@ import { geoCode } from './utilities/geoCode.js';
 const [userLocation, setUserLocation] = useState({})
 
 
-const businessss = [
-{id:'123', geoLocation: {latitude: 51.3937849, longitude: 0.0332362}}, 
-{id:'124', geoLocation: {latitude: 51.3937208, longitude: 0.0331184}},
-{id:'125', geoLocation: {latitude:51.420226, longitude: -0.09189309999999999}},
-]
-const mappedGeos = businesses.map((item, i) => item.geoLocation)
-console.log(mappedGeos)
-function sortLocations(){
-  const orderred = orderByDistance(userLocation, mappedGeos)
-  return orderred
-}
-console.log(businesses)
-console.log(sortLocations())
+const docs = [...businesses.values()]
 
-// get user's current location in latlong
+// get user's current location in latlong and show busiensses closest to user's location
+useEffect(()=>{
+ navigator.geolocation.getCurrentPosition(res=>{
+       setUserLocation({latitude:res.coords.latitude, longitude: res.coords.longitude })})
+      }, [])
+      console.log(userLocation)
+
+
+
   useEffect(()=>{
-  
-    async function helper(){
-       navigator.geolocation.getCurrentPosition(res=>{
-       setUserLocation({latitude:res.coords.latitude, longitude: res.coords.longitude })
 
-    })
+     function helper(){
+       if (userLocation && businesses){
+        const mappedGeos = docs.map((item, i) => item.geoLocation)
+       const orderedLocations = orderByDistance(userLocation, mappedGeos)
+console.log(orderedLocations)
+            const arr = []
+           for (const obj of orderedLocations){
+            arr.push(businesses.get(obj))
+             }
+              setSortedBusinesses(arr)
+        } else{
+          setBusinesses(docs)
+        }
     }
      helper()
-    }, [])
+    }, [userLocation, businesses])
   
-    console.log(userLocation)
+    console.log(sortedBusinesses)
 
 
   function handleExhibitiob(direction){
@@ -203,7 +207,7 @@ console.log(sortLocations())
 <div className='text-xs'>
     <h2 className='text-sm font-semibold pb-4'>Currently exhibited at:</h2>
     <div className='overflow-y-scroll h-[25rem]'>
-    {businesses.map(item=> (
+    {sortedBusinesses.map(item=> (
       <div className='text-xs flex justify-between bg-white px-2 py-2 my-2'>
      <h2 className='text-xs'>{item.businessName}</h2>
     <h2 className='text-xs'> 0.5 miles</h2>
