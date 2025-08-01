@@ -2,25 +2,59 @@ import React from 'react';
 import NavMenu from './NavMenu';
 import ExhibitionItem from './Components/ExhibitionItem';
 import { NavLink } from 'react-router-dom';
-import { getDocs, collection, query, Timestamp, where } from "firebase/firestore";
-import {  db } from "./firebase.js"; 
 import {  useEffect, useState } from 'react';
 import {getDate} from './utilities/getDate.js'
-import { 
-  fetchBusinesses, 
-}from './utilities/fetchBusinesses.js';
+import { fetchBusinesses}from './utilities/fetchBusinesses.js';
+import { fetchCurrentExhibition } from './utilities/getchCurrentExhibition.js';
 import { fetchUpcomingExhibitions } from './utilities/fetchUpcomingExhibitions.js';
 import Spiner from './Components/Spiner.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faArrowRight, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+import orderByDistance from 'geolib/es/orderByDistance';
+import getDistance from 'geolib/es/getDistance';
+import { geoCode } from './utilities/geoCode.js';
 
 
+// const address = '47 Addison road, BR2 9RS'
+// const convert = await geoCode(address)
+// console.log(convert)
  function Home() {
   const [businesses,  setBusinesses] = useState([]);
   const [exhibitions, setExhibitions] = useState([])
   const [currentExhibition, setCurrentExhibition] = useState(null)
   const [loading, setLoading] = useState(false)
   const [index, setIndex] = useState(0)
+const [userLocation, setUserLocation] = useState({})
+
+
+const businessss = [
+{id:'123', geoLocation: {latitude: 51.3937849, longitude: 0.0332362}}, 
+{id:'124', geoLocation: {latitude: 51.3937208, longitude: 0.0331184}},
+{id:'125', geoLocation: {latitude:51.420226, longitude: -0.09189309999999999}},
+]
+const mappedGeos = businesses.map((item, i) => item.geoLocation)
+console.log(mappedGeos)
+function sortLocations(){
+  const orderred = orderByDistance(userLocation, mappedGeos)
+  return orderred
+}
+console.log(businesses)
+console.log(sortLocations())
+
+// get user's current location in latlong
+  useEffect(()=>{
+  
+    async function helper(){
+       navigator.geolocation.getCurrentPosition(res=>{
+       setUserLocation({latitude:res.coords.latitude, longitude: res.coords.longitude })
+
+    })
+    }
+     helper()
+    }, [])
+  
+    console.log(userLocation)
+
 
   function handleExhibitiob(direction){
       if (direction === 'next'){
@@ -32,9 +66,8 @@ import {faArrowRight, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
       }
   }
  
-console.log(exhibitions)
 
-const currentDay = Timestamp.fromDate(new Date());
+
 
  const expireDate = currentExhibition? currentExhibition.expireAt: null
 
@@ -61,18 +94,9 @@ const currentDay = Timestamp.fromDate(new Date());
       
       try{
     
-         
-        const querry = query(
-          collection(db, 'exhibitions'),
-          where('startsAt', '<=', currentDay),
-          where ('status', '==', 'accepted'),
-          where('expireAt', '>', currentDay))
-          
-          const currentExhibitionSnapShot = await getDocs(querry)
-          const currentExhibition = currentExhibitionSnapShot.docs.map(doc => ({...doc.data(), docId: doc.id}))
-        console.log(currentExhibition)
+         const currentExhibition = await fetchCurrentExhibition()
           setCurrentExhibition(currentExhibition[0])
-           setExhibitions([currentExhibition[0]])
+          setExhibitions([currentExhibition[0]])
 
        
       }catch(err){
@@ -120,7 +144,7 @@ const currentDay = Timestamp.fromDate(new Date());
   }, [currentExhibition])
 
 
-console.log(exhibitions)
+
 
  return (
    <div className='m-0'>
@@ -174,12 +198,10 @@ console.log(exhibitions)
             date={index === 0 ? getDate(exhibitions[index]?.expireAt): getDate(exhibitions[index]?.startsAt)}
             dateMessage={index ===0? 'Ends on': 'Starts on '}
     />}
-  
- 
   </div>
 
 <div className='text-xs'>
-    <h2 className='text-sm font-semibold pb-4'>Art Hosts in your area:</h2>
+    <h2 className='text-sm font-semibold pb-4'>Currently exhibited at:</h2>
     <div className='overflow-y-scroll h-[25rem]'>
     {businesses.map(item=> (
       <div className='text-xs flex justify-between bg-white px-2 py-2 my-2'>
@@ -188,24 +210,9 @@ console.log(exhibitions)
     </div>
  ) )}
   </div> 
-   
-
- 
      </div> 
-
-
    </section>
-
-
- 
-
-
-   
-
    </div>
- 
-   
-
   }
   </div>
   );

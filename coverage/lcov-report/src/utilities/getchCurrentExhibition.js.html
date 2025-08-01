@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/utilities/fetchBusinesses.js</title>
+    <title>Code coverage report for src/utilities/getchCurrentExhibition.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/utilities</a> fetchBusinesses.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/utilities</a> getchCurrentExhibition.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -79,19 +79,7 @@
 <a name='L14'></a><a href='#L14'>14</a>
 <a name='L15'></a><a href='#L15'>15</a>
 <a name='L16'></a><a href='#L16'>16</a>
-<a name='L17'></a><a href='#L17'>17</a>
-<a name='L18'></a><a href='#L18'>18</a>
-<a name='L19'></a><a href='#L19'>19</a>
-<a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L17'></a><a href='#L17'>17</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -101,35 +89,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"> 
- import { getDocs, collection, query, where, orderBy} from "firebase/firestore";
- import { db } from "../firebase";
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { getDocs, collection, query, Timestamp, where } from "firebase/firestore";
+import { db } from "../firebase";
 &nbsp;
- export async function <span class="fstat-no" title="function not covered" >fetchBusinesses </span>() {
-<span class="cstat-no" title="statement not covered" >      try {</span>
-        const querry = <span class="cstat-no" title="statement not covered" >query(</span>
-          collection(db, 'businesses'),
-          where('currentlyDisplaying', '==', true)
-        )
-        const snapshot = <span class="cstat-no" title="statement not covered" >await getDocs(querry);</span>
-        const data = <span class="cstat-no" title="statement not covered" >snapshot.docs.map(<span class="fstat-no" title="function not covered" >do</span>c =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
-          businessId: doc.id,
-          ...doc.data(),
-        }));
+export async function <span class="fstat-no" title="function not covered" >fetchCurrentExhibition(</span>){
+    const currentDay = <span class="cstat-no" title="statement not covered" >Timestamp.fromDate(new Date());</span>
+ const querry = <span class="cstat-no" title="statement not covered" >query(</span>
+          collection(db, 'exhibitions'),
+          where('startsAt', '&lt;=', currentDay),
+          where ('status', '==', 'accepted'),
+          where('expireAt', '&gt;', currentDay))
+          
+          const currentExhibitionSnapShot = <span class="cstat-no" title="statement not covered" >await getDocs(querry)</span>
+<span class="cstat-no" title="statement not covered" >          console.log(currentExhibitionSnapShot)</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        return data</span>
-      } catch (error) {
-<span class="cstat-no" title="statement not covered" >        console.error( error);</span>
-      }
-    };
-&nbsp;
-&nbsp;</pre></td></tr></table></pre>
+          const currentExhibition = <span class="cstat-no" title="statement not covered" >currentExhibitionSnapShot.docs.map(<span class="fstat-no" title="function not covered" >do</span>c =&gt; (<span class="cstat-no" title="statement not covered" >{...doc.data(), docId: doc.id})</span>)</span>
+<span class="cstat-no" title="statement not covered" >          return currentExhibition</span>
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

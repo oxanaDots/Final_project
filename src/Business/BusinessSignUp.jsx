@@ -7,7 +7,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase.js"; 
 import { fetchData } from '../utilities/fetchData.js';
-
+import { geoCode } from '../utilities/geoCode.js';
 function BusinessSignup() {
   const {handleSubmit, register, isSubmitting, watch, formState: {errors}} = useForm({shouldUseNativeValidation: false})
   
@@ -19,7 +19,7 @@ function BusinessSignup() {
 
 
   try {
-    const enterprisesData = await fetchData()
+    const enterprisesData = await fetchData('http://localhost:3001/api/enterprises')
  
       const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -32,6 +32,7 @@ function BusinessSignup() {
 
    if (foundEnterprise.length !== 0){
 
+    const geoCodedLoc = await geoCode(`${data.location}, ${data.postcode}`)
      await setDoc(doc(db, "businesses", business.uid), {
        businessName: data.businessName,
        firstName: data.firstName,
@@ -40,6 +41,7 @@ function BusinessSignup() {
        location: data.location,
        postcode: data.postcode,
        phoneNumber: data.phoneNumber,
+       geoLocation: geoCodedLoc && geoCodedLoc,
        business_type: data.business_type,
        role: 'business',
        createdAt: new Date()

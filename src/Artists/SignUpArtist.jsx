@@ -18,7 +18,7 @@ const [links, setLinks] = useState([])
     const {handleSubmit, register, watch, formState: {errors}} = useForm({shouldUseNativeValidation: false})
 
     async function onSubmit(data){
-           const linksArray = links.length > 0 && links
+         const linksArray = links.length > 0 && links
         .split(',')
         .map(link => link.trim())
         .filter(link => link !== '');

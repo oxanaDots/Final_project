@@ -4,7 +4,11 @@
 
  export async function fetchBusinesses () {
       try {
-        const snapshot = await getDocs(collection(db, "businesses"));
+        const querry = query(
+          collection(db, 'businesses'),
+          where('currentlyDisplaying', '==', true)
+        )
+        const snapshot = await getDocs(querry);
         const data = snapshot.docs.map(doc => ({
           businessId: doc.id,
           ...doc.data(),

@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 
 import { assertFails, assertSucceeds, initializeTestEnvironment } from '@firebase/rules-unit-testing';
 
-import { getDoc, doc, getDocs, collection, setDoc } from 'firebase/firestore';
+import { getDocs, collection } from 'firebase/firestore';
 
 
 
@@ -24,15 +24,13 @@ let testFirestoreEnv
 
        })
           it('Read exhibitions collection', async ()=>{
+            
           const db = testFirestoreEnv.unauthenticatedContext().firestore()
            const exhibitions = collection(db, 'exhibitions');
       
            const snapshot = await assertSucceeds(getDocs(exhibitions))
+         
            return snapshot.docs
-      
           })
-    
-
-    
 
         })

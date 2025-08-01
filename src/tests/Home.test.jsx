@@ -3,9 +3,24 @@ import '@testing-library/jest-dom'
 
 jest.mock('../firebase.js')
 
+
+
+jest.mock('firebase/firestore', () => ({
+  getDocs: jest.fn(),
+  collection: jest.fn(),
+  query:  jest.fn(),
+  where:  jest.fn(),
+  Timestamp: {fromDate: () => ({}) },
+}))
 jest.mock('../utilities/fetchBusinesses.js', () => ({
   fetchBusinesses: jest.fn().mockResolvedValue([
     { businessName: 'TestBusiness1',  }
+  ]),
+}))
+
+jest.mock('../utilities/getchCurrentExhibition.js', ()=>({
+   fetchCurrentExhibition: jest.fn().mockResolvedValue([
+
   ]),
 }))
 
@@ -15,21 +30,14 @@ jest.mock('../utilities/fetchUpcomingExhibitions.js', ()=>({
   ]),
 }))
 
-jest.mock('firebase/firestore', () => ({
-  getDocs: jest.fn(),
-  collection: jest.fn(),
-  query:  jest.fn(),
-  where:  jest.fn(),
-  Timestamp: {fromDate: () => ({}) },
-}))
-
 
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { fetchBusinesses } from '../utilities/fetchBusinesses'
+import { getDocs } from "firebase/firestore";
 import { fetchUpcomingExhibitions } from '../utilities/fetchUpcomingExhibitions';
+import { fetchCurrentExhibition } from '../utilities/getchCurrentExhibition';
 import Home from '../Home'
-
 
 
 
@@ -38,8 +46,11 @@ describe('Home Screen', () => {
    beforeEach(() => {
 
     fetchBusinesses.mockResolvedValue([
-      { businessName: 'TestBusiness1' }
+     { businessName: 'TestBusiness1' }, { businessName: 'TestBusiness2' }
     ])
+
+     fetchCurrentExhibition.mockResolvedValue([{title: 'TestOne'}])
+
 
  fetchUpcomingExhibitions.mockResolvedValue(
   [{title: 'TestTwo',}, { title: 'TestThree'}]

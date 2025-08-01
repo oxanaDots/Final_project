@@ -1,5 +1,5 @@
-export async function fetchData(){
-      const res = await fetch('http://localhost:3001/api/enterprises')
+export async function fetchData(link){
+      const res = await fetch(link)
     const data = await res.json()
     return data
 }
