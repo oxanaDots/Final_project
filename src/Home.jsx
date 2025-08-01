@@ -11,6 +11,8 @@ import Spiner from './Components/Spiner.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faArrowRight, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import orderByDistance from 'geolib/es/orderByDistance';
+import getDistance from 'geolib/es/getDistance';
+import convertDistance from 'geolib/es/convertDistance'
 
 
 
@@ -24,8 +26,8 @@ import orderByDistance from 'geolib/es/orderByDistance';
   const [currentExhibition, setCurrentExhibition] = useState(null)
   const [loading, setLoading] = useState(false)
   const [index, setIndex] = useState(0)
-const [userLocation, setUserLocation] = useState({})
-
+  const [userLocation, setUserLocation] = useState({})
+  const [distance, setDistance] = useState('_')
 
 const docs = [...businesses.values()]
 
@@ -42,15 +44,18 @@ useEffect(()=>{
 
      function helper(){
        if (userLocation && businesses){
-        const mappedGeos = docs.map((item, i) => item.geoLocation)
-       const orderedLocations = orderByDistance(userLocation, mappedGeos)
-console.log(orderedLocations)
+            const mappedGeos = docs.map((item) => item.geoLocation)
+            const orderedLocations = orderByDistance(userLocation, mappedGeos)
             const arr = []
            for (const obj of orderedLocations){
-            arr.push(businesses.get(obj))
-             }
-              setSortedBusinesses(arr)
-        } else{
+            const value = businesses.get(obj)
+            const distanceInMeters = getDistance(userLocation, obj, 0.2)
+            const convertedIntoMiles = convertDistance(distanceInMeters, 'mi')
+            arr.push({...value, distance: convertedIntoMiles.toFixed(2)})
+            }
+          
+             setSortedBusinesses (arr)
+             } else{
           setBusinesses(docs)
         }
     }
@@ -205,13 +210,21 @@ console.log(orderedLocations)
   </div>
 
 <div className='text-xs'>
-    <h2 className='text-sm font-semibold pb-4'>Currently exhibited at:</h2>
-    <div className='overflow-y-scroll h-[25rem]'>
+    <h2 className='text-sm font-semibold text-zinc-600 pb-6'>Currently exhibited at:</h2>
+    <div className=' flex gap-6 flex-col overflow-y-scroll h-[25rem]'>
     {sortedBusinesses.map(item=> (
-      <div className='text-xs flex justify-between bg-white px-2 py-2 my-2'>
-     <h2 className='text-xs'>{item.businessName}</h2>
-    <h2 className='text-xs'> 0.5 miles</h2>
+      <div className='text-[0.6rem] flex  flex-col text-ternary-medium'>
+        <div className='flex justify-between px-2 '>
+        <p className=' self-end'>{item.business_type}</p>
+        <p>Distance</p>
+        </div>
+      <div className='text-xs flex justify-between  text-primary-dark
+      border border-y border-x-0 items-center border-ternary-medium px-2 py-2 '>
+
+     <h2 className='text-xs font-semibold'>{item.businessName}</h2>
+    <h2 className='text-xs border rounded-md border-ternary-dark py-1 px-2'>{item.distance} miles</h2>
     </div>
+        </div>
  ) )}
   </div> 
      </div> 
