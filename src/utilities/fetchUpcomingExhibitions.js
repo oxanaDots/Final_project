@@ -1,5 +1,8 @@
  import { getDocs, collection, query, where, orderBy} from "firebase/firestore";
  import { db } from "../firebase";
+
+
+
 export async function  fetchUpcomingExhibitions(expireDate){
 
     try{
@@ -12,7 +15,13 @@ export async function  fetchUpcomingExhibitions(expireDate){
         const acceptedExhibitionsSnap = await getDocs(querry)
         const acceptedExhibitions = acceptedExhibitionsSnap.docs.map(doc => ({...doc.data(), docId: doc.id}))
      
-         return acceptedExhibitions
+        if (acceptedExhibitions.length){
+            return acceptedExhibitions
+
+        } else{
+           return undefined
+        }
+
        
 
     } catch (err){

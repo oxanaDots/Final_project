@@ -1,38 +1,75 @@
+// jest.mock('../firebase');
+// const getDocs = jest.fn();
 
-import { readFileSync } from 'fs';
+jest.mock('firebase/firestore', ()=>({
 
-import { assertFails, assertSucceeds, initializeTestEnvironment } from '@firebase/rules-unit-testing';
+    collection: jest.fn(),
+    query: jest.fn(),
+    where: jest.fn(),
+    orderBy: jest.fn(),
+    getDocs: jest.fn()
+  }
+))
+jest.mock('../firebase');
 
-import { getDoc, doc, getDocs, collection, setDoc } from 'firebase/firestore';
+
+ import { getDocs, collection, query, where, orderBy} from "firebase/firestore";
+import { fetchUpcomingExhibitions } from '../utilities/fetchUpcomingExhibitions';
+import { waitFor } from '@testing-library/react';
 
 
+describe('fetchUpcomingExhibition function', ()=>{
 
-let testFirestoreEnv
-
-          describe('Art-hosting app', ()=>{
-          beforeAll(async ()=>{
-          testFirestoreEnv =   await initializeTestEnvironment({
-          projectId: "art-hosting",
-          firestore: {
-          rules: readFileSync("firestore.rules", "utf8"),
-          port: 8080,
-          host: "127.0.0.1", 
-          },
-
-          });
   
+  beforeEach(async ()=>{
+     
+    // in the real fetchUpcomingExhibition function the snapshot.docs variable returns an array with induvidual 
+    // document snapshots, each with its own id which is later assigned to docId field
+    // this needs to be mocked and returned as a resolved promise since await getDocs() is an async function
 
+       getDocs.mockResolvedValue({
+    docs: [
+     { id: "1", data: () => ({ title: "One" }) },
+     { id: "2", data: () => ({ title: "Two" }) }
+    ]
        })
-          it('Read exhibitions collection', async ()=>{
-          const db = testFirestoreEnv.unauthenticatedContext().firestore()
-           const exhibitions = collection(db, 'exhibitions');
-      
-           const snapshot = await assertSucceeds(getDocs(exhibitions))
-           return snapshot.docs
-      
-          })
-    
 
-    
+      })
 
-        })
+
+       const mockedData = [
+    { docId: "1",  title: "One"  },
+    { docId: "2", title: "Two" }
+    ]
+       
+       
+       it ('The function should return correct data', async ()=>{
+         //  data returns an array with objects, each with a docId and the rest of the key-field pairs are spread out using the spread operator
+         // expect is called to determine if the fetchUpcomingExhibitions function returns expected data
+         
+         const date = new Date()
+
+  const data = await fetchUpcomingExhibitions(date)
+    
+    expect (collection).toHaveBeenCalled()
+    expect (where).toHaveBeenCalled()
+    expect (orderBy).toHaveBeenCalled()
+    expect (query).toHaveBeenCalled()
+     expect (getDocs).toHaveBeenCalled()
+    
+    expect(data).toEqual(mockedData)
+
+  })
+
+  it('', async()=>{
+  waitFor(()=>{
+    getDocs.mockResolvedValue({docs:[]})
+  })
+     const data = await fetchUpcomingExhibitions()
+     expect(data).toBeUndefined()
+
+})
+})
+
+
+// appropriated from https://itnext.io/firebase-firestore-unit-testing-with-jest-and-kind-of-typescript-e26874196b1e

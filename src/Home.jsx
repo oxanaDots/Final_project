@@ -27,7 +27,7 @@ import convertDistance from 'geolib/es/convertDistance'
   const [loading, setLoading] = useState(false)
   const [index, setIndex] = useState(0)
   const [userLocation, setUserLocation] = useState({})
-  const [distance, setDistance] = useState('_')
+
 
 const docs = [...businesses.values()]
 
@@ -36,10 +36,7 @@ useEffect(()=>{
  navigator.geolocation.getCurrentPosition(res=>{
        setUserLocation({latitude:res.coords.latitude, longitude: res.coords.longitude })})
       }, [])
-      console.log(userLocation)
-
-
-
+   
   useEffect(()=>{
 
      function helper(){
@@ -62,7 +59,7 @@ useEffect(()=>{
      helper()
     }, [userLocation, businesses])
   
-    console.log(sortedBusinesses)
+    console.log(businesses)
 
 
   function handleExhibitiob(direction){

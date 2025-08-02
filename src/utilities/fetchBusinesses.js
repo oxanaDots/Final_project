@@ -1,5 +1,5 @@
  
- import { getDocs, collection, query, where, orderBy} from "firebase/firestore";
+ import { getDocs, collection, query, where} from "firebase/firestore";
  import { db } from "../firebase";
 
  export async function fetchBusinesses () {
@@ -8,17 +8,23 @@
           collection(db, 'businesses'),
           where('currentlyDisplaying', '==', true)
         )
-         const myMap = new Map()
         const snapshot = await getDocs(querry);
 
         const data = snapshot.docs.map(doc => ({
           businessId: doc.id,
           ...doc.data(),
         }));
-            data.forEach(item=> myMap.set(item.geoLocation, item))
-             return myMap
-    
 
+        if ( data.length){
+         const myMap = new Map()
+
+           data.forEach(item=> myMap.set(item.geoLocation, item))
+        } else{
+
+          return undefined
+        }
+
+  
       } catch (error) {
         console.error( error);
       }

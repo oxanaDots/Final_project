@@ -34,7 +34,6 @@ jest.mock('../utilities/fetchUpcomingExhibitions.js', ()=>({
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { fetchBusinesses } from '../utilities/fetchBusinesses'
-import { getDocs } from "firebase/firestore";
 import { fetchUpcomingExhibitions } from '../utilities/fetchUpcomingExhibitions';
 import { fetchCurrentExhibition } from '../utilities/getchCurrentExhibition';
 import Home from '../Home'
@@ -56,11 +55,12 @@ describe('Home Screen', () => {
   [{title: 'TestTwo',}, { title: 'TestThree'}]
  )
 })
-
+ getCurrentPosition.mockResolvedValue({lat: 5.678, lng:0.333})
 
   afterEach(() => {
     jest.clearAllMocks()
   })
+
 
   it('Next, previous and current buttons', async () => {
     render(
