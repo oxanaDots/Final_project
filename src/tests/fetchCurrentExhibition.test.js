@@ -7,15 +7,18 @@ jest.mock('firebase/firestore', ()=>({
     query: jest.fn(),
     where: jest.fn(),
     orderBy: jest.fn(),
-    getDocs: jest.fn()
+    getDocs: jest.fn(),
+    Timestamp: jest.fn(() => fromDate('02-08-2025'))
   }
 ))
 jest.mock('../firebase');
 
 
- import { getDocs, collection, query, where, orderBy} from "firebase/firestore";
+ import { getDocs, collection, query, where, orderBy, Timestamp} from "firebase/firestore";
 import { fetchCurrentExhibition } from '../utilities/getchCurrentExhibition';
 import { waitFor } from '@testing-library/react';
+
+
 
 
 describe('fetchUpcomingExhibition function', ()=>{
@@ -41,7 +44,11 @@ describe('fetchUpcomingExhibition function', ()=>{
     { docId: "1",  title: "One"  },
     { docId: "2", title: "Two" }
     ]
-       
+       beforeAll(()=>{
+jest.spyOn(Timestamp, 'fromDate')
+    .mockImplementation(date => ({date}));
+        })
+     
        
        it ('The function should return correct data', async ()=>{
          //  data returns an array with objects, each with a docId and the rest of the key-field pairs are spread out using the spread operator
@@ -56,6 +63,8 @@ describe('fetchUpcomingExhibition function', ()=>{
     expect (orderBy).toHaveBeenCalled()
     expect (query).toHaveBeenCalled()
      expect (getDocs).toHaveBeenCalled()
+      expect (Timestamp).toHaveBeenCalled()
+
     
     expect(data).toEqual(mockedData)
 
