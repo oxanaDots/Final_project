@@ -15,11 +15,11 @@ export async function  fetchUpcomingExhibitions(expireDate){
         const acceptedExhibitionsSnap = await getDocs(querry)
         const acceptedExhibitions = acceptedExhibitionsSnap.docs.map(doc => ({...doc.data(), docId: doc.id}))
      
-        if (acceptedExhibitions.length){
+        if (acceptedExhibitions.length !==0 ){
             return acceptedExhibitions
 
-        } else{
-           return undefined
+        }else{
+            return []
         }
 
        

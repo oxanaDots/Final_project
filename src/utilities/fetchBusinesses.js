@@ -15,10 +15,11 @@
           ...doc.data(),
         }));
 
-        if ( data.length){
+        if ( data.length !== 0){
          const myMap = new Map()
 
            data.forEach(item=> myMap.set(item.geoLocation, item))
+           return myMap
         } else{
 
           return undefined

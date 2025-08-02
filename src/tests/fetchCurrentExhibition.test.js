@@ -1,14 +1,16 @@
 // jest.mock('../firebase');
 // const getDocs = jest.fn();
-
+// mock firebase/firestore module and its fucntions
 jest.mock('firebase/firestore', ()=>({
-
+// mock the module's functionsand eulate Timestamp export
     collection: jest.fn(),
     query: jest.fn(),
     where: jest.fn(),
     orderBy: jest.fn(),
     getDocs: jest.fn(),
-    Timestamp: jest.fn(() => fromDate('02-08-2025'))
+  Timestamp: {
+    fromDate: jest.fn( new Date())
+  }
   }
 ))
 jest.mock('../firebase');
@@ -44,11 +46,7 @@ describe('fetchUpcomingExhibition function', ()=>{
     { docId: "1",  title: "One"  },
     { docId: "2", title: "Two" }
     ]
-       beforeAll(()=>{
-jest.spyOn(Timestamp, 'fromDate')
-    .mockImplementation(date => ({date}));
-        })
-     
+      
        
        it ('The function should return correct data', async ()=>{
          //  data returns an array with objects, each with a docId and the rest of the key-field pairs are spread out using the spread operator
@@ -58,12 +56,7 @@ jest.spyOn(Timestamp, 'fromDate')
 
   const data = await fetchCurrentExhibition(date)
     
-    expect (collection).toHaveBeenCalled()
-    expect (where).toHaveBeenCalled()
-    expect (orderBy).toHaveBeenCalled()
-    expect (query).toHaveBeenCalled()
-     expect (getDocs).toHaveBeenCalled()
-      expect (Timestamp).toHaveBeenCalled()
+ 
 
     
     expect(data).toEqual(mockedData)

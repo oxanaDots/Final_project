@@ -10,17 +10,13 @@ import { fetchUpcomingExhibitions } from './utilities/fetchUpcomingExhibitions.j
 import Spiner from './Components/Spiner.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faArrowRight, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
-import orderByDistance from 'geolib/es/orderByDistance';
-import getDistance from 'geolib/es/getDistance';
-import convertDistance from 'geolib/es/convertDistance'
+import { orderByDistance, getDistance, convertDistance } from 'geolib'
 
 
 
-// const address = '47 Addison road, BR2 9RS'
-// const convert = await geoCode(address)
-// console.log(convert)
+
  function Home() {
-  const [businesses,  setBusinesses] = useState([]);
+  const [businesses,  setBusinesses] = useState(new Map());
   const [sortedBusinesses, setSortedBusinesses] = useState([])
   const [exhibitions, setExhibitions] = useState([])
   const [currentExhibition, setCurrentExhibition] = useState(null)
@@ -36,6 +32,19 @@ useEffect(()=>{
  navigator.geolocation.getCurrentPosition(res=>{
        setUserLocation({latitude:res.coords.latitude, longitude: res.coords.longitude })})
       }, [])
+
+
+       useEffect(()=>{
+  let isMounted = true
+  async function helper(){
+      const businessesData = await fetchBusinesses()
+         setBusinesses( businessesData)
+  }
+      helper()
+      return()=>{
+        isMounted = false
+      }
+ }, [])
    
   useEffect(()=>{
 
@@ -45,21 +54,21 @@ useEffect(()=>{
             const orderedLocations = orderByDistance(userLocation, mappedGeos)
             const arr = []
            for (const obj of orderedLocations){
-            const value = businesses.get(obj)
+            const businessDoc = businesses.get(obj)
             const distanceInMeters = getDistance(userLocation, obj, 0.2)
             const convertedIntoMiles = convertDistance(distanceInMeters, 'mi')
-            arr.push({...value, distance: convertedIntoMiles.toFixed(2)})
+            arr.push({...businessDoc, distance: convertedIntoMiles.toFixed(2)})
             }
           
              setSortedBusinesses (arr)
              } else{
-          setBusinesses(docs)
+             setBusinesses(docs)
         }
     }
      helper()
     }, [userLocation, businesses])
   
-    console.log(businesses)
+    console.log(sortedBusinesses)
 
 
   function handleExhibitiob(direction){
@@ -76,20 +85,6 @@ useEffect(()=>{
 
 
  const expireDate = currentExhibition? currentExhibition.expireAt: null
-
- useEffect(()=>{
-  let isMounted = true
-  async function helper(){
-      const businessesData = await fetchBusinesses()
-         setBusinesses( businessesData)
-  }
-      helper()
-      return()=>{
-        isMounted = false
-      }
- }, [])
-
-
 
 
   useEffect(() => {
@@ -129,7 +124,7 @@ useEffect(()=>{
       try{
   
 
-        if (currentExhibition && exhibitions.length> 0){
+        if (currentExhibition && exhibitions.length > 0){
           
           const upcomingExhibitions = await fetchUpcomingExhibitions(expireDate)
           setExhibitions((prev)=>  [...prev, ...upcomingExhibitions])

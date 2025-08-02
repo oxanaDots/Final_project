@@ -43,7 +43,7 @@ describe('fetchUpcomingExhibition function', ()=>{
     ]
        
        
-       it ('The function should return correct data', async ()=>{
+       it ('The function should return correct data is docssnapshot return a non-empty object', async ()=>{
          //  data returns an array with objects, each with a docId and the rest of the key-field pairs are spread out using the spread operator
          // expect is called to determine if the fetchUpcomingExhibitions function returns expected data
          
@@ -62,11 +62,11 @@ describe('fetchUpcomingExhibition function', ()=>{
   })
 
   it('', async()=>{
-  waitFor(()=>{
+
     getDocs.mockResolvedValue({docs:[]})
-  })
+
      const data = await fetchUpcomingExhibitions()
-     expect(data).toBeUndefined()
+     expect(data).toHaveLength(0)
 
 })
 })
