@@ -77,10 +77,10 @@ function ExhibitionSubmission() {
  
   return (
     <div className='grid justify-center py-8'>
-    {!statusB ? 
+   {!statusB ? 
     <>
     <div className='grid justify-center grid-cols-[30%_40%]'>
-       
+       <h2>Review exhibition</h2>
       <ExhibitionItem 
      status = 'current'
     //  links={currentExhibition.links}
