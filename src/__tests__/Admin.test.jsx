@@ -29,13 +29,13 @@ function renderHelper(id){
 
  function AdminTest() {
   const exhibitions = [
-    { docId: '123', artistFirstName: 'ArtistOneName', artistLastName: 'ArtistOneLastName', title: 'Exhibition One' },
+    { docId: '123', artistFirstName: 'ArtistOneName', artistLastName: 'ArtistOneLastName', title: 'Exhibition One', },
     { docId: '124', artistFirstName: 'ArtistTwoName',artistLastName: 'ArtistTwoLastName', title: 'Exhibition Two' }
   ];
 
   return (
 <>
- <h2 className='font-semibold py-4'> Exhibition submissions</h2>
+    <h2 className='font-semibold py-4'> Exhibition submissions</h2>
     <Outlet context={{ exhibitions }} />
     </>
   )
@@ -43,7 +43,7 @@ function renderHelper(id){
   return  render(
       <MemoryRouter initialEntries={[`/admin/exhibition_submission/${id}`]}>
        <Routes>
-         <Route  element={<AdminTest />}>
+         <Route path='/admin'  element={<AdminTest />}>
            <Route
            path={`/admin/exhibition_submission/${id}`}
            element={<ExhibitionSubmission  />}
@@ -200,6 +200,8 @@ describe ('Admin page', ()=>{
        fireEvent.click(screen.getByTestId('reject'))
 
        expect(await screen.findByText('Submission updated!')).toBeInTheDocument()
+
+
         fireEvent.click(screen.getByTestId('return-to-admin'))
       expect(await screen.findByText('Exhibition submissions')).toBeInTheDocument()
     

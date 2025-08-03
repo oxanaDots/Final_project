@@ -216,7 +216,7 @@ function BusinessSignup() {
 
 
    
-        <button type='submit' className='submit-btn'>{isSubmitting? "Checking your company details":'Submit'}</button>
+        <button type='submit'  data-testid="submit" className='submit-btn'>{isSubmitting? "Checking your company details":'Submit'}</button>
       </form>
     </div>
     </div>

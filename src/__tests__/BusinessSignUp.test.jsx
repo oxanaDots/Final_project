@@ -18,6 +18,8 @@ jest.mock("firebase/auth", () => ({
   getAuth: jest.fn(),
   createUserWithEmailAndPassword: jest.fn()
 }));
+
+
 import "@testing-library/jest-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -25,6 +27,7 @@ import { MemoryRouter } from "react-router-dom";
 import { fetchData } from "../utilities/fetchData";
 import BusinessSignup from "../Business/BusinessSignUp";
 import * as firebaseAuth from "firebase/auth";
+import { geoCode } from '../utilities/geoCode';
 
 async function fillInForm(){
    await userEvent.type(screen.getByPlaceholderText(/business name/i), "test");
@@ -54,6 +57,7 @@ describe('Sign up form for enterprises', ()=>{
         email: "test@mail.com"
       }
     });
+
   })
 
    afterEach(() => {
@@ -97,7 +101,7 @@ await fillInForm();
 
  
 
-it(' signUpError state change', async()=>{
+it('signUpError state change', async()=>{
   
  fetchData.mockImplementation(async()=> {
         return [
@@ -123,5 +127,13 @@ it(' signUpError state change', async()=>{
        expect(error).toHaveTextContent('No record of your company has been found. Try again.');
 
     })
+  })
+
+  it('', async ()=>{
+
+    geoCode.mockResolvedValue({latitude: 0.0, longtitude: 3.9})
+        fireEvent.click(screen.getByTestId('submit'))
+    
+
   })
 })
