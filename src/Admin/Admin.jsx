@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, where } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { useMatch } from 'react-router-dom';
@@ -15,12 +15,17 @@ function AdminDashboard() {
 
  const allExhibitionsQuery = query(
       collection(db,'exhibitions'),
+      where('status', '==', 'pending'),
        orderBy('createdAt'))       
       
   const exhibitionsSnapshot =  await getDocs(allExhibitionsQuery)
-  const data = exhibitionsSnapshot.docs.map(doc=> ({...doc.data(), docId: doc.id}))
+  console.log(exhibitionsSnapshot)
+   if (exhibitionsSnapshot.size > 0 ){
+            const data = exhibitionsSnapshot.docs.map(doc=> ({...doc.data(), docId: doc.id}))
 
-        setExhibition(data)
+                setExhibition(data)
+          }
+
         console.log(exhibitions[0].createdAt)
       } catch(err){
         console.error(err)
@@ -53,7 +58,7 @@ function AdminDashboard() {
       <div className='flex flex-col py-4'>
       <h2 className='font-semibold py-4'> Exhibition submissions</h2>
       <div className=' flex flex-col cursor-pointer w-[30vw]'>
-        {exhibitions && exhibitions.map((item, id)=>{
+        {exhibitions.length>0 ? exhibitions.map((item, id)=>{
           return (
             <div  data-testid={`exhibition-item-${id}`} onClick={()=> navigateToExhibition(item.docId)}  className='flex p-2 flex-col'>
           <div  key={id} className='flex justify-between w-full  text-[0.6rem] text-opacity-60 '>
@@ -72,7 +77,7 @@ function AdminDashboard() {
             </div>
             </div>
           )
-        })}
+        }):<p className='text-xs cursor-default'>No exhibitions to review</p>}
       </div>
       </div>
       </>

@@ -21,35 +21,27 @@ function ExhibitionSubmission() {
    async function reviewSubmission(status){
     try{
         const exhibitionDocRef = doc(db, 'exhibitions', currentExhibition.docId);
-
-       const allPendingExhibitionsQuery = query(
-      collection(db,'exhibitions'),
-       where ('status', '==', 'pending'),
-       orderBy('createdAt'))
-         const allNonPendingExhibitionsQuery = query(
+         console.log(exhibitionDocRef)
+        const allNonPendingExhibitionsQuery = query(
       collection(db,'exhibitions'),
        where ('status', '==', 'accepted'),
        orderBy('startsAt'))
-       const allPendingExhibitionsSnapshot= await getDocs(allPendingExhibitionsQuery)
-        const allAcceptedExhibitionsSnapshot= await getDocs(allNonPendingExhibitionsQuery)
 
-      const pendingExhibitionsList = allPendingExhibitionsSnapshot.docs.map(doc =>({...doc.data(), docId:doc.id}))
+      const allAcceptedExhibitionsSnapshot = await getDocs(allNonPendingExhibitionsQuery)
       const acceptedExhibitionsList = allAcceptedExhibitionsSnapshot.docs.map(doc =>({...doc.data(), docId:doc.id}))
-
-      console.log('STATUS', status)
-      console.log('Current exhibition ref', exhibitionDocRef)
-      console.log('all pending exhibitions', pendingExhibitionsList)
-      console.log('all accepted exhibitions', acceptedExhibitionsList)
-      console.log(exhibitions)
      
       let startDate  
       if (allAcceptedExhibitionsSnapshot.size === 0){
+        // convert todays date into firebase Timestamp using fromDate()
         startDate = Timestamp.fromDate(new Date())
       } else {
         startDate = acceptedExhibitionsList[acceptedExhibitionsList.length-1].expireAt
       }
 
       const sevenDays = (24 * 7 * 60 * 60 * 1000)
+
+
+      // convert startDate into a Js object so we can add 7 days, then back into a Timestamp
       const expireAt = Timestamp.fromDate(new Date(startDate.toDate().getTime() + sevenDays)) 
      
 
@@ -62,11 +54,8 @@ function ExhibitionSubmission() {
           await updateDoc(exhibitionDocRef, {
             status: status,
 
-          })
+          })} 
 
-       } 
-
-   
       setstatus(true)
     } catch(err){
         console.error(err)
@@ -111,7 +100,7 @@ function ExhibitionSubmission() {
     </>
      : <div className='bg-ternary-light px-8 py-6'>
         <h2 className='py-6 text-ternary-dark font-semibold text-lg'>Submission updated!</h2>
-        <button onClick={()=> navigate('/admin')} className='submit-btn'>Return to my dashboard</button>
+        <button data-testid="return-to-admin" onClick={()=> navigate('/admin')} className='submit-btn'>Return to my dashboard</button>
      </div>
    
     }
