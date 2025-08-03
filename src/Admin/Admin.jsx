@@ -76,6 +76,8 @@ function AdminDashboard() {
       </div>
       </div>
       </>
+      // Outlet is used to render child componenst of the current component, Admin
+      // all the children components and their paths are defined in the App.js component
        :   <Outlet context={{exhibitions}}/>
       }
     

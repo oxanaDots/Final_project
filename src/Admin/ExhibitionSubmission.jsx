@@ -6,6 +6,9 @@ import {  doc,collection, Timestamp, updateDoc, where, getDocs, query, orderBy  
 import { db } from '../firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faXmark, faCheck} from '@fortawesome/free-solid-svg-icons';
+
+
+
 function ExhibitionSubmission() {
   const linkParams = useMatch('/admin/exhibition_submission/:id');
   const currentId = linkParams.params
@@ -98,10 +101,10 @@ function ExhibitionSubmission() {
     </div >
     <div  data-testid="submission-outcome" className='flex  justify-center items-center py-10 text-3xl'>
         
-    <button onClick={()=>reviewSubmission('accepted')} className=' text-green-600 flex'>
+    <button data-testid="accept" onClick={()=>reviewSubmission('accepted')} className=' text-green-600 flex'>
         <FontAwesomeIcon icon={faCheck}/>
     </button>
-    <button onClick={()=> reviewSubmission('rejected')} className='flex text-red-600 p-12'>
+    <button data-testid="reject" onClick={()=> reviewSubmission('rejected')} className='flex text-red-600 p-12'>
         <FontAwesomeIcon icon={faXmark}/>
     </button>
     </div>
