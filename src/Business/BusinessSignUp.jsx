@@ -19,7 +19,7 @@ function BusinessSignup() {
 
 
   try {
-    const enterprisesData = await fetchData('http://localhost:3001/api/enterprises')
+    const enterprisesData = await fetchData('/api/enterprises')
  
       const userCredential = await createUserWithEmailAndPassword(
       auth,
