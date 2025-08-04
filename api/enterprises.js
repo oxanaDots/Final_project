@@ -14,7 +14,7 @@
 
 // module.exports = app; 
 
-import enterprises from '../../enterprises.json';
+import enterprises from './enterprises.json';
 
 export default function handler(req, res) {
   res.status(200).json(enterprises);
