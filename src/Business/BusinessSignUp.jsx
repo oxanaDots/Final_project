@@ -19,7 +19,7 @@ function BusinessSignup() {
 
 
   try {
-    const enterprisesData = await fetchData('/api/enterprises')
+    const enterprisesData = await fetchData('https://final-project-red-delta.vercel.app/api/enterprises')
  
       const userCredential = await createUserWithEmailAndPassword(
       auth,
