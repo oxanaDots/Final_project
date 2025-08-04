@@ -4,7 +4,10 @@ import { fetchData } from "../utilities/fetchData";
 
 
 describe('', ()=>{
-    
+      afterEach(() => {
+    global.fetch.mockRestore();
+   
+  });
     it('fetches data from an API endpoint', async () => {
       const mockData = { id: 1, name: 'Example' };
 

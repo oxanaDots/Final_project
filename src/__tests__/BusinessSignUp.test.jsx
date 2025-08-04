@@ -9,15 +9,13 @@ jest.mock('firebase/app', () => {
   };
 });
 
-
-
-
 jest.mock("../firebase.js");
 jest.mock("../utilities/fetchData", () => ({ fetchData: jest.fn() }));
 jest.mock("firebase/auth", () => ({
   getAuth: jest.fn(),
   createUserWithEmailAndPassword: jest.fn()
 }));
+
 
 
 import "@testing-library/jest-dom";
@@ -129,11 +127,5 @@ it('signUpError state change', async()=>{
     })
   })
 
-  it('', async ()=>{
-
-    geoCode.mockResolvedValue({latitude: 0.0, longtitude: 3.9})
-        fireEvent.click(screen.getByTestId('submit'))
-    
-
-  })
+ 
 })

@@ -1,3 +1,5 @@
+
+
 export async function fetchData(link){
       const res = await fetch(link)
       if(!res.ok){
