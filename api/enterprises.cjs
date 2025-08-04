@@ -14,8 +14,10 @@
 
 // module.exports = app; 
 
-import enterprises from './enterprises.json';
+const enterprises = require('./enterprises.json');
 
-export default function handler(req, res) {
+module.exports = (req, res) => {
+  // you can even log here to see it in Vercel logs:
+  console.log('Serving enterprises, count =', enterprises.length);
   res.status(200).json(enterprises);
-}
+};
