@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1754403401688" clover="3.2.0">
-  <project timestamp="1754403401688" name="All files">
-    <metrics statements="45" coveredstatements="32" conditionals="36" coveredconditionals="20" methods="12" coveredmethods="11" elements="93" coveredelements="63" complexity="0" loc="45" ncloc="45" packages="2" files="3" classes="3"/>
+<coverage generated="1754403579070" clover="3.2.0">
+  <project timestamp="1754403579070" name="All files">
+    <metrics statements="45" coveredstatements="32" conditionals="36" coveredconditionals="19" methods="12" coveredmethods="11" elements="93" coveredelements="62" complexity="0" loc="45" ncloc="45" packages="2" files="3" classes="3"/>
     <package name="Business">
-      <metrics statements="30" coveredstatements="18" conditionals="30" coveredconditionals="15" methods="10" coveredmethods="9"/>
+      <metrics statements="30" coveredstatements="18" conditionals="30" coveredconditionals="14" methods="10" coveredmethods="9"/>
       <file name="BusinessSignUp.jsx" path="/Users/oksanadotsenko/Desktop/fp/src/Business/BusinessSignUp.jsx">
-        <metrics statements="30" coveredstatements="18" conditionals="30" coveredconditionals="15" methods="10" coveredmethods="9"/>
+        <metrics statements="30" coveredstatements="18" conditionals="30" coveredconditionals="14" methods="10" coveredmethods="9"/>
         <line num="12" count="8" type="stmt"/>
         <line num="14" count="8" type="stmt"/>
         <line num="15" count="8" type="stmt"/>

@@ -12,7 +12,7 @@ function BusinessSignup() {
   const {handleSubmit, register, isSubmitting, watch, formState: {errors}} = useForm({shouldUseNativeValidation: false})
   
   const [signUpError, setSignUpError] = useState('')
-  const [geoCodeValue, setGeoCode] = useState( null)
+  const [geoCodeValue, setGeoCode] = useState( '')
   const navigate = useNavigate()
 
 
@@ -52,7 +52,7 @@ function BusinessSignup() {
       console.log("Business user created and stored in Firestore");
       navigate("/signin");
     } else{
-      setGeoCode(undefined)
+      setGeoCode('Wrong address')
     }
     
       
@@ -168,7 +168,7 @@ function BusinessSignup() {
                 }}
             error={errors.postcode}
           />
-        <p>{!geoCodeValue && 'Enetr correct address'}</p>
+        <p>{geoCodeValue === 'Wrong address' && 'Enetr correct address'}</p>
     </div>
     <InputField
             name="phoneNumber"
