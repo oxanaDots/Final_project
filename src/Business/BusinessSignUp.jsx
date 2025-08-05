@@ -9,33 +9,36 @@ import { auth, db } from "../firebase.js";
 import { fetchData } from '../utilities/fetchData.js';
 import { geoCode } from '../utilities/geoCode.js';
 function BusinessSignup() {
-  const {handleSubmit, register, isSubmitting, watch, formState: {errors}} = useForm({shouldUseNativeValidation: false})
+  const {handleSubmit, register, isSubmitting, watch, reset, formState: {errors}} = useForm({shouldUseNativeValidation: false})
   
   const [signUpError, setSignUpError] = useState('')
   const [geoCodeValue, setGeoCode] = useState( '')
+
   const navigate = useNavigate()
 
-
+console.log(geoCodeValue)
+console.log(signUpError)
   async function onSubmit (data) {
 
 
   try {
-    const enterprisesData = await fetchData('https://final-project-red-delta.vercel.app/api/enterprises')
- 
+    // const enterprisesData = await fetchData('https://final-project-red-delta.vercel.app/api/enterprises')
+     const enterprisesData = await fetchData('http://localhost:3001/api/enterprises')
+
+   
+   const geoCodedLoc = await geoCode(`${data.location}, ${data.postcode}`)
+   const foundEnterprise = enterprisesData && enterprisesData.filter(item => item.email === data.email && item.companyID === data.companyID)
+   
+   
+    if (geoCodeValue !== 'Wrong address'&& foundEnterprise.length > 0){
+
       const userCredential = await createUserWithEmailAndPassword(
       auth,
       data.email,
       data.password
     );
-    const business = userCredential.user;
+        const business = userCredential.user;
 
-   const foundEnterprise = enterprisesData && enterprisesData.filter(item => item.email === data.email && item.companyID === data.companyID)
-
-   if (foundEnterprise.length !== 0){
-
-    const geoCodedLoc = await geoCode(`${data.location}, ${data.postcode}`)
-     geoCodedLoc && setGeoCode(geoCodeValue)
-    if (geoCodeValue){
        await setDoc(doc(db, "businesses", business.uid), {
        businessName: data.businessName,
        firstName: data.firstName,
@@ -51,14 +54,13 @@ function BusinessSignup() {
       });
       console.log("Business user created and stored in Firestore");
       navigate("/signin");
-    } else{
-      setGeoCode('Wrong address')
+    }  else{
+      setGeoCode(geoCodeValue?geoCodeValue: 'Wrong address')
+      setSignUpError('No record of your company has been found. Try again.')
     }
     
       
-    } else{
-        setSignUpError('No record of your company has been found. Try again.')
-    }
+   
 
   } catch (error) {
     console.error("Error during signup:", error.message);
@@ -83,13 +85,14 @@ function BusinessSignup() {
       }}
         data-testid="signupForm" className=' flex flex-col w-[90vw] items-left p-4 justify-center text-center '  onSubmit={handleSubmit(onSubmit)}>
               <legend className="text-xl text-center font-semibold mb-4">Create an Account</legend>
-                 { signUpError.length > 0 &&
+                 { signUpError.length > 0 && 
                 
-                 <p data-testid="signup-error"  className='text-red-500 flex my-4 justify-center rounded-md text-xs bg-red-50 border-red-400 self  text-center border py-4'>{signUpError}</p>
+                 <p data-testid="signup-error"  className='text-red-500 flex mt-4 justify-center rounded-md text-xs bg-red-50 border-red-400 self  text-center border py-4'>{signUpError}</p>
                 
                  }
+                 {geoCodeValue === 'Wrong address' && <p className='text-red-500 flex mb-4 mt-2 justify-center rounded-md text-xs bg-red-50 border-red-400 self  text-center border py-4'>Make sure you entered correct location.</p>}
 
-        <div className=' w-100 flex justify-between w-full gap-4 '>
+       
 
               <InputField
                 name="businessName"
@@ -103,16 +106,8 @@ function BusinessSignup() {
                 error={errors.businessName}
               />
 
-                <InputField
-                name="companyID"
-                placeholder="company ID"
-                register={register}
-                validationRules={{
-                  required: "Enter your company ID",
-                }}
-                error={errors.companyID}
-              />
-              </div>
+            
+            
               <div className=' w-100 flex justify-between w-full gap-4 '>
             
               <InputField
@@ -136,8 +131,10 @@ function BusinessSignup() {
                     /^[a-zA-Z]+$/.test(value) || "Your input can only contain alpahbetic letters",
                 }}
                 error={errors.lastName}
+             
               />
     </div>
+     <div className=' w-100 flex justify-between w-full gap-4 '>
     <InputField
                 name="email"
                 placeholder="email address"
@@ -149,7 +146,19 @@ function BusinessSignup() {
                     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) || "Please enter a valid email address",
                 }}
                 error={errors.email}
+                 registerError={signUpError.length > 0&&true}
               />
+                  <InputField
+                name="companyID"
+                placeholder="company ID"
+                register={register}
+                validationRules={{
+                  required: "Enter your company ID",
+                }}
+                error={errors.companyID}
+                   registerError={signUpError.length > 0 && true}
+              />
+           </div>   
     <div className=' w-100 flex justify-between w-full gap-4 '>
           <InputField
             name="location"
@@ -157,6 +166,8 @@ function BusinessSignup() {
             register={register}
             validationRules={{ required: 'Business address is required' }}
             error={errors.location}
+             registerError={geoCodeValue ==='Wrong address' &&true}
+
           />
           <InputField
             name="postcode"
@@ -167,8 +178,9 @@ function BusinessSignup() {
                     /^[A-Za-z]{1,2}\d{1,2}[A-Za-z]?\s\d{1,2}[A-Za-z]{2}$/.test(value) || "Please enter a valid postcode",
                 }}
             error={errors.postcode}
+             registerError={geoCodeValue ==='Wrong address' &&true}
+
           />
-        <p>{geoCodeValue === 'Wrong address' && 'Enetr correct address'}</p>
     </div>
     <InputField
             name="phoneNumber"

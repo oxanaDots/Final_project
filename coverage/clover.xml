@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1754403579070" clover="3.2.0">
-  <project timestamp="1754403579070" name="All files">
-    <metrics statements="45" coveredstatements="32" conditionals="36" coveredconditionals="19" methods="12" coveredmethods="11" elements="93" coveredelements="62" complexity="0" loc="45" ncloc="45" packages="2" files="3" classes="3"/>
+<coverage generated="1754409834287" clover="3.2.0">
+  <project timestamp="1754409834287" name="All files">
+    <metrics statements="45" coveredstatements="35" conditionals="44" coveredconditionals="31" methods="12" coveredmethods="11" elements="101" coveredelements="77" complexity="0" loc="45" ncloc="45" packages="2" files="3" classes="3"/>
     <package name="Business">
-      <metrics statements="30" coveredstatements="18" conditionals="30" coveredconditionals="14" methods="10" coveredmethods="9"/>
+      <metrics statements="30" coveredstatements="20" conditionals="38" coveredconditionals="26" methods="10" coveredmethods="9"/>
       <file name="BusinessSignUp.jsx" path="/Users/oksanadotsenko/Desktop/fp/src/Business/BusinessSignUp.jsx">
-        <metrics statements="30" coveredstatements="18" conditionals="30" coveredconditionals="14" methods="10" coveredmethods="9"/>
+        <metrics statements="30" coveredstatements="20" conditionals="38" coveredconditionals="26" methods="10" coveredmethods="9"/>
         <line num="12" count="8" type="stmt"/>
         <line num="14" count="8" type="stmt"/>
         <line num="15" count="8" type="stmt"/>
-        <line num="16" count="8" type="stmt"/>
-        <line num="22" count="2" type="stmt"/>
-        <line num="23" count="2" type="stmt"/>
-        <line num="25" count="2" type="stmt"/>
-        <line num="30" count="2" type="stmt"/>
-        <line num="32" count="2" type="cond" truecount="3" falsecount="1"/>
-        <line num="34" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="37" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="38" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="39" count="0" type="stmt"/>
-        <line num="52" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
+        <line num="17" count="8" type="stmt"/>
+        <line num="19" count="8" type="stmt"/>
+        <line num="20" count="8" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="30" count="2" type="cond" truecount="3" falsecount="1"/>
+        <line num="33" count="2" type="cond" truecount="3" falsecount="1"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
         <line num="55" count="0" type="stmt"/>
-        <line num="60" count="2" type="stmt"/>
-        <line num="64" count="0" type="stmt"/>
-        <line num="71" count="8" type="stmt"/>
-        <line num="78" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="79" count="0" type="stmt"/>
-        <line num="80" count="0" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="58" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="59" count="2" type="stmt"/>
+        <line num="66" count="0" type="stmt"/>
+        <line num="73" count="8" type="stmt"/>
+        <line num="80" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="81" count="0" type="stmt"/>
-        <line num="101" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="125" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="136" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="149" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="167" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="217" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="104" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="120" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="131" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="146" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="178" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="229" count="2" type="cond" truecount="1" falsecount="1"/>
       </file>
     </package>
     <package name="utilities">
-      <metrics statements="15" coveredstatements="14" conditionals="6" coveredconditionals="5" methods="2" coveredmethods="2"/>
+      <metrics statements="15" coveredstatements="15" conditionals="6" coveredconditionals="5" methods="2" coveredmethods="2"/>
       <file name="fetchData.js" path="/Users/oksanadotsenko/Desktop/fp/src/utilities/fetchData.js">
         <metrics statements="6" coveredstatements="6" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
         <line num="4" count="2" type="stmt"/>
@@ -50,16 +50,16 @@
         <line num="10" count="1" type="stmt"/>
       </file>
       <file name="geoCode.js" path="/Users/oksanadotsenko/Desktop/fp/src/utilities/geoCode.js">
-        <metrics statements="9" coveredstatements="8" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="2" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
-        <line num="12" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="12" count="4" type="cond" truecount="2" falsecount="0"/>
         <line num="13" count="1" type="stmt"/>
         <line num="14" count="1" type="stmt"/>
         <line num="16" count="1" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
       </file>
     </package>
   </project>
