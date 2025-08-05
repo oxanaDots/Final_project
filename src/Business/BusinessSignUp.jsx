@@ -52,7 +52,7 @@ function BusinessSignup() {
       console.log("Business user created and stored in Firestore");
       navigate("/signin");
     } else{
-      console.warn('Coordinates cannot be determined. Make sure the address is correct and try again.')
+      setGeoCode(undefined)
     }
     
       
