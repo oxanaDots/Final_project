@@ -12,6 +12,7 @@ function BusinessSignup() {
   const {handleSubmit, register, isSubmitting, watch, formState: {errors}} = useForm({shouldUseNativeValidation: false})
   
   const [signUpError, setSignUpError] = useState('')
+  const [geoCodeValue, setGeoCode] = useState( null)
   const navigate = useNavigate()
 
 
@@ -33,7 +34,9 @@ function BusinessSignup() {
    if (foundEnterprise.length !== 0){
 
     const geoCodedLoc = await geoCode(`${data.location}, ${data.postcode}`)
-     await setDoc(doc(db, "businesses", business.uid), {
+     geoCodedLoc && setGeoCode(geoCodeValue)
+    if (geoCodeValue){
+       await setDoc(doc(db, "businesses", business.uid), {
        businessName: data.businessName,
        firstName: data.firstName,
        lastName: data.lastName,
@@ -41,13 +44,17 @@ function BusinessSignup() {
        location: data.location,
        postcode: data.postcode,
        phoneNumber: data.phoneNumber,
-       geoLocation: geoCodedLoc && geoCodedLoc,
+       geoLocation:  geoCodedLoc,
        business_type: data.business_type,
        role: 'business',
        createdAt: new Date()
       });
       console.log("Business user created and stored in Firestore");
       navigate("/signin");
+    } else{
+      console.warn('Coordinates cannot be determined. Make sure the address is correct and try again.')
+    }
+    
       
     } else{
         setSignUpError('No record of your company has been found. Try again.')
@@ -161,7 +168,7 @@ function BusinessSignup() {
                 }}
             error={errors.postcode}
           />
-        
+        <p>{!geoCodeValue && 'Enetr correct address'}</p>
     </div>
     <InputField
             name="phoneNumber"

@@ -1,6 +1,6 @@
 import Home from './Home'
 import { createBrowserRouter, NavLink, RouterProvider } from 'react-router-dom'
-import './App.css'
+
 import './index.css' 
 import SignUpArtist from './Artists/SignUpArtist'
 import { ArtistFormProvider } from './Artists/ArtistFormContext'
