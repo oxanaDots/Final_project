@@ -1,5 +1,5 @@
 import React from 'react';
-jest.mock('firebase/app', () => {
+jest.mock('../firebase.js', () => {
   return {
     auth: jest.fn(),
     currentUser:{
@@ -9,30 +9,46 @@ jest.mock('firebase/app', () => {
   };
 });
 
-jest.mock("../firebase.js");
-jest.mock("../utilities/fetchData", () => ({ fetchData: jest.fn() }));
+// jest.mock('../Forms/UserAuthContext', () => ({
+//   UserAuthContext: () => ({ setUser: jest.fn() })
+// }));
+
+jest.mock('firebase/firestore', ()=>({
+  setDoc: jest.fn()
+}))
+
+jest.mock("../utilities/fetchData");
 jest.mock("firebase/auth", () => ({
   getAuth: jest.fn(),
   createUserWithEmailAndPassword: jest.fn()
 }));
 
+jest.mock('../utilities/geoCode.mjs', () => ({
+  geoCode: jest.fn(async () => {
+    return {lat: 0.0, lng: 0.9};
+  }),
+}));
+
 
 
 import "@testing-library/jest-dom";
-import { render, screen, waitFor } from "@testing-library/react";
+import {  render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { fetchData } from "../utilities/fetchData";
-import BusinessSignup from "../Business/BusinessSignUp";
-import * as firebaseAuth from "firebase/auth";
-import { geoCode } from '../utilities/geoCode';
+import BusinessSignup from '../Business/BusinessSignUp';
+import {  setDoc } from "firebase/firestore";
+import { geoCode } from '../utilities/geoCode.mjs';
+import SignIn from '../Forms/SignIn'
+import { UserAuthContext } from '../Forms/UserAuthContext';
 
-async function fillInForm(){
+async function fillInForm(email, companyId){
    await userEvent.type(screen.getByPlaceholderText(/business name/i), "test");
-      await userEvent.type(screen.getByPlaceholderText(/company id/i), "RF238E2");
+      await userEvent.type(screen.getByPlaceholderText(/company id/i), companyId);
       await userEvent.type(screen.getByPlaceholderText(/first name/i), "test");
       await userEvent.type(screen.getByPlaceholderText(/last name/i), "test");
-      await userEvent.type(screen.getByPlaceholderText(/email address/i), "test@mail.com");
+      await userEvent.type(screen.getByPlaceholderText(/email address/i), email);
       await userEvent.type(screen.getByPlaceholderText(/business address/i), "Green street");
       await userEvent.type(screen.getByPlaceholderText(/postcode/i), "E1 38CD");
       await userEvent.type(screen.getByPlaceholderText(/phone number/i), "07889546333");
@@ -48,84 +64,69 @@ async function submit(){
 }
 describe('Sign up form for enterprises', ()=>{
   beforeEach(()=>{
- 
-    firebaseAuth.createUserWithEmailAndPassword.mockResolvedValue({
-      user: {
-        uid:   "123",
-        email: "test@mail.com"
+    geoCode.mockResolvedValue({lat: 0.0, lng: 0.9})
+   
+ fetchData.mockResolvedValue([
+          {"email": "test@mail.com", "companyID": "RF238E2"}
+        ])
+   createUserWithEmailAndPassword.mockResolvedValue({
+     user: {
+       uid:   "123",
+       email: "test_1@mail.com"
       }
     });
-
+    setDoc.mockResolvedValue(
+      {geoLocation: {lat: 0.0, lng: 0.9}, email:  "test_1@mail.com", }
+    )
   })
 
    afterEach(() => {
     jest.restoreAllMocks();
   });
     
-    it('form fields', async ()=>{
-    render(
-    <MemoryRouter>
-      <BusinessSignup />
-    </MemoryRouter>);
 
-   
-await fillInForm();
-   
-    expect(screen.getByPlaceholderText(/business name/i).value).toBe("test");
-    expect(screen.getByPlaceholderText(/company id/i).value).toBe("RF238E2");
-    })
-
-
-    it('call companies details API', async()=> {
-       render(
-    <MemoryRouter>
-      <BusinessSignup />
-    </MemoryRouter>);
-  
-
-  await fillInForm();
-
-      fetchData.mockImplementation(async()=> {
-        return [
-          {"email": "test_1@mail.com", "companyID": "RF234E2"}
-        ]
-      })
-      // simulate user clicking submit button
-      await submit();
-      await waitFor(()=>{
-        expect(fetchData).toHaveBeenCalled()
-    })
-})
 
  
 
 it('signUpError state change', async()=>{
   
- fetchData.mockImplementation(async()=> {
-        return [
-          {email: "test_2@mail.com", companyID: "YI294P7"}
-        ]
-      })
-  
- 
+   
      render(
     <MemoryRouter>
       <BusinessSignup/>
     </MemoryRouter>);
     
 
-      await fillInForm();
-      await submit();
-     
-      await waitFor(async ()=>{
-        
-      const error =  await screen.findByTestId('signup-error');
-       expect(fetchData).toHaveBeenCalled();
+      
+    await fillInForm("wrong@mail.com", "wrong");
+    await submit()
+       const error =  await screen.findByTestId('signup-error');
        
        expect(error).toHaveTextContent('No record of your company has been found. Try again.');
-
-    })
+ 
+  
   })
+
+  it('Navigate to Sign In page', async ()=>{
+        render (
+          <MemoryRouter initialEntries={['/business_signup']}   >
+              <Routes>
+                <Route path="/business_signup" element={<BusinessSignup/>}/>
+                 <Route path="/signin" element={<SignIn />} />
+           
+              </Routes>
+            
+            </MemoryRouter>
+        )
+ 
+        
+   await fillInForm("test@mail.com", "RF238E2");
+   await submit()
+  
+   
+    expect(await screen.findByText('/signin')).toBeInTheDocument()
+
+   })
 
  
 })

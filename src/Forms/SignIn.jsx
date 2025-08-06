@@ -88,7 +88,7 @@ function SignIn() {
 
 
 <div className=' flex  w-[30rem] justify-center items-center'>
-    <form className='flex-col w-[90vw] flex items-left p-4 justify-center text-center '  onSubmit={handleSubmit(onSubmit)}>
+    <form  data-testid="sign-in" className='flex-col w-[90vw] flex items-left p-4 justify-center text-center '  onSubmit={handleSubmit(onSubmit)}>
       
           <legend className="text-xl text-center font-semibold mb-4">Sign In</legend>
   {errors.firebase ? (

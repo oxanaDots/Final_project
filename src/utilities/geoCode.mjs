@@ -1,6 +1,5 @@
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 import { fetchData } from "./fetchData";
-const API_KEY= 'AIzaSyDxe9tazUQv28lXPoUxaqYD5IAVC6TM4Y4'
-
 
 export async function geoCode(address) {
   try {
@@ -13,7 +12,7 @@ export async function geoCode(address) {
    const  {lat, lng} = data.results[0].geometry.location;
     return {latitude: lat, longitude: lng}
  } else{
-     return 'No data fetched'
+     return 
  }
 
   } catch (err) {

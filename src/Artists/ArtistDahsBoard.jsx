@@ -17,21 +17,14 @@ function ArtistDashboard() {
   const [exhibition, setExhibition]  = useState(false)
     const [loading, setLoading] = useState(true);
      const [uploadStatus, setUploadStatus] = useState(false)
+const [fileTooBig, SetFileTooBig] = useState(false)
+
 const {user} = UserAuthContext()
  const nav = useNavigate()
  const location = useLocation()
-const auth = getAuth();
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log('Current user:', user);
-    // if you just want the token claims:
-    user.getIdTokenResult().then(tokenResult => {
-      console.log('Custom claims:', tokenResult.claims);
-    });
-  } else {
-    console.log('No user is signed in');
-  }
-}); const artists_dash = location.pathname === '/artist_dashboard'
+
+
+const artists_dash = location.pathname === '/artist_dashboard'
  useEffect(() => {
     async function getExhibition() {
       try{
@@ -65,10 +58,16 @@ fileInput.current.click()
 function deleteFile(inx){
   setFiles(files => files.filter((_, index)=> index !== inx))
 }
+
+
 function addFiles(event){
 
   const selectedFiles = Array.from(event.target.files)
-  setFiles((file)=> [...file, ...selectedFiles])
+setFiles((file)=> [...{file: file, fileSize: file.size}, ...selectedFiles])
+}
+
+function handleNext(){
+
 }
 
   return (
@@ -78,19 +77,12 @@ function addFiles(event){
        <div className=' '><h2 className='font-semibold text-primary-dark text-2xl'>Welcome, {user.firstName} {user.lastName}!</h2></div> 
       </section>
       {artists_dash && 
-<section className='grid grid-cols-[30%_50%] w-[80vw] gap-16 py-10 justify-center'>
-  <div className='flex flex-col  border-b'>
-    <h2 className='pb-4 font-semibold'>Current art hosts:</h2>
-    <div className='flex justify-between text-xs py-2 px-4 bg-ternary-light'>
-      <p >Art Host1</p>
-      <p>Location </p>
-      </div>
-  </div>
+<section className='grid w-[80vw] gap-16 py-10 justify-center'>
  
   {!exhibition && !uploadStatus? <div className='flex flex-col'>
    
     <h2 className='pb-4 font-semibold' >Next steps:</h2>
-      <p className='text-xs py-2' >Upload your art and receive your exhibition schedule on the spot:</p>
+      <p className='text-xs py-2' >Upload your exhibition material for review:</p>
     <div className='grid grid-cols-[50%_50%] gap-20 justify-between text-xs py-2 px-4 '>
      <div className='border border-ternary-medium border-dashed flex flex-col rounded-md col-span-1 justify-center items-center text-center py-6 bg-ternary-light'>
    <FontAwesomeIcon className='text-2xl text-ternary-medium self-center text-center pb-8 pt-4' icon={faArrowUpFromBracket} />
@@ -102,22 +94,23 @@ function addFiles(event){
         ref={fileInput}
         style={{ display: 'none' }}
         onChange={addFiles}
-      multiple
+        multiple
         />
      {files.length ? 
      <div>
        <div className='col-2  border-b'>
       <h2 className='font-semibold pb-4'>Uploaded files:</h2>
-        <div className=' overflow-y-scroll h-[25vh] flex-col justify-center px-4'>
+        <div className=' overflow-y-scroll h-[45vh] flex-col justify-center px-4'>
               
         {files && files.map((file, index)=>(
-      <div className='flex justify-between items-center'>
-          <div className='flex items-center py-2 text-[0.7rem] gap-2'>
+      <div className='flex justify-between gap-4 items-center my-2 p-2 '>
+          {(file.size / 1000000) > 0.3 && <p>File is too big</p>}
+          <div className='flex items-center text-[0.7rem] gap-4 bg-red-50 px-4 py-2'>
             <FontAwesomeIcon className='text-ternary-medium' icon={faImage}/>
              <p>{file.name} ({(file.size / 1000000).toFixed(2)} MB)</p>
-
-          </div>
+         
           <FontAwesomeIcon onClick={()=> deleteFile(index)} className='text-red-600 cursor-pointer'icon={faTrash}/>
+          </div>
         </div>
       ))}
         </div>

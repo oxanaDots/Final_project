@@ -19,23 +19,18 @@ function UploadExhibition() {
         medium:''
     })
 
-// useEffect(async ()=>{
-//   const fetchToken = async () => {
-//     await auth.currentUser.getIdToken(true);
-//     const tokenResult = await auth.currentUser.getIdTokenResult(true);
-//     console.log(tokenResult.claims);
-//   };
-//   fetchToken();
-
-// }, [])
+console.log('user', user)
+console.log('userID', user.id)
 
     function handleChange(e){
         const { name, value } = e.target;
          setExhibitionDetails(prev => ({ ...prev, [name]: value }));
     }
 
-    console.log(user.id)
-    async function handleUpload(){
+  
+
+
+ async function handleUpload(){
  
   try{
    await auth.currentUser.getIdToken(true); 
@@ -47,9 +42,10 @@ function UploadExhibition() {
 
   const uploadedImageURLs = await Promise.all(
     files.map(async (file) => {
+      // to ensure that each artists can only access their own exhibition docs, each images folder is places into a subfolder naes after user id
       const storageRef = ref(storage, `exhibitions/${user.id}/${Date.now()}-${file.name}`);
       await uploadBytes(storageRef, file);
- 
+      // return paths to images downloaded to cloud storage
       return await getDownloadURL(storageRef);
     })
   );

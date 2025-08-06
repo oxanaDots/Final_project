@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/40</span>
+                <span class='fraction'>0/34</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>0/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/36</span>
+                <span class='fraction'>0/30</span>
             </div>
         
             
@@ -210,14 +210,7 @@
 <a name='L145'></a><a href='#L145'>145</a>
 <a name='L146'></a><a href='#L146'>146</a>
 <a name='L147'></a><a href='#L147'>147</a>
-<a name='L148'></a><a href='#L148'>148</a>
-<a name='L149'></a><a href='#L149'>149</a>
-<a name='L150'></a><a href='#L150'>150</a>
-<a name='L151'></a><a href='#L151'>151</a>
-<a name='L152'></a><a href='#L152'>152</a>
-<a name='L153'></a><a href='#L153'>153</a>
-<a name='L154'></a><a href='#L154'>154</a>
-<a name='L155'></a><a href='#L155'>155</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L148'></a><a href='#L148'>148</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -237,18 +230,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -286,18 +272,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -337,6 +322,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -390,21 +376,14 @@ function <span class="fstat-no" title="function not covered" >ArtistDashboard(</
   const [exhibition, setExhibition]  = <span class="cstat-no" title="statement not covered" >useState(false)</span>
     const [loading, setLoading] = <span class="cstat-no" title="statement not covered" >useState(true);</span>
      const [uploadStatus, setUploadStatus] = <span class="cstat-no" title="statement not covered" >useState(false)</span>
+const [fileTooBig, SetFileTooBig] = <span class="cstat-no" title="statement not covered" >useState(false)</span>
+&nbsp;
 const {user} = <span class="cstat-no" title="statement not covered" >UserAuthContext()</span>
  const nav = <span class="cstat-no" title="statement not covered" >useNavigate()</span>
  const location = <span class="cstat-no" title="statement not covered" >useLocation()</span>
-const auth = <span class="cstat-no" title="statement not covered" >getAuth();</span>
-<span class="cstat-no" title="statement not covered" >onAuthStateChanged(auth, <span class="fstat-no" title="function not covered" >(u</span>ser) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  if (user) {</span>
-<span class="cstat-no" title="statement not covered" >    console.log('Current user:', user);</span>
-    // if you just want the token claims:
-<span class="cstat-no" title="statement not covered" >    user.getIdTokenResult().then(<span class="fstat-no" title="function not covered" >to</span>kenResult =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      console.log('Custom claims:', tokenResult.claims);</span>
-    });
-  } else {
-<span class="cstat-no" title="statement not covered" >    console.log('No user is signed in');</span>
-  }
-}); const artists_dash = <span class="cstat-no" title="statement not covered" >location.pathname === '/artist_dashboard'</span>
+&nbsp;
+&nbsp;
+const artists_dash = <span class="cstat-no" title="statement not covered" >location.pathname === '/artist_dashboard'</span>
 <span class="cstat-no" title="statement not covered" > useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
     async function <span class="fstat-no" title="function not covered" >getExhibition(</span>) {
 <span class="cstat-no" title="statement not covered" >      try{</span>
@@ -438,10 +417,16 @@ function <span class="fstat-no" title="function not covered" >handleClick(</span
 function <span class="fstat-no" title="function not covered" >deleteFile(</span>inx){
 <span class="cstat-no" title="statement not covered" >  setFiles(<span class="fstat-no" title="function not covered" >fi</span>les =&gt; <span class="cstat-no" title="statement not covered" >files.filter(<span class="fstat-no" title="function not covered" >(_</span>, index)=&gt; <span class="cstat-no" title="statement not covered" >index !== inx)</span>)</span></span>
 }
+&nbsp;
+&nbsp;
 function <span class="fstat-no" title="function not covered" >addFiles(</span>event){
 &nbsp;
   const selectedFiles = <span class="cstat-no" title="statement not covered" >Array.from(event.target.files)</span>
-<span class="cstat-no" title="statement not covered" >  setFiles(<span class="fstat-no" title="function not covered" >(f</span>ile)=&gt; <span class="cstat-no" title="statement not covered" >[...file, ...selectedFiles])</span></span>
+<span class="cstat-no" title="statement not covered" >setFiles(<span class="fstat-no" title="function not covered" >(f</span>ile)=&gt; <span class="cstat-no" title="statement not covered" >[...{file: file, fileSize: file.size}, ...selectedFiles])</span></span>
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >handleNext(</span>){
+&nbsp;
 }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
@@ -451,19 +436,12 @@ function <span class="fstat-no" title="function not covered" >addFiles(</span>ev
        &lt;div className=' '&gt;&lt;h2 className='font-semibold text-primary-dark text-2xl'&gt;Welcome, {user.firstName} {user.lastName}!&lt;/h2&gt;&lt;/div&gt; 
       &lt;/section&gt;
       {artists_dash &amp;&amp; 
-&lt;section className='grid grid-cols-[30%_50%] w-[80vw] gap-16 py-10 justify-center'&gt;
-  &lt;div className='flex flex-col  border-b'&gt;
-    &lt;h2 className='pb-4 font-semibold'&gt;Current art hosts:&lt;/h2&gt;
-    &lt;div className='flex justify-between text-xs py-2 px-4 bg-ternary-light'&gt;
-      &lt;p &gt;Art Host1&lt;/p&gt;
-      &lt;p&gt;Location &lt;/p&gt;
-      &lt;/div&gt;
-  &lt;/div&gt;
+&lt;section className='grid w-[80vw] gap-16 py-10 justify-center'&gt;
  
   {!exhibition &amp;&amp; !uploadStatus? &lt;div className='flex flex-col'&gt;
    
     &lt;h2 className='pb-4 font-semibold' &gt;Next steps:&lt;/h2&gt;
-      &lt;p className='text-xs py-2' &gt;Upload your art and receive your exhibition schedule on the spot:&lt;/p&gt;
+      &lt;p className='text-xs py-2' &gt;Upload your exhibition material for review:&lt;/p&gt;
     &lt;div className='grid grid-cols-[50%_50%] gap-20 justify-between text-xs py-2 px-4 '&gt;
      &lt;div className='border border-ternary-medium border-dashed flex flex-col rounded-md col-span-1 justify-center items-center text-center py-6 bg-ternary-light'&gt;
    &lt;FontAwesomeIcon className='text-2xl text-ternary-medium self-center text-center pb-8 pt-4' icon={faArrowUpFromBracket} /&gt;
@@ -475,22 +453,23 @@ function <span class="fstat-no" title="function not covered" >addFiles(</span>ev
         ref={fileInput}
         style={{ display: 'none' }}
         onChange={addFiles}
-      multiple
+        multiple
         /&gt;
      {files.length ? 
      &lt;div&gt;
        &lt;div className='col-2  border-b'&gt;
       &lt;h2 className='font-semibold pb-4'&gt;Uploaded files:&lt;/h2&gt;
-        &lt;div className=' overflow-y-scroll h-[25vh] flex-col justify-center px-4'&gt;
+        &lt;div className=' overflow-y-scroll h-[45vh] flex-col justify-center px-4'&gt;
               
         {files &amp;&amp; files.map(<span class="fstat-no" title="function not covered" >(f</span>ile, index)=&gt;(
-<span class="cstat-no" title="statement not covered" >      &lt;div className='flex justify-between items-center'&gt;</span>
-          &lt;div className='flex items-center py-2 text-[0.7rem] gap-2'&gt;
+<span class="cstat-no" title="statement not covered" >      &lt;div className='flex justify-between gap-4 items-center my-2 p-2 '&gt;</span>
+          {(file.size / 1000000) &gt; 0.3 &amp;&amp; &lt;p&gt;File is too big&lt;/p&gt;}
+          &lt;div className='flex items-center text-[0.7rem] gap-4 bg-red-50 px-4 py-2'&gt;
             &lt;FontAwesomeIcon className='text-ternary-medium' icon={faImage}/&gt;
              &lt;p&gt;{file.name} ({(file.size / 1000000).toFixed(2)} MB)&lt;/p&gt;
-&nbsp;
-          &lt;/div&gt;
+         
           &lt;FontAwesomeIcon onClick={<span class="fstat-no" title="function not covered" >()</span>=&gt; <span class="cstat-no" title="statement not covered" >deleteFile(index)}</span> className='text-red-600 cursor-pointer'icon={faTrash}/&gt;
+          &lt;/div&gt;
         &lt;/div&gt;
       ))}
         &lt;/div&gt;
@@ -532,7 +511,7 @@ export default ArtistDashboard;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-03T23:50:45.627Z
+                at 2025-08-06T02:21:38.000Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

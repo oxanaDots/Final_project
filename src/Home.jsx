@@ -84,7 +84,7 @@ useEffect(()=>{
 
 
 
- const expireDate = currentExhibition? currentExhibition.expireAt: null
+ const expireDate = currentExhibition ? currentExhibition.expireAt: null
 
 
   useEffect(() => {

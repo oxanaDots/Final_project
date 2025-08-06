@@ -7,19 +7,16 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase.js"; 
 import { fetchData } from '../utilities/fetchData.js';
-import { geoCode } from '../utilities/geoCode.js';
+import { geoCode } from '../utilities/geoCode.mjs';
 function BusinessSignup() {
   const {handleSubmit, register, isSubmitting, watch, reset, formState: {errors}} = useForm({shouldUseNativeValidation: false})
   
   const [signUpError, setSignUpError] = useState('')
   const [geoCodeValue, setGeoCode] = useState( '')
-
   const navigate = useNavigate()
 
-console.log(geoCodeValue)
-console.log(signUpError)
-  async function onSubmit (data) {
 
+  async function onSubmit (data) {
 
   try {
     // const enterprisesData = await fetchData('https://final-project-red-delta.vercel.app/api/enterprises')
@@ -27,10 +24,15 @@ console.log(signUpError)
 
    
    const geoCodedLoc = await geoCode(`${data.location}, ${data.postcode}`)
+   console.log(geoCodedLoc)
    const foundEnterprise = enterprisesData && enterprisesData.filter(item => item.email === data.email && item.companyID === data.companyID)
+   console.log(foundEnterprise)
+     console.log(data.location, data.postcode)
+
+    !geoCodedLoc && setGeoCode( 'Wrong address')
+      foundEnterprise.length === 0 &&  setSignUpError('No record of your company has been found. Try again.')
    
-   
-    if (geoCodeValue !== 'Wrong address'&& foundEnterprise.length > 0){
+    if (geoCodedLoc && foundEnterprise.length > 0){
 
       const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -54,10 +56,9 @@ console.log(signUpError)
       });
       console.log("Business user created and stored in Firestore");
       navigate("/signin");
-    }  else{
-      setGeoCode(geoCodeValue?geoCodeValue: 'Wrong address')
-      setSignUpError('No record of your company has been found. Try again.')
-    }
+    } 
+    
+    
     
       
    
