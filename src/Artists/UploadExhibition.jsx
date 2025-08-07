@@ -33,12 +33,8 @@ console.log('userID', user.id)
  async function handleUpload(){
  
   try{
-   await auth.currentUser.getIdToken(true); 
-  const userToken = await auth.currentUser.getIdTokenResult(); 
-  console.log(userToken)
-  console.log(userToken.claims)
-  setUploadStatus(true)
 
+  setUploadStatus(true)
 
   const uploadedImageURLs = await Promise.all(
     files.map(async (file) => {
@@ -95,7 +91,7 @@ console.log('userID', user.id)
      <input className=' flex w-full border px-3 text-sm py-[0.7rem]' name='medium' value={exhibitionDetails.medium} onChange={handleChange} placeholder='art medium'/>
 
       <textarea className=' flex h-[15rem] w-full border px-3 text-sm py-[0.7rem]' name='descr' value={exhibitionDetails.descr} onChange={handleChange} placeholder='add description'/>
-      <button onClick={()=> handleUpload()} className='submit-btn'>{uploadStatus ? 'Uploading...': 'Upload'}</button>
+      <button onClick={()=> handleUpload()} data-testid = 'submit' className='submit-btn'>{uploadStatus ? 'Uploading...': 'Upload'}</button>
       </div>
      </section>
     </div> ): 
@@ -103,7 +99,7 @@ console.log('userID', user.id)
         <FontAwesomeIcon className='text-2xl pb-4 text-green-600' icon={faCheck}/>
         <h2 className='font-semibold'>Your files have been uploaded!</h2>
         <p className='text-xs py-8'>Your exhibition will take place on</p>
-        <button onClick={()=> nav('/artist_dashboard')} className='py-2 px-4 text-xs bg-green-600 text-secondary-light border rounded-full'>Return to your Dashboard</button>
+        <button data-testid='return-to-dashboard' onClick={()=> nav('/artist_dashboard')} className='py-2 px-4 text-xs bg-green-600 text-secondary-light border rounded-full'>Return to your Dashboard</button>
         </div>}
     </>
   );

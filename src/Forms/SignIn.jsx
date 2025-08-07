@@ -32,11 +32,6 @@ function SignIn() {
       userData = artistDoc.data();
       setUser({ ...userData, id: user.uid });
       navigate('/artist_dashboard');
-    } else if (businessDoc.exists()) {
-      userData = businessDoc.data();
-      setUser({ ...userData, id: user.uid });
-
-      navigate('/business_dashboard');
     }  else  if (user.email === 'admin1234@test.com'){
         navigate('/admin')
       }
@@ -126,7 +121,7 @@ function SignIn() {
 />
 
 
-    <button className='submit-btn'>Submit</button>
+    <button  data-testid='submit-btn' className='submit-btn'>Submit</button>
   </form>
 </div>
 

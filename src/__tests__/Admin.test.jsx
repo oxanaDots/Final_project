@@ -18,7 +18,7 @@ jest.mock('firebase/firestore', () => ({
 
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { MemoryRouter, Routes, Route, Outlet, useOutletContext } from "react-router-dom"
+import { MemoryRouter, Routes, Route, Outlet } from "react-router-dom"
 import Admin from '../Admin/Admin'
  import { getDocs, doc, updateDoc, query, where, orderBy, Timestamp} from "firebase/firestore";
 import ExhibitionSubmission from "../Admin/ExhibitionSubmission";
@@ -159,9 +159,7 @@ describe ('Admin page', ()=>{
 
 
    it("Returns correct context for exhibitions with docId: 124", async () => {
-    
-
-    renderHelper('124')
+     renderHelper('124')
 
       expect(await screen.findByText('ArtistTwoName ArtistTwoLastName')).toBeInTheDocument()
 
@@ -169,10 +167,7 @@ describe ('Admin page', ()=>{
     })
 
       it("Updates a doc with a status 'accepted, adds expireAt and startsAt dates'.", async () => {
-    
-
-    
-      renderHelper('124')
+     renderHelper('124')
   
        doc.mockReturnValue({id: '124'})
        getDocs.mockResolvedValue({docs: acceptedDocs, size: acceptedDocs.length})
@@ -187,9 +182,6 @@ describe ('Admin page', ()=>{
 
 
       it("Returns correct context for exhibitions with docId: 124", async () => {
-    
-
-    
       renderHelper('124')
   
        doc.mockReturnValue({id: '124'})

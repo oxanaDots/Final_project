@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useRef, useState } from 'react';
 import { UserAuthContext } from '../Forms/UserAuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from '../firebase';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 
 import ExhibitionItem from '../Components/ExhibitionItem';
 
@@ -15,16 +15,41 @@ function ArtistDashboard() {
 
   const [files, setFiles]=useState([])
   const [exhibition, setExhibition]  = useState(false)
-    const [loading, setLoading] = useState(true);
-     const [uploadStatus, setUploadStatus] = useState(false)
-const [fileTooBig, SetFileTooBig] = useState(false)
+  const [loading, setLoading] = useState(true);
+  const [uploadStatus, setUploadStatus] = useState(false)
+  // const [exceededLimit, setexceededLimit] = useState(false)
+  // const [excedeSize, setExedeSize] = useState(false)
+  const [warning, setWarning] = useState(null)
 
 const {user} = UserAuthContext()
  const nav = useNavigate()
  const location = useLocation()
 
+//  useEffect(()=>{
+//   files.length > 10? setexceededLimit(true):  setexceededLimit(false)
+//   files.some(file=> (file.size / 1000000) >5 ? setExedeSize(true) : setExedeSize(false) )
+//  }, [files ])
+const exceededLimit = useMemo(()=> files.length > 10, [files])
 
+const excedeSize = useMemo(()=> files.some(file=> (file.size / 1000000) >5), [files])
+const reachedLimit = useMemo(()=> files.length ===  10, [files] )
+
+ useEffect(()=>{
+  if(( excedeSize || exceededLimit) || ( excedeSize && exceededLimit)){
+    setWarning('Make sure you do not exceed upload limits for file size and amount.')
+  } else {
+    setWarning(null)
+  }
+ }, [excedeSize, exceededLimit])
+ 
+const warningFlag =( !excedeSize && !exceededLimit) || ( !excedeSize || !exceededLimit)
 const artists_dash = location.pathname === '/artist_dashboard'
+
+console.log('excedesize', excedeSize)
+console.log('exceededLimit', exceededLimit)
+
+
+
  useEffect(() => {
     async function getExhibition() {
       try{
@@ -49,8 +74,13 @@ const artists_dash = location.pathname === '/artist_dashboard'
     getExhibition();
   }, [user, uploadStatus]);
 
+
+  // useRef hook is used to create a reference to a DOM element (</input>) in this case
+  // fileInput now holds an object: {current: input}
 const fileInput = useRef()
 
+
+// trigger a click event of an input element
 function handleClick(){
 fileInput.current.click()
 }
@@ -63,12 +93,18 @@ function deleteFile(inx){
 function addFiles(event){
 
   const selectedFiles = Array.from(event.target.files)
-setFiles((file)=> [...{file: file, fileSize: file.size}, ...selectedFiles])
-}
 
-function handleNext(){
+  
+  setFiles((file)=> [...file, ...selectedFiles])
+   }
 
-}
+   function handleNext(){
+
+    if(!exceededLimit && !excedeSize){
+     nav('add_exhibition')
+    }
+   }
+
 
   return (
    <>
@@ -77,45 +113,75 @@ function handleNext(){
        <div className=' '><h2 className='font-semibold text-primary-dark text-2xl'>Welcome, {user.firstName} {user.lastName}!</h2></div> 
       </section>
       {artists_dash && 
-<section className='grid w-[80vw] gap-16 py-10 justify-center'>
+<section className='flex  w-[80vw] gap-16 py-10 justify-center'>
  
   {!exhibition && !uploadStatus? <div className='flex flex-col'>
    
     <h2 className='pb-4 font-semibold' >Next steps:</h2>
       <p className='text-xs py-2' >Upload your exhibition material for review:</p>
-    <div className='grid grid-cols-[50%_50%] gap-20 justify-between text-xs py-2 px-4 '>
-     <div className='border border-ternary-medium border-dashed flex flex-col rounded-md col-span-1 justify-center items-center text-center py-6 bg-ternary-light'>
+    <div className=' flex  gap-20  justify-between text-xs  py-2 px-4 '>
+
+     <div className='border border-ternary-medium border-dashed flex p-6 flex-col rounded-md col-start-1 w-full justify-center items-center text-center py-6 bg-ternary-light'>
+      <p>You can add up to 10 files.</p>
+      <p className='text-center py-2 text-ternary-medium'>Max size: 5 MB per image</p>
+
    <FontAwesomeIcon className='text-2xl text-ternary-medium self-center text-center pb-8 pt-4' icon={faArrowUpFromBracket} />
-   <button onClick={handleClick} className='text-center py-2 my-2 bg-secondary-dark text-secondary-light flex flex-col px-4 rounded-full w-auto self-center' >Browse Files</button>
-   <p className='text-center py-2 text-ternary-medium'>Max size: 200Mb</p>
+  
+{  exceededLimit &&
+<div>
+<p className='text-red-500 text-xs'>{`You can only upload 10 files. Remove  ${files.length - 10} files to proceede.`} </p>
+</div>}
+
+{ (!reachedLimit  && !exceededLimit) && <button data-testid="browse-button"  onClick={handleClick} className='text-center py-2 my-2 bg-secondary-dark text-secondary-light  px-4 rounded-full w-auto self-center' >Browse Files</button>} 
+
+{reachedLimit && <p className='text-green-500 text-base font-semibold'>Upload limit has been reached!</p>}
      </div>
+     {/* inputFile ref now points to a file input element which is hidden. A click on the input elment is triggered with handleClick() function
+     which open browser's file picker UI.*/}
      <input
+        data-testid="input-files" 
         type="file"
         ref={fileInput}
         style={{ display: 'none' }}
+        // addFiles attached to onChange  callback updates files state
         onChange={addFiles}
         multiple
+       
+        accept=".jpg, .jpeg, .png" 
         />
      {files.length ? 
      <div>
-       <div className='col-2  border-b'>
+       <div className='col-2  border-b col-start-2'>
       <h2 className='font-semibold pb-4'>Uploaded files:</h2>
         <div className=' overflow-y-scroll h-[45vh] flex-col justify-center px-4'>
               
         {files && files.map((file, index)=>(
-      <div className='flex justify-between gap-4 items-center my-2 p-2 '>
-          {(file.size / 1000000) > 0.3 && <p>File is too big</p>}
-          <div className='flex items-center text-[0.7rem] gap-4 bg-red-50 px-4 py-2'>
-            <FontAwesomeIcon className='text-ternary-medium' icon={faImage}/>
-             <p>{file.name} ({(file.size / 1000000).toFixed(2)} MB)</p>
-         
-          <FontAwesomeIcon onClick={()=> deleteFile(index)} className='text-red-600 cursor-pointer'icon={faTrash}/>
+      <div className=' justify-between flex gap-4 items-center  width-full p-2  '>
+          <div data-testid='file-item' className={`grid grid-cols-[15%_5%_60%_10%_5%] w-full items-center text-[0.7rem] gap-4  px-4 py-2 ${(file.size / 1000000) > 5 ? 'bg-red-50':' bg-green-50'}`}>
+          <p className={`${(file.size / 1000000) >5 ?'text-red-500': 'text-green-500' }  col-start-1   rounded-sm`}>{(file.size / 1000000) > 5 ? 'File is too big' : 'Accepted'}</p>
+                <div className='grid w-full h-full aspect-square overflow-hidden  justify-center place-self-center rounded-sm border ' key={index}>
+                <img
+                className='object-cover w-full h-full border-ternary-medium'
+                //  Web API URL static method createObjectURL which return a string containing unique blob URL
+                src={URL.createObjectURL(file)}
+                />
+            </div>             
+                <p className=' grid col-start-3'>{file.name} </p>
+                <p className=' grid col-start-4'>({(file.size / 1000000).toFixed(2)} MB)</p>
+         <button onClick={()=> deleteFile(index)} className='grid col-start-5 cursor-pointer' data-testid={`delete-button-${index}`}>
+             <FontAwesomeIcon   className='text-red-600 'icon={faTrash}/>
+         </button>
           </div>
         </div>
       ))}
         </div>
      </div>
-        <button onClick={()=> nav('add_exhibition')} className='justify-self-end items-baseline grid col-2 text-center py-2 mt-4 bg-primary-dark text-secondary-light px-4 rounded-full '>Next</button>
+     <div className='flex items-center justify-end gap-6 py-4'> 
+     <p className='text-red-500'>{warning}</p>
+{ !excedeSize && !exceededLimit && !warning && <button  data-testid="next"  onClick={()=> handleNext()} className=' flex  text-center py-2 mt-4 bg-primary-dark text-secondary-light px-4 rounded-full '>Next</button>
+}     </div>
+
+
 </div>
 : null}
       </div>

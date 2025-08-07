@@ -1,4 +1,3 @@
-import { useArtistForm } from './ArtistFormContext'
 import InputField from '../Components/InputField';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
@@ -9,9 +8,7 @@ import { auth, db } from "../firebase.js";
 
 function SignUpArtist() {
     const navigate = useNavigate()
-    const {
-         setArtistFormData
-    } = useArtistForm()
+
 const [but, updateButt] = useState(false)
 const [links, setLinks] = useState([])
 
@@ -27,7 +24,7 @@ const [links, setLinks] = useState([])
              links: linksArray.length > 0 ? linksArray : [],
              role: 'artist'
           };        
-          setArtistFormData(updatedData);
+        
 
          try{
          const  userCredentials = await createUserWithEmailAndPassword(

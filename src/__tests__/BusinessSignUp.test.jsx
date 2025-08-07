@@ -1,13 +1,5 @@
 import React from 'react';
-jest.mock('../firebase.js', () => {
-  return {
-    auth: jest.fn(),
-    currentUser:{
-   email: "test@mail.com",
-   uid: "123"
-    }
-  };
-});
+jest.mock('../firebase.js');
 
 // jest.mock('../Forms/UserAuthContext', () => ({
 //   UserAuthContext: () => ({ setUser: jest.fn() })
@@ -64,11 +56,12 @@ async function submit(){
 }
 describe('Sign up form for enterprises', ()=>{
   beforeEach(()=>{
-    geoCode.mockResolvedValue({lat: 0.0, lng: 0.9})
+
+   geoCode.mockResolvedValue({lat: 0.0, lng: 0.9})
    
- fetchData.mockResolvedValue([
-          {"email": "test@mail.com", "companyID": "RF238E2"}
-        ])
+   fetchData.mockResolvedValue([
+     {"email": "test_1@mail.com", "companyID": "RF238E2"}
+    ])
    createUserWithEmailAndPassword.mockResolvedValue({
      user: {
        uid:   "123",
@@ -100,9 +93,8 @@ it('signUpError state change', async()=>{
       
     await fillInForm("wrong@mail.com", "wrong");
     await submit()
-       const error =  await screen.findByTestId('signup-error');
-       
-       expect(error).toHaveTextContent('No record of your company has been found. Try again.');
+    const error =  await screen.findByTestId('signup-error');
+    expect(error).toHaveTextContent('No record of your company has been found. Try again.');
  
   
   })
@@ -113,20 +105,20 @@ it('signUpError state change', async()=>{
               <Routes>
                 <Route path="/business_signup" element={<BusinessSignup/>}/>
                  <Route path="/signin" element={<SignIn />} />
-           
               </Routes>
-            
             </MemoryRouter>
         )
  
         
-   await fillInForm("test@mail.com", "RF238E2");
-   await submit()
-  
-   
-    expect(await screen.findByText('/signin')).toBeInTheDocument()
+   await fillInForm("test_1@mail.com", "RF238E2");
+
+   waitFor(async ()=>{
+     await submit()
 
    })
 
- 
+  
+   expect(screen.getByText('Account created')).toBeInTheDocument();
+   
+  })
 })
