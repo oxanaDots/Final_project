@@ -83,9 +83,9 @@ function App() {
      
   <BusinessFormProvider>
     <AuthProvider>
-<ArtistFormProvider>
+
 <RouterProvider router={router}/>
-</ArtistFormProvider>
+
 </AuthProvider>
 </BusinessFormProvider>
      
