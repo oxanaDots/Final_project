@@ -75,8 +75,5 @@ try{
 
 })
 
-export const notifyAdmin(){
-  
-}
 
 // firebase deploy --only functions:notifyArtists --project art-hosting

@@ -14,7 +14,7 @@ function BusinessSignup() {
   const [signUpError, setSignUpError] = useState('')
   const [geoCodeValue, setGeoCode] = useState( '')
   const [submitted, setSubmitted] = useState(false)
-  const navigate = useNavigate()
+ 
 
 
   async function onSubmit (data) {

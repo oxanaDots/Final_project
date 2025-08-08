@@ -6,7 +6,8 @@ jest.mock('../firebase.js');
 // }));
 
 jest.mock('firebase/firestore', ()=>({
-  setDoc: jest.fn()
+  setDoc: jest.fn(),
+  doc: jest.fn()
 }))
 
 jest.mock("../utilities/fetchData");
@@ -69,7 +70,7 @@ describe('Sign up form for enterprises', ()=>{
       }
     });
     setDoc.mockResolvedValue(
-      {geoLocation: {lat: 0.0, lng: 0.9}, email:  "test_1@mail.com", }
+      {doc: {geoLocation: {lat: 0.0, lng: 0.9}, email:  "test_1@mail.com", }}
     )
   })
 
@@ -81,7 +82,7 @@ describe('Sign up form for enterprises', ()=>{
 
  
 
-it('signUpError state change', async()=>{
+it('Shows error when user enters wrong email and company id', async()=>{
   
    
      render(
@@ -99,26 +100,19 @@ it('signUpError state change', async()=>{
   
   })
 
-  it('Navigate to Sign In page', async ()=>{
+  it('Shows successfull account registration method', async ()=>{
         render (
           <MemoryRouter initialEntries={['/business_signup']}   >
               <Routes>
                 <Route path="/business_signup" element={<BusinessSignup/>}/>
-                 <Route path="/signin" element={<SignIn />} />
               </Routes>
             </MemoryRouter>
         )
  
         
-   await fillInForm("test_1@mail.com", "RF238E2");
+ await fillInForm("test_1@mail.com", "RF238E2");
 
-   waitFor(async ()=>{
-     await submit()
-
-   })
-
-  
-   expect(screen.getByText('Account created')).toBeInTheDocument();
-   
+ await submit()
+expect(await screen.findByText(/Account created successfully!/i)).toBeInTheDocument();   
   })
 })

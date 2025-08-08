@@ -12,9 +12,6 @@ if (timestamp){
 
     return expire
 }
-
-
-
  }
 
 export function getFirebaseTimestamp(data){

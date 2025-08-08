@@ -61,7 +61,11 @@ describe('Sign up form for enterprises', ()=>{
   });
     
 
+afterEach(() => {
+  jest.clearAllMocks();
+  jest.restoreAllMocks();
 
+});
  
 
 it('signUpError state change', async()=>{

@@ -22,8 +22,9 @@ jest.mock("../Forms/UserAuthContext", ()=>({
 
 jest.mock("firebase/storage", ()=>({
 ref:jest.fn(),
-uploadBytes:jest.fn(),
-getDownloadURL:jest.fn()
+uploadBytes: jest.fn()
+
+
 }))
 
 
@@ -44,7 +45,7 @@ const files = [
             new File(['there'], 'there.png', {type: 'image/png'}),
             ]
 const mockexcedeLimit = Array.from({length: 11}, ( _, i)=> new File([`file${i}`], `${i}.png`, {type: 'image/png'}))
- const imagePaths = Array.from({length: 10}, (_, i) => `image0${i}.jpg`)
+ const imagePaths = ['test/path/file.jpg' ]
 
 
 function renderHelper(initialEntry){
@@ -85,19 +86,23 @@ describe('',  ()=>{
             {id: '123',
             data: ()=> ({ title:'Title One'})}
         ]})
-        getDownloadURL.mockResolvedValue(imagePaths)
+        uploadBytes.mockResolvedValue({ path: 'test/path/file.jpg' })
         addDoc.mockResolvedValue({images:imagePaths, title:'title'})
     })
+        afterEach(() => {
+        jest.clearAllMocks();
+        jest.restoreAllMocks();
 
+        });
 
     it("Show details of an exhibition that's been uploaded", async()=>{
        renderHelper('/artist_dashboard')
        
         // fireEvent.click(screen.getByTestId('browse-files'))
-        waitFor(async ()=>{
-            expect(await screen.getByText('Title One')).toBeInTheDocument()
+      
+        expect(await screen.findByText(/Title One\b/i)).toBeInTheDocument()
 
-        })
+        
     })
 
 

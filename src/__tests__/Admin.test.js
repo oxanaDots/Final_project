@@ -108,10 +108,13 @@ describe ('Admin page', ()=>{
         })}
     ]
 
-   
-
-  
 })
+
+
+afterEach(() => {
+  jest.clearAllMocks();
+  jest.restoreAllMocks();
+});
     it ('list all exhibitions and navigate to an individual exhibition item', async()=>{
 
       getDocs.mockResolvedValue({

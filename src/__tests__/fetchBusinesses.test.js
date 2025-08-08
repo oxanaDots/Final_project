@@ -31,6 +31,12 @@ describe('fetchUpcomingExhibition function', ()=>{
        })
 
       })
+
+            afterEach(() => {
+        jest.clearAllMocks();
+        jest.restoreAllMocks();
+
+      });
       
       const fakeData = {
   "0, 0" :{ geoLoc: { lat:0, lng:0 },  businessName: "One", businessId: 'business1' },

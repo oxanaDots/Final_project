@@ -42,7 +42,6 @@ const reachedLimit = useMemo(()=> files.length ===  10, [files] )
   }
  }, [excedeSize, exceededLimit])
  
-const warningFlag =( !excedeSize && !exceededLimit) || ( !excedeSize || !exceededLimit)
 const artists_dash = location.pathname === '/artist_dashboard'
 
 console.log('excedesize', excedeSize)

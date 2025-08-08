@@ -42,6 +42,12 @@ describe('fetchUpcomingExhibition function', ()=>{
       })
 
 
+        afterEach(() => {
+          jest.clearAllMocks();
+          jest.restoreAllMocks();
+
+        });
+
        const mockedData = [
     { docId: "1",  title: "One"  },
     { docId: "2", title: "Two" }
