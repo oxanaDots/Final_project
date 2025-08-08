@@ -4,6 +4,7 @@ import { collection, getDocs, query, orderBy, where } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { useMatch } from 'react-router-dom';
+import { storage } from '../firebase';
 function AdminDashboard() {
 
   const [exhibitions, setExhibition] = useState([])
@@ -22,8 +23,7 @@ function AdminDashboard() {
   console.log(exhibitionsSnapshot)
    if (exhibitionsSnapshot.size > 0 ){
             const data = exhibitionsSnapshot.docs.map(doc=> ({...doc.data(), docId: doc.id}))
-
-                setExhibition(data)
+           setExhibition(data)
           }
 
         console.log(exhibitions[0].createdAt)
@@ -42,7 +42,7 @@ function AdminDashboard() {
     }
   }, [])
 
-  console.log(exhibitions)
+
 
  function navigateToExhibition(id) {
   navigate(`/admin/exhibition_submission/${id}`);

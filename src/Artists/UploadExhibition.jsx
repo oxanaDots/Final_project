@@ -42,7 +42,7 @@ console.log('userID', user.id)
       const storageRef = ref(storage, `exhibitions/${user.id}/${Date.now()}-${file.name}`);
       await uploadBytes(storageRef, file);
       // return paths to images downloaded to cloud storage
-      return await getDownloadURL(storageRef);
+      return storageRef.fullPath;
     })
   );
 
@@ -57,6 +57,8 @@ console.log('userID', user.id)
         createdAt: new Date(),
         status: 'pending'
       });
+
+    
  
 
         } catch(err){

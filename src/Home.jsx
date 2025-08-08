@@ -24,7 +24,8 @@ import { orderByDistance, getDistance, convertDistance } from 'geolib'
   const [index, setIndex] = useState(0)
   const [userLocation, setUserLocation] = useState({})
 
-
+const images = Array.from({length: 10}, (_, i)=> `image${i}.jpg`)
+console.log('images', images)
 const docs = [...businesses.values()]
 
 // get user's current location in latlong and show busiensses closest to user's location

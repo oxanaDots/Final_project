@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { useMatch } from 'react-router-dom';
 import ExhibitionItem from '../Components/ExhibitionItem';
 import {  doc,collection, Timestamp, updateDoc, where, getDocs, query, orderBy  } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db, storage } from '../firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faXmark, faCheck} from '@fortawesome/free-solid-svg-icons';
-
-
+import { ref } from 'firebase/storage';
+import { getBlob } from 'firebase/storage';
 
 function ExhibitionSubmission() {
   const linkParams = useMatch('/admin/exhibition_submission/:id');
@@ -15,9 +15,30 @@ function ExhibitionSubmission() {
   const {exhibitions} = useOutletContext()
   const currentExhibition = exhibitions.find((item)=> item.docId === currentId['id'])
    const [statusB, setstatus] = useState(false)
+   const [paths, setPaths] = useState([])
   const navigate = useNavigate()
 
 
+  useEffect(()=>{
+    async function helper(){
+      const images = currentExhibition.images
+      try{
+          for (const path of images){
+        const pathRef = ref(storage,  path)
+        const blob = await getBlob(pathRef)
+        const objectUrl = URL.createObjectURL(blob);
+        setPaths((links)=> [...links, objectUrl])
+      }
+      } catch(err){
+        console.error(err)
+      }
+    }
+    helper()
+  }, [])
+
+  console.log(paths)
+
+console.log(currentExhibition)
    async function reviewSubmission(status){
     try{
         const exhibitionDocRef = doc(db, 'exhibitions', currentExhibition.docId);
@@ -64,6 +85,11 @@ function ExhibitionSubmission() {
 
    }
  
+
+
+   useEffect(()=>{
+
+   })
   return (
     <div className='grid justify-center py-8'>
    {!statusB ? 
@@ -80,10 +106,10 @@ function ExhibitionSubmission() {
     <section className='grid grid-cols-2 justify-center   col-1 gap-4 px-6 '>
     {currentExhibition.images && currentExhibition.images.map((link, index)=> (
             <div className='  aspect-square overflow-hidden  justify-center place-self-center rounded-sm border ' key={index}>
-                <img
+                {paths.map((path)=> <img
                 className='object-cover w-full h-full border-ternary-medium'
-                src={link}
-                />
+                src={path}
+                /> )}
             </div>
         ))}
     </section>

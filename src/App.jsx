@@ -3,7 +3,6 @@ import { createBrowserRouter, NavLink, RouterProvider } from 'react-router-dom'
 
 import './index.css' 
 import SignUpArtist from './Artists/SignUpArtist'
-import { ArtistFormProvider } from './Artists/ArtistFormContext'
 import Roles from './Forms/Roles'
 import BusinessSignup from './Business/BusinessSignUp'
 import { BusinessFormProvider } from './Business/BusinessFormContext'
