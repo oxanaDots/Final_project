@@ -6,6 +6,8 @@ import { UserAuthContext } from './UserAuthContext';
 import { browserSessionPersistence, setPersistence, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
+
+
 function SignIn() {
     const {setUser} = UserAuthContext()
     const {handleSubmit, register, setError, reset, clearErrors, formState: {errors}} = useForm({shouldUseNativeValidation: false,  mode: "onTouched",})
@@ -24,7 +26,6 @@ function SignIn() {
     const user = userCredential.user;
 
     const artistDoc = await getDoc(doc(db, 'artists', user.uid));
-    const businessDoc = await getDoc(doc(db, 'businesses', user.uid));
 
     let userData = null;
 
@@ -87,7 +88,7 @@ function SignIn() {
       
           <legend className="text-xl text-center font-semibold mb-4">Sign In</legend>
   {errors.firebase ? (
-    <p className="text-red-500 text-sm py-2">{errors.firebase.message}</p>
+    <p  data-testid='error-message'className="text-red-500 text-sm py-2">{errors.firebase.message}</p>
   ) : null}
          
    

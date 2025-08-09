@@ -100,7 +100,7 @@ it('Shows error when user enters wrong email and company id', async()=>{
   
   })
 
-  it('Shows successfull account registration method', async ()=>{
+  it('Shows successfull account registration message', async ()=>{
         render (
           <MemoryRouter initialEntries={['/business_signup']}   >
               <Routes>

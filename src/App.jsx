@@ -5,12 +5,10 @@ import './index.css'
 import SignUpArtist from './Artists/SignUpArtist'
 import Roles from './Forms/Roles'
 import BusinessSignup from './Business/BusinessSignUp'
-import { BusinessFormProvider } from './Business/BusinessFormContext'
 import ArtistDashboard from './Artists/ArtistDahsBoard'
 import SignIn from './Forms/SignIn'
 import ProtectedRoute from './Forms/ProtectedRoute'
 import { AuthProvider } from './Forms/UserAuthContext'
-import BusinessDashboard from './Business/BusinessDashboard'
 import UploadExhibition from './Artists/UploadExhibition'
 import AdminDashboard from './Admin/Admin'
 import ExhibitionSubmission from './Admin/ExhibitionSubmission'
@@ -52,12 +50,7 @@ function App() {
     ]
     },
   
-    {
-      path: '/business_dashboard',
-      element: <ProtectedRoute>
-        <BusinessDashboard/>
-        </ProtectedRoute>
-    },
+
     {
       path: '/signin',
       element: <SignIn/>
@@ -80,13 +73,13 @@ function App() {
   return (
     <div>
      
-  <BusinessFormProvider>
+ 
     <AuthProvider>
 
 <RouterProvider router={router}/>
 
 </AuthProvider>
-</BusinessFormProvider>
+
      
    
     </div>

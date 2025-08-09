@@ -1,199 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1754694120403" clover="3.2.0">
-  <project timestamp="1754694120403" name="All files">
-    <metrics statements="307" coveredstatements="237" conditionals="167" coveredconditionals="115" methods="97" coveredmethods="84" elements="571" coveredelements="436" complexity="0" loc="307" ncloc="307" packages="6" files="13" classes="13"/>
+<coverage generated="1754698602110" clover="3.2.0">
+  <project timestamp="1754698602110" name="All files">
+    <metrics statements="102" coveredstatements="63" conditionals="66" coveredconditionals="39" methods="26" coveredmethods="21" elements="194" coveredelements="123" complexity="0" loc="102" ncloc="102" packages="5" files="6" classes="6"/>
     <package name="src">
-      <metrics statements="67" coveredstatements="63" conditionals="28" coveredconditionals="25" methods="24" coveredmethods="23"/>
-      <file name="Home.jsx" path="/Users/oksanadotsenko/Desktop/fp/src/Home.jsx">
-        <metrics statements="67" coveredstatements="63" conditionals="28" coveredconditionals="25" methods="24" coveredmethods="23"/>
-        <line num="19" count="7" type="stmt"/>
-        <line num="20" count="7" type="stmt"/>
-        <line num="21" count="7" type="stmt"/>
-        <line num="22" count="7" type="stmt"/>
-        <line num="23" count="7" type="stmt"/>
-        <line num="24" count="7" type="stmt"/>
-        <line num="25" count="7" type="stmt"/>
-        <line num="27" count="70" type="stmt"/>
-        <line num="28" count="7" type="stmt"/>
-        <line num="29" count="7" type="stmt"/>
-        <line num="32" count="7" type="stmt"/>
-        <line num="33" count="1" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
-        <line num="38" count="7" type="stmt"/>
-        <line num="39" count="1" type="stmt"/>
-        <line num="41" count="1" type="stmt"/>
-        <line num="42" count="1" type="stmt"/>
-        <line num="44" count="1" type="stmt"/>
-        <line num="45" count="1" type="stmt"/>
-        <line num="46" count="1" type="stmt"/>
-        <line num="50" count="7" type="stmt"/>
-        <line num="53" count="2" type="cond" truecount="3" falsecount="1"/>
-        <line num="54" count="2" type="stmt"/>
-        <line num="55" count="2" type="stmt"/>
-        <line num="56" count="2" type="stmt"/>
-        <line num="57" count="2" type="stmt"/>
-        <line num="58" count="4" type="stmt"/>
-        <line num="59" count="4" type="stmt"/>
-        <line num="60" count="4" type="stmt"/>
-        <line num="61" count="4" type="stmt"/>
-        <line num="64" count="2" type="stmt"/>
-        <line num="66" count="0" type="stmt"/>
-        <line num="69" count="2" type="stmt"/>
-        <line num="72" count="7" type="stmt"/>
-        <line num="76" count="3" type="cond" truecount="2" falsecount="0"/>
-        <line num="77" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="78" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="79" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="81" count="1" type="stmt"/>
-        <line num="88" count="7" type="cond" truecount="2" falsecount="0"/>
-        <line num="91" count="7" type="stmt"/>
-        <line num="92" count="1" type="stmt"/>
-        <line num="93" count="1" type="stmt"/>
-        <line num="97" count="1" type="stmt"/>
-        <line num="99" count="1" type="stmt"/>
-        <line num="100" count="1" type="stmt"/>
-        <line num="101" count="1" type="stmt"/>
-        <line num="105" count="0" type="stmt"/>
-        <line num="107" count="1" type="stmt"/>
-        <line num="110" count="1" type="stmt"/>
-        <line num="111" count="1" type="stmt"/>
-        <line num="112" count="1" type="stmt"/>
-        <line num="120" count="7" type="stmt"/>
-        <line num="121" count="2" type="stmt"/>
-        <line num="125" count="2" type="stmt"/>
-        <line num="128" count="2" type="cond" truecount="4" falsecount="0"/>
-        <line num="130" count="1" type="stmt"/>
-        <line num="131" count="1" type="stmt"/>
-        <line num="138" count="0" type="stmt"/>
-        <line num="142" count="2" type="stmt"/>
-        <line num="143" count="2" type="stmt"/>
-        <line num="144" count="2" type="stmt"/>
-        <line num="151" count="7" type="stmt"/>
-        <line num="173" count="1" type="stmt"/>
-        <line num="181" count="1" type="stmt"/>
-        <line num="189" count="1" type="stmt"/>
-        <line num="209" count="10" type="stmt"/>
-      </file>
-    </package>
-    <package name="src.Admin">
-      <metrics statements="64" coveredstatements="56" conditionals="22" coveredconditionals="16" methods="21" coveredmethods="18"/>
-      <file name="Admin.jsx" path="/Users/oksanadotsenko/Desktop/fp/src/Admin/Admin.jsx">
-        <metrics statements="21" coveredstatements="21" conditionals="12" coveredconditionals="9" methods="8" coveredmethods="8"/>
-        <line num="10" count="3" type="stmt"/>
-        <line num="11" count="3" type="stmt"/>
-        <line num="12" count="3" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="17" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="24" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="25" count="2" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
-        <line num="29" count="1" type="stmt"/>
-        <line num="31" count="1" type="stmt"/>
-        <line num="36" count="3" type="stmt"/>
-        <line num="37" count="1" type="stmt"/>
-        <line num="39" count="1" type="stmt"/>
-        <line num="40" count="1" type="stmt"/>
-        <line num="41" count="1" type="stmt"/>
-        <line num="48" count="1" type="stmt"/>
-        <line num="51" count="3" type="stmt"/>
-        <line num="62" count="2" type="stmt"/>
-        <line num="63" count="1" type="stmt"/>
-      </file>
-      <file name="ExhibitionSubmission.jsx" path="/Users/oksanadotsenko/Desktop/fp/src/Admin/ExhibitionSubmission.jsx">
-        <metrics statements="43" coveredstatements="35" conditionals="10" coveredconditionals="7" methods="13" coveredmethods="10"/>
-        <line num="13" count="7" type="stmt"/>
-        <line num="14" count="7" type="stmt"/>
-        <line num="15" count="7" type="stmt"/>
-        <line num="16" count="12" type="stmt"/>
-        <line num="17" count="7" type="stmt"/>
-        <line num="18" count="7" type="stmt"/>
-        <line num="19" count="7" type="stmt"/>
-        <line num="22" count="7" type="stmt"/>
-        <line num="24" count="5" type="stmt"/>
-        <line num="25" count="5" type="stmt"/>
-        <line num="26" count="5" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-        <line num="33" count="5" type="stmt"/>
-        <line num="36" count="5" type="stmt"/>
-        <line num="39" count="7" type="stmt"/>
-        <line num="41" count="7" type="stmt"/>
-        <line num="43" count="2" type="stmt"/>
-        <line num="44" count="2" type="stmt"/>
-        <line num="45" count="2" type="stmt"/>
-        <line num="46" count="2" type="stmt"/>
-        <line num="51" count="2" type="stmt"/>
-        <line num="52" count="4" type="stmt"/>
-        <line num="55" count="2" type="cond" truecount="1" falsecount="1"/>
-        <line num="57" count="0" type="stmt"/>
-        <line num="59" count="2" type="stmt"/>
-        <line num="62" count="2" type="stmt"/>
-        <line num="66" count="2" type="stmt"/>
-        <line num="69" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="70" count="1" type="stmt"/>
-        <line num="74" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="75" count="1" type="stmt"/>
-        <line num="80" count="2" type="stmt"/>
-        <line num="82" count="0" type="stmt"/>
-        <line num="90" count="7" type="stmt"/>
-        <line num="93" count="7" type="stmt"/>
-        <line num="108" count="0" type="stmt"/>
-        <line num="109" count="0" type="stmt"/>
-        <line num="119" count="1" type="stmt"/>
-        <line num="122" count="1" type="stmt"/>
-        <line num="129" count="1" type="stmt"/>
+      <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="App.jsx" path="/Users/oksanadotsenko/Desktop/fp/src/App.jsx">
+        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="18" count="0" type="stmt"/>
+        <line num="73" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.Artists">
-      <metrics statements="63" coveredstatements="62" conditionals="47" coveredconditionals="40" methods="26" coveredmethods="26"/>
-      <file name="ArtistDahsBoard.jsx" path="/Users/oksanadotsenko/Desktop/fp/src/Artists/ArtistDahsBoard.jsx">
-        <metrics statements="41" coveredstatements="41" conditionals="43" coveredconditionals="36" methods="18" coveredmethods="18"/>
-        <line num="16" count="32" type="stmt"/>
-        <line num="17" count="32" type="stmt"/>
-        <line num="18" count="32" type="stmt"/>
-        <line num="19" count="32" type="stmt"/>
-        <line num="22" count="32" type="stmt"/>
-        <line num="24" count="32" type="stmt"/>
-        <line num="25" count="32" type="stmt"/>
-        <line num="26" count="32" type="stmt"/>
-        <line num="32" count="32" type="stmt"/>
-        <line num="34" count="36" type="stmt"/>
-        <line num="35" count="32" type="stmt"/>
-        <line num="37" count="32" type="stmt"/>
-        <line num="38" count="8" type="cond" truecount="5" falsecount="1"/>
-        <line num="39" count="2" type="stmt"/>
-        <line num="41" count="6" type="stmt"/>
-        <line num="45" count="32" type="stmt"/>
-        <line num="47" count="32" type="stmt"/>
-        <line num="48" count="32" type="stmt"/>
-        <line num="52" count="32" type="stmt"/>
-        <line num="54" count="21" type="stmt"/>
-        <line num="55" count="21" type="cond" truecount="1" falsecount="1"/>
-        <line num="56" count="21" type="stmt"/>
-        <line num="57" count="21" type="stmt"/>
-        <line num="59" count="21" type="cond" truecount="1" falsecount="1"/>
-        <line num="60" count="21" type="stmt"/>
-        <line num="61" count="21" type="stmt"/>
-        <line num="62" count="2" type="stmt"/>
-        <line num="66" count="19" type="stmt"/>
-        <line num="69" count="21" type="stmt"/>
-        <line num="73" count="21" type="stmt"/>
-        <line num="79" count="32" type="stmt"/>
-        <line num="84" count="4" type="stmt"/>
-        <line num="88" count="11" type="stmt"/>
-        <line num="94" count="4" type="stmt"/>
-        <line num="97" count="4" type="stmt"/>
-        <line num="102" count="1" type="cond" truecount="3" falsecount="1"/>
-        <line num="103" count="1" type="stmt"/>
-        <line num="108" count="32" type="stmt"/>
-        <line num="158" count="104" type="stmt"/>
-        <line num="170" count="1" type="stmt"/>
-        <line num="180" count="1" type="cond" truecount="4" falsecount="0"/>
-      </file>
+      <metrics statements="22" coveredstatements="21" conditionals="4" coveredconditionals="4" methods="8" coveredmethods="8"/>
       <file name="UploadExhibition.jsx" path="/Users/oksanadotsenko/Desktop/fp/src/Artists/UploadExhibition.jsx">
         <metrics statements="22" coveredstatements="21" conditionals="4" coveredconditionals="4" methods="8" coveredmethods="8"/>
         <line num="12" count="14" type="stmt"/>
@@ -224,10 +42,10 @@
       <metrics statements="31" coveredstatements="26" conditionals="42" coveredconditionals="29" methods="10" coveredmethods="9"/>
       <file name="BusinessSignUp.jsx" path="/Users/oksanadotsenko/Desktop/fp/src/Business/BusinessSignUp.jsx">
         <metrics statements="31" coveredstatements="26" conditionals="42" coveredconditionals="29" methods="10" coveredmethods="9"/>
-        <line num="12" count="8" type="stmt"/>
-        <line num="14" count="8" type="stmt"/>
-        <line num="15" count="8" type="stmt"/>
-        <line num="16" count="8" type="stmt"/>
+        <line num="12" count="6" type="stmt"/>
+        <line num="14" count="6" type="stmt"/>
+        <line num="15" count="6" type="stmt"/>
+        <line num="16" count="6" type="stmt"/>
         <line num="22" count="2" type="stmt"/>
         <line num="24" count="2" type="stmt"/>
         <line num="27" count="2" type="stmt"/>
@@ -244,7 +62,7 @@
         <line num="58" count="1" type="stmt"/>
         <line num="59" count="1" type="stmt"/>
         <line num="63" count="0" type="stmt"/>
-        <line num="70" count="8" type="stmt"/>
+        <line num="70" count="6" type="stmt"/>
         <line num="77" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="78" count="0" type="stmt"/>
         <line num="79" count="0" type="stmt"/>
@@ -258,112 +76,65 @@
       </file>
     </package>
     <package name="src.Forms">
-      <metrics statements="42" coveredstatements="3" conditionals="16" coveredconditionals="0" methods="6" coveredmethods="0"/>
+      <metrics statements="41" coveredstatements="10" conditionals="16" coveredconditionals="3" methods="6" coveredmethods="3"/>
       <file name="SignIn.jsx" path="/Users/oksanadotsenko/Desktop/fp/src/Forms/SignIn.jsx">
-        <metrics statements="37" coveredstatements="0" conditionals="16" coveredconditionals="0" methods="4" coveredmethods="0"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="11" count="0" type="stmt"/>
-        <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
+        <metrics statements="36" coveredstatements="7" conditionals="16" coveredconditionals="3" methods="4" coveredmethods="3"/>
+        <line num="12" count="9" type="stmt"/>
+        <line num="13" count="9" type="stmt"/>
+        <line num="14" count="9" type="stmt"/>
+        <line num="15" count="9" type="stmt"/>
         <line num="16" count="0" type="stmt"/>
         <line num="18" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
         <line num="26" count="0" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
-        <line num="29" count="0" type="stmt"/>
-        <line num="31" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="32" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="32" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="33" count="0" type="stmt"/>
         <line num="34" count="0" type="stmt"/>
-        <line num="35" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="36" count="0" type="stmt"/>
-        <line num="38" count="0" type="stmt"/>
-        <line num="47" count="0" type="stmt"/>
-        <line num="48" count="0" type="cond" truecount="0" falsecount="6"/>
-        <line num="50" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="36" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="49" count="0" type="cond" truecount="0" falsecount="6"/>
         <line num="51" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
+        <line num="52" count="0" type="stmt"/>
         <line num="54" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
         <line num="57" count="0" type="stmt"/>
-        <line num="59" count="0" type="stmt"/>
+        <line num="58" count="0" type="stmt"/>
         <line num="60" count="0" type="stmt"/>
-        <line num="62" count="0" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
         <line num="63" count="0" type="stmt"/>
-        <line num="65" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="68" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="66" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="69" count="0" type="stmt"/>
-        <line num="74" count="0" type="stmt"/>
-        <line num="81" count="0" type="stmt"/>
-        <line num="102" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="105" count="0" type="stmt"/>
+        <line num="70" count="0" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
+        <line num="82" count="9" type="stmt"/>
+        <line num="103" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="106" count="5" type="stmt"/>
       </file>
       <file name="UserAuthContext.jsx" path="/Users/oksanadotsenko/Desktop/fp/src/Forms/UserAuthContext.jsx">
         <metrics statements="5" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
         <line num="14" count="0" type="stmt"/>
       </file>
     </package>
     <package name="src.utilities">
-      <metrics statements="40" coveredstatements="27" conditionals="12" coveredconditionals="5" methods="10" coveredmethods="8"/>
-      <file name="fetchBusinesses.js" path="/Users/oksanadotsenko/Desktop/fp/src/utilities/fetchBusinesses.js">
-        <metrics statements="10" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="18" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="21" count="2" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="25" count="1" type="stmt"/>
-        <line num="30" count="0" type="stmt"/>
-      </file>
+      <metrics statements="6" coveredstatements="6" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
       <file name="fetchData.js" path="/Users/oksanadotsenko/Desktop/fp/src/utilities/fetchData.js">
-        <metrics statements="6" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="5" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="9" count="0" type="stmt"/>
-        <line num="10" count="0" type="stmt"/>
-      </file>
-      <file name="fetchUpcomingExhibitions.js" path="/Users/oksanadotsenko/Desktop/fp/src/utilities/fetchUpcomingExhibitions.js">
-        <metrics statements="8" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
-        <line num="8" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
-        <line num="18" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="19" count="1" type="stmt"/>
-        <line num="22" count="1" type="stmt"/>
-        <line num="28" count="0" type="stmt"/>
-      </file>
-      <file name="getDate.js" path="/Users/oksanadotsenko/Desktop/fp/src/utilities/getDate.js">
-        <metrics statements="10" coveredstatements="5" conditionals="4" coveredconditionals="1" methods="2" coveredmethods="1"/>
-        <line num="2" count="5" type="stmt"/>
-        <line num="8" count="5" type="stmt"/>
-        <line num="9" count="5" type="stmt"/>
-        <line num="10" count="5" type="stmt"/>
-        <line num="11" count="5" type="cond" truecount="1" falsecount="1"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="22" count="0" type="stmt"/>
-      </file>
-      <file name="getchCurrentExhibition.js" path="/Users/oksanadotsenko/Desktop/fp/src/utilities/getchCurrentExhibition.js">
-        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="13" count="2" type="stmt"/>
-        <line num="15" count="2" type="stmt"/>
-        <line num="16" count="2" type="stmt"/>
+        <metrics statements="6" coveredstatements="6" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="5" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
       </file>
     </package>
   </project>

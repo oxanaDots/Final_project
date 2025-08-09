@@ -1,7 +1,7 @@
 import React, {  useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import {db, storage, auth } from '../firebase'
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {db, storage,  } from '../firebase'
+import { ref, uploadBytes,  } from "firebase/storage";
 import { collection, addDoc} from "firebase/firestore";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCheck} from '@fortawesome/free-solid-svg-icons';
