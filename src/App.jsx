@@ -58,7 +58,10 @@ function App() {
    
     {
       path: '/admin',
-      element: <AdminDashboard/>,
+      element:(
+        <ProtectedRoute>
+           <AdminDashboard/>
+        </ProtectedRoute>),
       children: [
         {
           path: 'exhibition_submission/:id',
@@ -74,7 +77,7 @@ function App() {
     <div>
      
  
-    <AuthProvider>
+<AuthProvider>
 
 <RouterProvider router={router}/>
 

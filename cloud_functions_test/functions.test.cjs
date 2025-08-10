@@ -1,6 +1,6 @@
-process.env.FIRESTORE_EMULATOR_HOST   = '127.0.0.1:8080';
-process.env.FIREBASE_AUTH_EMULATOR_HOST     = '127.0.0.1:9099';
-process.env.FIREBASE_DATABASE_EMULATOR_HOST = '127.0.0.1:9000';
+process.env.FIRESTORE_EMULATOR_HOST = '127.0.0.1:8080';
+process.env.FIREBASE_AUTH_EMULATOR_HOST= '127.0.0.1:9099';
+process.env.FIREBASE_DATABASE_EMULATOR_HOST= '127.0.0.1:9000';
 
 const mockery = require('mockery');
 const admin = require('firebase-admin');
@@ -65,10 +65,8 @@ let myFunctions
        return {sentEmail, afterSnap}
   }
 
-    it('Setting custom claim on user sign up', async ()=> {
+ it('Setting custom claim on user sign up', async ()=> {
       
-  
-
   const uid   = 'artist2';
   const email = 'artist2@example.com';
   
@@ -85,6 +83,12 @@ let myFunctions
     })
 
   it('Send an artist an email notification about updated status of their exhibition submission', async ()=>{
+      const{ sentEmail, afterSnap} = await  helper('accepted', 'artist@example.com', 'artist1')
+      expect(sentEmail.length).to.equal(1)
+      assert.strictEqual(sentEmail[0].to, afterSnap.data().email);
+    })
+
+     it('Send a welcome email to an enterprise', async ()=>{
       const{ sentEmail, afterSnap} = await  helper('accepted', 'artist@example.com', 'artist1')
       expect(sentEmail.length).to.equal(1)
       assert.strictEqual(sentEmail[0].to, afterSnap.data().email);

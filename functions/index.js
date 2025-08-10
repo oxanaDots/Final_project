@@ -4,6 +4,6 @@ import './firebase.js'
 
 
 import { processSignUp } from './setCustomClaims.js';
-import { notifyArtists } from "./notifyUsers.js";
+import { notifyArtists, sendWelcomeEmail } from "./notifyUsers.js";
 
-export {processSignUp, notifyArtists}
+export {processSignUp, notifyArtists, sendWelcomeEmail}

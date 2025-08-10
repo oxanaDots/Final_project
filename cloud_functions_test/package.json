@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha \"*.test.cjs\" --exit"
-  },
+  "test": "mocha \"*.test.cjs\" --exit"
+  }, 
   "keywords": [],
   "author": "",
   "license": "ISC",

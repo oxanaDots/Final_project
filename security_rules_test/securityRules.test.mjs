@@ -5,7 +5,7 @@ import { assertFails, assertSucceeds, initializeTestEnvironment } from '@firebas
 
 import { getDoc, doc, getDocs, collection, setDoc } from 'firebase/firestore';
 
-import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
+import { uploadBytes, ref, getDownloadURL, getBytes } from 'firebase/storage';
 
 
 
@@ -75,7 +75,7 @@ describe('Art-hosting app', ()=>{
 
        it('Read exhibitions storage by authenticated (signed in) enterprises', async ()=>{
     const db = testStorageEnv.authenticatedContext('business1', {business: true}).storage();
-    const imageRef = ref(db, 'exhibitions/image1.jpg')
+    const imageRef = ref(db, 'exhibitions/artist1/image1.jpg')
    
        await assertSucceeds(getDownloadURL(imageRef))
     })
@@ -84,7 +84,7 @@ describe('Art-hosting app', ()=>{
     const db = testStorageEnv.authenticatedContext('artist1', {artist: true}).storage();
     const imageRef = ref(db, 'exhibitions/artist1/image1.jpg')
    
-       await assertSucceeds(getDownloadURL(imageRef))
+       await assertSucceeds(getBytes(imageRef))
     })
 
        it('Fail read exhibitions storage by unauthenticated users', async ()=>{

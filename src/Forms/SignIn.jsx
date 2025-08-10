@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../Components/InputField';
 import { UserAuthContext } from './UserAuthContext';
-import { browserSessionPersistence, setPersistence, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
@@ -15,7 +15,6 @@ function SignIn() {
     const onSubmit = async (data) => {
          try {
         
-        await setPersistence(auth, browserSessionPersistence)
 
         const  userCredential = await signInWithEmailAndPassword(
             auth,
@@ -24,9 +23,8 @@ function SignIn() {
           );
          
     const user = userCredential.user;
-
     const artistDoc = await getDoc(doc(db, 'artists', user.uid));
-
+   
     let userData = null;
 
     if (artistDoc.exists()) {
@@ -34,6 +32,8 @@ function SignIn() {
       setUser({ ...userData, id: user.uid });
       navigate('/artist_dashboard');
     }  else  if (user.email === 'admin1234@test.com'){
+      setUser()
+      setUser(user)
         navigate('/admin')
       }
     console.log(user)

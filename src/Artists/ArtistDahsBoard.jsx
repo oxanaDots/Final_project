@@ -17,18 +17,13 @@ function ArtistDashboard() {
   const [exhibition, setExhibition]  = useState(false)
   const [loading, setLoading] = useState(true);
   const [uploadStatus, setUploadStatus] = useState(false)
-  // const [exceededLimit, setexceededLimit] = useState(false)
-  // const [excedeSize, setExedeSize] = useState(false)
   const [warning, setWarning] = useState(null)
 
 const {user} = UserAuthContext()
  const nav = useNavigate()
  const location = useLocation()
 
-//  useEffect(()=>{
-//   files.length > 10? setexceededLimit(true):  setexceededLimit(false)
-//   files.some(file=> (file.size / 1000000) >5 ? setExedeSize(true) : setExedeSize(false) )
-//  }, [files ])
+
 const exceededLimit = useMemo(()=> files.length > 10, [files])
 
 const excedeSize = useMemo(()=> files.some(file=> (file.size / 1000000) >5), [files])

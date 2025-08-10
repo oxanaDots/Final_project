@@ -1,4 +1,4 @@
-import {  onDocumentUpdated } from "firebase-functions/v2/firestore";
+import {  onDocumentUpdated , onDocumentCreated} from "firebase-functions/v2/firestore";
 import * as logger from "firebase-functions/logger";
 import { createTransport } from "nodemailer";
 import { getDate } from "./utility/getDate.js";
@@ -12,36 +12,40 @@ const transporter = createTransport({
   },
 });
 
-// export const notifyEnterprise = onDocumentUpdated("exhibitions/{docId}", async (event) => {
-//  try{
-// const currentDay = Timestamp.fromDate(new Date());
+export const sendWelcomeEmail = onDocumentCreated("businesses/{docId}", async (event) => {
+ try{
+ const data = event.data?.data()
+ const userEmail = data.email
+ const enterPriseName = `${data.firstName} ${data.lastName}`
 
-//   const newValue = event.data.after.data();
+ if (!userEmail || !enterPriseName){
+  logger.warn('No email or name')
+  return 
+ }
 
-//  if (newValue.status ==='accepted' && newValue.startsAt>= currentDay){
+  const mailOptions = {
+    from: "noreply@art-hosting.firebaseapp.com",
+    to: userEmail,
+    subject: "Welcome to Art Hosting Platform",
+    text: `Hello ${enterPriseName}, thank you for registering with our Art Hosting Platform`,
+    html: `<p>Next Steps:</p>
+    <p>Download our TV app.
+     <a href="https://final-project-red-delta.vercel.app/"  target="_blank">
+     here. 
+    </a>
+    
+    </p>`
 
-//  }
-
-//   const businessesSnapshot = await admin.firestore().collection("businesses").get();
-//   const emails = businessesSnapshot.docs.map(doc => doc.data().email);
-
-//   const mailOptions = {
-//     from: "noreply@art-hosting.firebaseapp.com",
-//     to: emails,
-//     subject: "New Art Exhibition Available",
-//     text: '',
-//   };
+  }
 
 
-//   await transporter.sendMail(mailOptions);
-//   logger.info("Emails sent");
-//  }catch(err){
-//   console.error(err)
-//  }
+  await transporter.sendMail(mailOptions);
+  logger.info("Emails sent");
+ }catch(err){
+  console.error(err)
+ }
 
- 
-
-// });
+});
 
 export const notifyArtists = onDocumentUpdated('exhibitions/{docId}', async(event)=> {
 try{

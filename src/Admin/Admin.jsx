@@ -5,10 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { useMatch } from 'react-router-dom';
 import { storage } from '../firebase';
+import { UserAuthContext } from '../Forms/UserAuthContext';
 function AdminDashboard() {
 
   const [exhibitions, setExhibition] = useState([])
   const navigate = useNavigate()
+  const {user} = UserAuthContext()
   const exhibitionItem = useMatch('/admin/exhibition_submission/:id');
 
  async function fetchExhibition (){

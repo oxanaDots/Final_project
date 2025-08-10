@@ -10,7 +10,7 @@ service firebase.storage {
       allow read: if request.auth != null && (
     request.auth.token.email == "admin1234@test.com" ||
     (request.auth.token.artist == true &&
-     request.auth.uid == resource.data.artists_id) || request.auth.token.business == true
+     request.auth.uid == artistId) || request.auth.token.business == true
   );
      
     }
