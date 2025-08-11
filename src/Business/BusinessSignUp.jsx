@@ -20,8 +20,8 @@ function BusinessSignup() {
   async function onSubmit (data) {
 
   try {
-    // const enterprisesData = await fetchData('https://final-project-red-delta.vercel.app/api/enterprises')
-     const enterprisesData = await fetchData('http://localhost:3001/api/enterprises')
+    const enterprisesData = await fetchData('https://final-project-red-delta.vercel.app/api/enterprises')
+    //  const enterprisesData = await fetchData('http://localhost:3001/api/enterprises')
 
    
    const geoCodedLoc = await geoCode(`${data.location}, ${data.postcode}`)
@@ -98,7 +98,7 @@ function BusinessSignup() {
               validationRules={{
                 required: "Enter the name of your business",
                 validate: (value) =>
-                  /^[a-zA-Z]+$/.test(value) || "Your input can only contain alpahbetic letters",
+                  /^[A-Za-z0-9]+$/.test(value) || "Your input can only contain special characters",
               }}
               error={errors.businessName}
             />
@@ -138,7 +138,7 @@ function BusinessSignup() {
               type="email"
               register={register}
               validationRules={{
-                required: "Enter your email address",
+                required: "Enter your work email address",
                 validate: (value) =>
                   /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) || "Please enter a valid email address",
               }}
