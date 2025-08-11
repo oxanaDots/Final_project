@@ -17,5 +17,10 @@
 const enterprises = require('./enterprises.json');
 
 module.exports = (req, res) => {
+    //allow get requests only
+     if (req.method !== 'GET') {
+    res.setHeader('Allow', 'GET');
+    return res.status(405).json({ error: 'Not allowed!' });
+  }
   res.status(200).json(enterprises);
 };
