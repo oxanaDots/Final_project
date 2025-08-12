@@ -1,9 +1,7 @@
 import React from 'react';
 jest.mock('../firebase.js');
 
-// jest.mock('../Forms/UserAuthContext', () => ({
-//   UserAuthContext: () => ({ setUser: jest.fn() })
-// }));
+
 
 jest.mock('firebase/firestore', ()=>({
   setDoc: jest.fn(),
@@ -13,7 +11,10 @@ jest.mock('firebase/firestore', ()=>({
 jest.mock("../utilities/fetchData");
 jest.mock("firebase/auth", () => ({
   getAuth: jest.fn(),
-  createUserWithEmailAndPassword: jest.fn()
+  createUserWithEmailAndPassword: jest.fn(),
+  sendEmailVerification: jest.fn(),
+  onAuthStateChanged: jest.fn(),
+  reload: jest.fn()
 }));
 
 jest.mock('../utilities/geoCode.mjs', () => ({
@@ -27,14 +28,13 @@ jest.mock('../utilities/geoCode.mjs', () => ({
 import "@testing-library/jest-dom";
 import {  render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter, Routes, Route, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { fetchData } from "../utilities/fetchData";
 import BusinessSignup from '../Business/BusinessSignUp';
 import {  setDoc } from "firebase/firestore";
 import { geoCode } from '../utilities/geoCode.mjs';
-import SignIn from '../Forms/SignIn'
-import { UserAuthContext } from '../Forms/UserAuthContext';
+
 
 async function fillInForm(email, companyId){
    await userEvent.type(screen.getByPlaceholderText(/business name/i), "test");
@@ -50,14 +50,19 @@ async function fillInForm(email, companyId){
       await userEvent.selectOptions(screen.getByRole('combobox'), "Services");
 
 }
+let emailVer
 
 async function submit(){
    await userEvent.click(screen.getByRole('button', { name: /submit/i }));
 
 }
+
+async function confirmEmail(){
+   await userEvent.click(screen.getByRole('button', { name: /I have completed verififcation/i }));
+
+}
 describe('Sign up form for enterprises', ()=>{
   beforeEach(()=>{
-
    geoCode.mockResolvedValue({lat: 0.0, lng: 0.9})
    
    fetchData.mockResolvedValue([
@@ -67,17 +72,24 @@ describe('Sign up form for enterprises', ()=>{
      user: {
        uid:   "123",
        email: "test_1@mail.com"
-      }
-    });
+      }})
+
     setDoc.mockResolvedValue(
       {doc: {geoLocation: {lat: 0.0, lng: 0.9}, email:  "test_1@mail.com", }}
     )
+  onAuthStateChanged.mockImplementation((auth, cb) => {
+  emailVer = cb;
+  return () => {};
+});
+  
   })
+
 
    afterEach(() => {
     jest.restoreAllMocks();
   });
     
+
 
 
  
@@ -113,6 +125,11 @@ it('Shows error when user enters wrong email and company id', async()=>{
  await fillInForm("test_1@mail.com", "RF238E2");
 
  await submit()
-expect(await screen.findByText(/Account created successfully!/i)).toBeInTheDocument();   
-  })
+ expect(await screen.findByText(/We sent you an email verification link to your email address. Click on the button below once verification has been completed./i)).toBeInTheDocument();   
+await confirmEmail()  
+emailVer({emailVerified: true})
+ expect(await screen.findByText(/Account created successfully!/i)).toBeInTheDocument();   
+
+
+})
 })

@@ -274,7 +274,7 @@ async function checkVerification(){
     <>
         {!verified && <div className='py-20'> 
       <p className='p-6'>We sent you an email verification link to your email address. Click on the button below once verification has been completed.</p>
-     <button className='py-3 bg-primary-dark rounded-md px-4 text-secondary-light' onClick={checkVerification} disabled={checking}>
+     <button data-testid='email-verification' className='py-3 bg-primary-dark rounded-md px-4 text-secondary-light' onClick={checkVerification} disabled={checking}>
     { checking && !verified ? "Checking your request" : "I have completed verififcation"}
     </button>
        </div>}

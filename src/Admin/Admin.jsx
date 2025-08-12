@@ -10,7 +10,7 @@ function AdminDashboard() {
 
   const [exhibitions, setExhibition] = useState([])
   const navigate = useNavigate()
-  const {user} = UserAuthContext()
+
   const exhibitionItem = useMatch('/admin/exhibition_submission/:id');
 
  async function fetchExhibition (){
