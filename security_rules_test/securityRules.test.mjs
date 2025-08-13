@@ -73,21 +73,21 @@ describe('Art-hosting app', ()=>{
        await assertSucceeds(uploadBytes(imageRef))
     })
 
-       it('Allows read access for exhibitions storage bucket for authenticated (signed in) enterprises', async ()=>{
+       it('Allows read access to exhibitions storage bucket for authenticated (signed in) enterprises', async ()=>{
     const db = testStorageEnv.authenticatedContext('business1', {business: true}).storage();
     const imageRef = ref(db, 'exhibitions/artist1/image1.jpg')
    
        await assertSucceeds(getDownloadURL(imageRef))
     })
 
-        it('Allows read access for files in exhibitions storage by authenticated artists who own those files', async ()=>{
+        it('Allows read access to files in exhibitions storage for authenticated artists who own those files', async ()=>{
     const db = testStorageEnv.authenticatedContext('artist1', {artist: true}).storage();
     const imageRef = ref(db, 'exhibitions/artist1/image1.jpg')
    
        await assertSucceeds(getBytes(imageRef))
     })
 
-       it('Denies read exhibitions storage by unauthenticated users', async ()=>{
+       it('Denies read access to exhibitions storage bucket for unauthenticated users', async ()=>{
     const db = testStorageEnv.unauthenticatedContext().storage();
     const imageRef = ref(db, 'exhibitions/artist1/image1.jpg')
    

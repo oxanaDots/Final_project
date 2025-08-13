@@ -1,7 +1,7 @@
 import React from 'react';
 import NavMenu from './NavMenu';
 import ExhibitionItem from './Components/ExhibitionItem';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import {  useEffect, useState } from 'react';
 import {getDate} from './utilities/getDate.js'
 import { fetchBusinesses}from './utilities/fetchBusinesses.js';
@@ -25,12 +25,12 @@ import { orderByDistance, getDistance, convertDistance } from 'geolib'
   const [userLocation, setUserLocation] = useState({})
 
 const images = Array.from({length: 10}, (_, i)=> `image${i}.jpg`)
-console.log('images', images)
+console.log('images', useLocation)
 const docs = [...businesses.values()]
 
 // get user's current location in latlong and show busiensses closest to user's location
-useEffect(()=>{
- navigator.geolocation.getCurrentPosition(res=>{
+      useEffect(()=>{
+       navigator.geolocation.getCurrentPosition(res=>{
        setUserLocation({latitude:res.coords.latitude, longitude: res.coords.longitude })})
       }, [])
 
@@ -156,7 +156,7 @@ useEffect(()=>{
     <NavMenu/>
 
 <h1 className='text-3xl  font-semibold'>Main Heading</h1>
-   <section className='grid grid-cols-[20%_30%_20%] pt-6 pb-20 justify-center items-baseline  gap-20'>
+   <section className='grid grid-cols-[25%_30%_25%] pt-6 pb-20 justify-center items-baseline  gap-20'>
 
 
     <div className='grid-cols-1'>
@@ -205,7 +205,7 @@ useEffect(()=>{
 
 <div className='text-xs'>
     <h2 className='text-sm font-semibold text-zinc-600 pb-6'>Currently exhibited at:</h2>
-    <div className=' flex gap-6 flex-col overflow-y-scroll h-[25rem]'>
+    {businesses.size > 0 ?<div className=' flex gap-6 flex-col overflow-y-scroll h-[25rem]'>
     {sortedBusinesses.map(item=> (
       <div className='text-[0.6rem] flex  flex-col text-ternary-medium'>
         <div className='flex justify-between px-2 '>
@@ -216,11 +216,19 @@ useEffect(()=>{
       border border-y border-x-0 items-center border-ternary-medium px-2 py-2 '>
 
      <h2 className='text-xs font-semibold'>{item.businessName}</h2>
-    <h2 className='text-xs border rounded-md border-ternary-dark py-1 px-2'>{item.distance} miles</h2>
+    <div className='flex justify-end flex-col gap-2'>
+    {useLocation ?<h2 className='text-xs border self-end flex flex-col rounded-md border-ternary-dark py-1 px-2'>{item.distance} miles</h2>
+    : null}
+    <h2>{item.location}, {item.postcode}</h2>
+   
+     </div>
     </div>
         </div>
  ) )}
-  </div> 
+  </div> :
+  <p>
+    No enterprises are currently displaying
+    </p>}
      </div> 
    </section>
    </div>
