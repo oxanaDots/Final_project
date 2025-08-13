@@ -9,8 +9,8 @@ function Roles() {
       <h1 className='text-xl font-semibold pb-8'>Are you an artist or a business owner?</h1>
       <div className='flex gap-8'>
     
-        <span onClick={()=> navigate('/artist_signup')} className='bg-ternary-light rounded-md cursor-pointer py-4 px-5'>Artist</span>
-        <span onClick={()=> navigate('/business_signup')} className='bg-ternary-light rounded-md cursor-pointer py-4 px-5'>Business Owner</span>
+        <button  data-testid='artist-btn'onClick={()=> navigate('/artist_signup')} className='bg-ternary-light rounded-md cursor-pointer py-4 px-5'>Artist</button>
+        <button data-testid='business-btn' onClick={()=> navigate('/business_signup')} className='bg-ternary-light rounded-md cursor-pointer py-4 px-5'>Business Owner</button>
       </div>
     </div>
     </section>

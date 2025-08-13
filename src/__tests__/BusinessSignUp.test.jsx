@@ -1,5 +1,7 @@
 import React from 'react';
-jest.mock('../firebase.js');
+jest.mock('../firebase.js', ()=>({
+  auth: jest.fn()
+}));
 
 
 
@@ -26,10 +28,10 @@ jest.mock('../utilities/geoCode.mjs', () => ({
 
 
 import "@testing-library/jest-dom";
-import {  render, screen, waitFor } from "@testing-library/react";
+import {  act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged , reload} from "firebase/auth";
 import { fetchData } from "../utilities/fetchData";
 import BusinessSignup from '../Business/BusinessSignUp';
 import {  setDoc } from "firebase/firestore";
@@ -79,8 +81,9 @@ describe('Sign up form for enterprises', ()=>{
     )
   onAuthStateChanged.mockImplementation((auth, cb) => {
   emailVer = cb;
-  return () => {};
 });
+
+reload.mockResolvedValue(undefined);   
   
   })
 
@@ -113,6 +116,7 @@ it('Shows error when user enters wrong email and company id', async()=>{
   })
 
   it('Shows successfull account registration message', async ()=>{
+
         render (
           <MemoryRouter initialEntries={['/business_signup']}   >
               <Routes>
@@ -128,8 +132,35 @@ it('Shows error when user enters wrong email and company id', async()=>{
  expect(await screen.findByText(/We sent you an email verification link to your email address. Click on the button below once verification has been completed./i)).toBeInTheDocument();   
 await confirmEmail()  
 emailVer({emailVerified: true})
+
  expect(await screen.findByText(/Account created successfully!/i)).toBeInTheDocument();   
 
 
 })
+
+it('', async()=>{
+
+
+     render (
+          <MemoryRouter initialEntries={['/business_signup']}   >
+              <Routes>
+                <Route path="/business_signup" element={<BusinessSignup/>}/>
+              </Routes>
+            </MemoryRouter>
+        )
+
+ await fillInForm("test_1@mail.com", "RF238E2");
+
+ await submit()
+ await confirmEmail()  
+
+  emailVer({ emailVerified: false });
+
+
+  expect(await screen.getByText('Email address could not be verified')).toBeInTheDocument()
+
+})
+
+
+
 })

@@ -7,7 +7,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase.js"; 
 
 function SignUpArtist() {
-    const navigate = useNavigate()
+const navigate = useNavigate()
 
 const [but, updateButt] = useState(false)
 const [links, setLinks] = useState([])
@@ -161,11 +161,11 @@ const [links, setLinks] = useState([])
 />
 
 <div className='flex flex-col w-full  gap-2 pt-2  self-left cursor-pointer'>
-   <div onClick={()=> updateButt (prev=> ! prev) }  className='flex  justify-left items-center gap-5  self-left '>
+   <button data-testid = 'btn' onClick={()=> updateButt (prev=> ! prev) }  className='flex  justify-left items-center gap-5  self-left '>
         <span >{but ? '-':'+'}</span>
         <p className='text-xs py-1'>Add comma separated links to your social media:</p>
-        </div>
-        {but && <textarea  onChange={(e) => setLinks(e.target.value)} className='bg-ternary-light w-full px-3 text-sm py-[0.7rem] '></textarea>  }
+        </button>
+        {but && <textarea data-testid='txt-area' onChange={(e) => setLinks(e.target.value)} className='bg-ternary-light w-full px-3 text-sm py-[0.7rem] '></textarea>  }
       </div>
     <button className='submit-btn'>Submit</button>
   </form>

@@ -56,6 +56,7 @@ useEffect(()=>{
             const arr = []
            for (const obj of orderedLocations){
             const businessDoc = businesses.get(obj)
+            // calc distance between current user and each enterprise
             const distanceInMeters = getDistance(userLocation, obj, 0.2)
             const convertedIntoMiles = convertDistance(distanceInMeters, 'mi')
             arr.push({...businessDoc, distance: convertedIntoMiles.toFixed(2)})

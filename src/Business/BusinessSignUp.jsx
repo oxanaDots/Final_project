@@ -67,7 +67,7 @@ function BusinessSignup() {
     }
   
   } catch (error) {
-    console.error("Error during signup:", error.message);
+    throw error
     
   }
 };
@@ -80,7 +80,7 @@ async function checkVerification(){
  try{
    await reload(user)
    if(!user.emailVerified){
-    setVerificationError(false)
+    setVerificationError(true)
    } else{
      
  setVerified(true)

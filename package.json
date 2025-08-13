@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "test": "react-scripts test --coverage",
+    "test": "react-scripts test --coverage ",
     "testind":"react-scripts test",
     "preview": "vite preview",
     "server": "node api/enterprises.cjs"
