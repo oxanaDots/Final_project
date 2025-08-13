@@ -1,0 +1,198 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 10,
+    "passes": 10,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-08-13T18:03:33.502Z",
+    "end": "2025-08-13T18:03:33.889Z",
+    "duration": 387
+  },
+  "tests": [
+    {
+      "title": "Read businesses collection",
+      "fullTitle": "Art-hosting app Read businesses collection",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 177,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Write to a businesses collection by users who are signed in and owners of a doc",
+      "fullTitle": "Art-hosting app Write to a businesses collection by users who are signed in and owners of a doc",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 20,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Fail writing to businesses collection by a user who is signed in but not an owner of a doc",
+      "fullTitle": "Art-hosting app Fail writing to businesses collection by a user who is signed in but not an owner of a doc",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 19,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Fail writing to artists collection by a user who is signed in but not an owner of a doc",
+      "fullTitle": "Art-hosting app Fail writing to artists collection by a user who is signed in but not an owner of a doc",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 37,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Write to a exhibitions collection by users who are signed in and owners of a doc",
+      "fullTitle": "Art-hosting app Write to a exhibitions collection by users who are signed in and owners of a doc",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 28,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Write to all exhibitions collection docs by admin",
+      "fullTitle": "Art-hosting app Write to all exhibitions collection docs by admin",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 33,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Write to exhibitions storage by authenticated (signed in) artists",
+      "fullTitle": "Art-hosting app Write to exhibitions storage by authenticated (signed in) artists",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 23,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Read exhibitions storage by authenticated (signed in) enterprises",
+      "fullTitle": "Art-hosting app Read exhibitions storage by authenticated (signed in) enterprises",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 11,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Read files in exhibitions storage by authenticated artists who own those files",
+      "fullTitle": "Art-hosting app Read files in exhibitions storage by authenticated artists who own those files",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 12,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Fail read exhibitions storage by unauthenticated users",
+      "fullTitle": "Art-hosting app Fail read exhibitions storage by unauthenticated users",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 18,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "Read businesses collection",
+      "fullTitle": "Art-hosting app Read businesses collection",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 177,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Write to a businesses collection by users who are signed in and owners of a doc",
+      "fullTitle": "Art-hosting app Write to a businesses collection by users who are signed in and owners of a doc",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 20,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Fail writing to businesses collection by a user who is signed in but not an owner of a doc",
+      "fullTitle": "Art-hosting app Fail writing to businesses collection by a user who is signed in but not an owner of a doc",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 19,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Fail writing to artists collection by a user who is signed in but not an owner of a doc",
+      "fullTitle": "Art-hosting app Fail writing to artists collection by a user who is signed in but not an owner of a doc",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 37,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Write to a exhibitions collection by users who are signed in and owners of a doc",
+      "fullTitle": "Art-hosting app Write to a exhibitions collection by users who are signed in and owners of a doc",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 28,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Write to all exhibitions collection docs by admin",
+      "fullTitle": "Art-hosting app Write to all exhibitions collection docs by admin",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 33,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Write to exhibitions storage by authenticated (signed in) artists",
+      "fullTitle": "Art-hosting app Write to exhibitions storage by authenticated (signed in) artists",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 23,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Read exhibitions storage by authenticated (signed in) enterprises",
+      "fullTitle": "Art-hosting app Read exhibitions storage by authenticated (signed in) enterprises",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 11,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Read files in exhibitions storage by authenticated artists who own those files",
+      "fullTitle": "Art-hosting app Read files in exhibitions storage by authenticated artists who own those files",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 12,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Fail read exhibitions storage by unauthenticated users",
+      "fullTitle": "Art-hosting app Fail read exhibitions storage by unauthenticated users",
+      "file": "/Users/oksanadotsenko/Desktop/fp/security_rules_test/securityRules.test.mjs",
+      "duration": 18,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    }
+  ]
+}

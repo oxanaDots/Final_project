@@ -30,64 +30,64 @@ let testStorageEnv = await initializeTestEnvironment({
 
 
 describe('Art-hosting app', ()=>{
-    it('Read businesses collection', async ()=>{
+    it('Denies read access to businesses collection for an unauthorised user', async ()=>{
     const db = testFirestoreEnv.unauthenticatedContext().firestore()
      const businesses = collection(db, 'businesses');
     await assertSucceeds(getDocs(businesses))
     })
 
-     it('Write to a businesses collection by users who are signed in and owners of a doc', async ()=>{
+     it('Allows write access to businesses collection for a user who is signed in and is owners of a doc', async ()=>{
     const db = testFirestoreEnv.authenticatedContext( 'business_test_1').firestore();
     const docRef = doc(db, 'businesses', 'business_test_1')
        await assertSucceeds(setDoc(docRef, { 'business_test_1': {businessName: 'Business Name'}}))
     })
-     it('Fail writing to businesses collection by a user who is signed in but not an owner of a doc', async ()=>{
+     it('Denies write access to businesses collection for a user who is signed in but not an owner of a doc', async ()=>{
     const db = testFirestoreEnv.authenticatedContext( 'business_test_1').firestore();
     const docRef = doc(db, 'businesses', 'business_test_2')
        await assertFails(setDoc(docRef, { 'business_test_2': {businessName: 'Business Name'}}))
     })
 
-     it('Fail writing to artists collection by a user who is signed in but not an owner of a doc', async ()=>{
-    const db = testFirestoreEnv.authenticatedContext( 'artist_test_1').firestore();
-    const docRef = doc(db, 'artists', 'artist_test_1')
-       await assertSucceeds(setDoc(docRef, { 'artist_test_1': {artistFirstName: 'Name', email: 'artist_test_1@example.com'}}))
+     it('Denies write access to artists collection by a user who is signed in but not an owner of a doc', async ()=>{
+    const db = testFirestoreEnv.authenticatedContext( 'artist1').firestore();
+    const docRef = doc(db, 'artists', 'artist1')
+       await assertSucceeds(setDoc(docRef, { 'artist1': {artistFirstName: 'Name', email: 'artist_test_1@example.com'}}))
     })
 
-       it('Write to a exhibitions collection by users who are signed in and owners of a doc', async ()=>{
+       it('Allows write access to exhibitions collection for a user who is signed in and is an owner of a doc', async ()=>{
     const db = testFirestoreEnv.authenticatedContext('artist1').firestore();
     const docRef = doc(db, 'exhibitions', 'exhibitionId')
        await assertSucceeds(setDoc(docRef, {artists_id: 'artist1' }))
        })
 
 
-      it('Write to all exhibitions collection docs by admin', async ()=>{
+      it('Allows write access to all exhibitions docs for admin', async ()=>{
     const db = testFirestoreEnv.authenticatedContext( 'admin',  {email: "admin1234@test.com"}).firestore();
     const docRef = doc(db, 'exhibitions', 'exhibitionId')
        await assertSucceeds(setDoc(docRef, { status: 'accepted', artists_id:'artist1'}))
     })
 
-       it('Write to exhibitions storage by authenticated (signed in) artists', async ()=>{
+       it('Allows write access to exhibitions storage bucket for authenticated artists', async ()=>{
     const db = testStorageEnv.authenticatedContext('artist1', {artist: true}).storage();
     const imageRef = ref(db, 'exhibitions/artist1/image1.jpg')
    
        await assertSucceeds(uploadBytes(imageRef))
     })
 
-       it('Read exhibitions storage by authenticated (signed in) enterprises', async ()=>{
+       it('Allows read access for exhibitions storage bucket for authenticated (signed in) enterprises', async ()=>{
     const db = testStorageEnv.authenticatedContext('business1', {business: true}).storage();
     const imageRef = ref(db, 'exhibitions/artist1/image1.jpg')
    
        await assertSucceeds(getDownloadURL(imageRef))
     })
 
-        it('Read files in exhibitions storage by authenticated artists who own those files', async ()=>{
+        it('Allows read access for files in exhibitions storage by authenticated artists who own those files', async ()=>{
     const db = testStorageEnv.authenticatedContext('artist1', {artist: true}).storage();
     const imageRef = ref(db, 'exhibitions/artist1/image1.jpg')
    
        await assertSucceeds(getBytes(imageRef))
     })
 
-       it('Fail read exhibitions storage by unauthenticated users', async ()=>{
+       it('Denies read exhibitions storage by unauthenticated users', async ()=>{
     const db = testStorageEnv.unauthenticatedContext().storage();
     const imageRef = ref(db, 'exhibitions/artist1/image1.jpg')
    

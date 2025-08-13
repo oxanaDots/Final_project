@@ -1,0 +1,73 @@
+
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-08-13T17:49:59.633Z",
+    "end": "2025-08-13T17:49:59.988Z",
+    "duration": 355
+  },
+  "tests": [
+    {
+      "title": "Send an artist an email notification about updated status of their exhibition submission",
+      "fullTitle": "Cloud functions Send an artist an email notification about updated status of their exhibition submission",
+      "file": "/Users/oksanadotsenko/Desktop/fp/cloud_functions_test/functions.test.cjs",
+      "duration": 6,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Setting custom claim on user sign up",
+      "fullTitle": "Cloud functions Setting custom claim on user sign up",
+      "file": "/Users/oksanadotsenko/Desktop/fp/cloud_functions_test/functions.test.cjs",
+      "duration": 69,
+      "currentRetry": 0,
+      "speed": "medium",
+      "err": {}
+    },
+    {
+      "title": "Send a welcome email to an enterprise on successful account registration",
+      "fullTitle": "Cloud functions Send a welcome email to an enterprise on successful account registration",
+      "file": "/Users/oksanadotsenko/Desktop/fp/cloud_functions_test/functions.test.cjs",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "Send an artist an email notification about updated status of their exhibition submission",
+      "fullTitle": "Cloud functions Send an artist an email notification about updated status of their exhibition submission",
+      "file": "/Users/oksanadotsenko/Desktop/fp/cloud_functions_test/functions.test.cjs",
+      "duration": 6,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Setting custom claim on user sign up",
+      "fullTitle": "Cloud functions Setting custom claim on user sign up",
+      "file": "/Users/oksanadotsenko/Desktop/fp/cloud_functions_test/functions.test.cjs",
+      "duration": 69,
+      "currentRetry": 0,
+      "speed": "medium",
+      "err": {}
+    },
+    {
+      "title": "Send a welcome email to an enterprise on successful account registration",
+      "fullTitle": "Cloud functions Send a welcome email to an enterprise on successful account registration",
+      "file": "/Users/oksanadotsenko/Desktop/fp/cloud_functions_test/functions.test.cjs",
+      "duration": 1,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    }
+  ]
+}

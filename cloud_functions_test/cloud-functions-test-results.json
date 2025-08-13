@@ -1,0 +1,90 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-08-13T18:00:33.483Z",
+    "end": "2025-08-13T18:00:33.887Z",
+    "duration": 404
+  },
+  "tests": [
+    {
+      "title": "Sends an artist an email notification about updated status of their exhibition submission",
+      "fullTitle": "Cloud functions Sends an artist an email notification about updated status of their exhibition submission",
+      "file": "/Users/oksanadotsenko/Desktop/fp/cloud_functions_test/functions.test.cjs",
+      "duration": 6,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Sets custom claim on artist sign up",
+      "fullTitle": "Cloud functions Sets custom claim on artist sign up",
+      "file": "/Users/oksanadotsenko/Desktop/fp/cloud_functions_test/functions.test.cjs",
+      "duration": 102,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Sets custom claim on business sign up",
+      "fullTitle": "Cloud functions Sets custom claim on business sign up",
+      "file": "/Users/oksanadotsenko/Desktop/fp/cloud_functions_test/functions.test.cjs",
+      "duration": 15,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Sends a welcome email to an enterprise on successful account registration",
+      "fullTitle": "Cloud functions Sends a welcome email to an enterprise on successful account registration",
+      "file": "/Users/oksanadotsenko/Desktop/fp/cloud_functions_test/functions.test.cjs",
+      "duration": 2,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    }
+  ],
+  "pending": [],
+  "failures": [],
+  "passes": [
+    {
+      "title": "Sends an artist an email notification about updated status of their exhibition submission",
+      "fullTitle": "Cloud functions Sends an artist an email notification about updated status of their exhibition submission",
+      "file": "/Users/oksanadotsenko/Desktop/fp/cloud_functions_test/functions.test.cjs",
+      "duration": 6,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Sets custom claim on artist sign up",
+      "fullTitle": "Cloud functions Sets custom claim on artist sign up",
+      "file": "/Users/oksanadotsenko/Desktop/fp/cloud_functions_test/functions.test.cjs",
+      "duration": 102,
+      "currentRetry": 0,
+      "speed": "slow",
+      "err": {}
+    },
+    {
+      "title": "Sets custom claim on business sign up",
+      "fullTitle": "Cloud functions Sets custom claim on business sign up",
+      "file": "/Users/oksanadotsenko/Desktop/fp/cloud_functions_test/functions.test.cjs",
+      "duration": 15,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    },
+    {
+      "title": "Sends a welcome email to an enterprise on successful account registration",
+      "fullTitle": "Cloud functions Sends a welcome email to an enterprise on successful account registration",
+      "file": "/Users/oksanadotsenko/Desktop/fp/cloud_functions_test/functions.test.cjs",
+      "duration": 2,
+      "currentRetry": 0,
+      "speed": "fast",
+      "err": {}
+    }
+  ]
+}

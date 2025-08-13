@@ -7,6 +7,8 @@
   "main": "securityRules.test.mjs",
   "scripts": {
     "test": "mocha \"*.test.mjs\" --exit",
+      "test:json": "mocha \"*.test.mjs\" --extension mjs --reporter json > results.json",
+
     "coverage": "nyc --reporter=lcov --reporter=text mocha \"*.test.mjs\""
   },
   "devDependencies": {

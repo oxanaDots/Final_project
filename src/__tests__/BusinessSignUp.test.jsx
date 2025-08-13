@@ -154,7 +154,7 @@ it('', async()=>{
  await submit()
  await confirmEmail()  
 
-  emailVer({ emailVerified: false });
+  emailVer({ emailVerified: true });
 
 
   expect(await screen.getByText('Email address could not be verified')).toBeInTheDocument()
