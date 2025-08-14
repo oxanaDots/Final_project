@@ -25,7 +25,6 @@ import { orderByDistance, getDistance, convertDistance } from 'geolib'
   const [userLocation, setUserLocation] = useState({})
 
 const images = Array.from({length: 10}, (_, i)=> `image${i}.jpg`)
-console.log('images', useLocation)
 const docs = [...businesses.values()]
 
 // get user's current location in latlong and show busiensses closest to user's location
@@ -36,15 +35,12 @@ const docs = [...businesses.values()]
 
 
        useEffect(()=>{
-  let isMounted = true
   async function helper(){
       const businessesData = await fetchBusinesses()
          setBusinesses( businessesData)
   }
       helper()
-      return()=>{
-        isMounted = false
-      }
+   
  }, [])
    
   useEffect(()=>{
@@ -70,7 +66,7 @@ const docs = [...businesses.values()]
      helper()
     }, [userLocation, businesses])
   
-    console.log(sortedBusinesses)
+    
 
 
   function handleExhibitiob(direction){
@@ -90,7 +86,7 @@ const docs = [...businesses.values()]
 
 
   useEffect(() => {
-  let isMounted = true
+ 
    setLoading(true)
   
     async function helper(){
@@ -109,9 +105,7 @@ const docs = [...businesses.values()]
       }
     }
     helper()
-     return()=>{
-        isMounted = false
-      }
+   
   }, []);
 
 
@@ -119,7 +113,7 @@ const docs = [...businesses.values()]
 
 
   useEffect(()=>{
-  let isMounted = true
+
 
     async function helper(){
 
@@ -141,9 +135,7 @@ const docs = [...businesses.values()]
     }
 
     helper()
-     return()=>{
-        isMounted = false
-      }
+ 
   }, [currentExhibition])
 
 

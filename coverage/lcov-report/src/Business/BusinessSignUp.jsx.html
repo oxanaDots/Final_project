@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">74.13% </span>
+                <span class="strong">72.88% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>43/58</span>
+                <span class='fraction'>43/59</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">69.49% </span>
+                <span class="strong">68.96% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>41/59</span>
+                <span class='fraction'>40/58</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">74.54% </span>
+                <span class="strong">73.68% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>41/55</span>
+                <span class='fraction'>42/57</span>
             </div>
         
             
@@ -367,7 +367,13 @@
 <a name='L302'></a><a href='#L302'>302</a>
 <a name='L303'></a><a href='#L303'>303</a>
 <a name='L304'></a><a href='#L304'>304</a>
-<a name='L305'></a><a href='#L305'>305</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L305'></a><a href='#L305'>305</a>
+<a name='L306'></a><a href='#L306'>306</a>
+<a name='L307'></a><a href='#L307'>307</a>
+<a name='L308'></a><a href='#L308'>308</a>
+<a name='L309'></a><a href='#L309'>309</a>
+<a name='L310'></a><a href='#L310'>310</a>
+<a name='L311'></a><a href='#L311'>311</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -395,7 +401,7 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -446,6 +452,10 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -453,6 +463,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -634,6 +645,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -722,7 +734,7 @@ function BusinessSignup() {
     !geoCodedLoc ? <span class="branch-0 cbranch-no" title="branch not covered" >setGeoCode( 'Wrong address') </span>: setGeoCode(geoCodedLoc)
       foundEnterprise.length === 0 &amp;&amp;  setSignUpError('No record of your company has been found. Try again.')
    
-    if (geoCodedLoc &amp;&amp; foundEnterprise.length &gt; 0){
+    if (geoCodedLoc &amp;&amp; foundEnterprise.length &gt; 0 ){
 &nbsp;
       const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -740,7 +752,7 @@ function BusinessSignup() {
     }
   
   } catch (error) {
-<span class="cstat-no" title="statement not covered" >    throw error</span>
+<span class="cstat-no" title="statement not covered" >     console.error('Form could not be submitted:', error.message)</span>
     
   }
 };
@@ -749,14 +761,19 @@ function BusinessSignup() {
 async function checkVerification(){
   const user = auth.currentUser
   setChecking(true)
- <span class="missing-if-branch" title="else path not taken" >E</span>if (!user) return
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (!user) {
+&nbsp;
+    return
+ }
 <span class="cstat-no" title="statement not covered" > try{</span>
 <span class="cstat-no" title="statement not covered" >   await reload(user)</span>
 <span class="cstat-no" title="statement not covered" >   if(!user.emailVerified){</span>
 <span class="cstat-no" title="statement not covered" >    setVerificationError(true)</span>
+<span class="cstat-no" title="statement not covered" >    setVerified(false)</span>
    } else{
-     
-<span class="cstat-no" title="statement not covered" > setVerified(true)</span>
+    
+<span class="cstat-no" title="statement not covered" >      setVerified(true)</span>
+    
 <span class="cstat-no" title="statement not covered" >       await setDoc(doc(db, "businesses", user.uid), {</span>
        businessName: formData.businessName,
        firstName: formData.firstName,
@@ -773,8 +790,8 @@ async function checkVerification(){
 <span class="cstat-no" title="statement not covered" >      console.log("Business user created and stored in Firestore");</span>
    }
 &nbsp;
- } catch(err){
-<span class="cstat-no" title="statement not covered" >  console.error(err)</span>
+ } catch(error){
+<span class="cstat-no" title="statement not covered" >     console.error('Error occured:', error.message)</span>
  } finally{
 <span class="cstat-no" title="statement not covered" >  setChecking(false)</span>
  }
@@ -945,13 +962,13 @@ async function checkVerification(){
       &lt;button type='submit'  data-testid="submit" className='submit-btn'&gt;{isSubmitting? <span class="branch-0 cbranch-no" title="branch not covered" >"Checking your company details":</span>'Submit'}&lt;/button&gt;
     &lt;/form&gt;):
     &lt;&gt;
-        {!verified &amp;&amp; &lt;div className='py-20'&gt; 
+        {!verified&amp;&amp; ! verificationError&amp;&amp; &lt;div className='py-20'&gt; 
       &lt;p className='p-6'&gt;We sent you an email verification link to your email address. Click on the button below once verification has been completed.&lt;/p&gt;
      &lt;button data-testid='email-verification' className='py-3 bg-primary-dark rounded-md px-4 text-secondary-light' onClick={checkVerification} disabled={checking}&gt;
-    { checking &amp;&amp; !verified ? "Checking your request" : "I have completed verififcation"}
+    { checking ? "Checking your request" : "I have completed verififcation"}
     &lt;/button&gt;
        &lt;/div&gt;}
-      {!verificationError &amp;&amp; verified &amp;&amp;
+      {verified &amp;&amp; ! verificationError &amp;&amp;
       
         &lt;div className='flex align-middle pt-20 '&gt;
         &lt;div className='p-10 border  border-primary-dark rounded-md'&gt;  
@@ -963,7 +980,8 @@ async function checkVerification(){
         &lt;/div&gt;
   &lt;/div&gt;}
   
- { verificationError &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;p&gt;Email address could not be verified&lt;/p&gt;}</span>
+ {verificationError &amp;&amp;<span class="branch-1 cbranch-no" title="branch not covered" >&lt;p&gt;Email address could not be verified&lt;/p&gt;}</span>
+ 
 &nbsp;
   
   &lt;/&gt;}
@@ -982,7 +1000,7 @@ export default BusinessSignup;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-13T19:13:51.125Z
+                at 2025-08-14T01:43:54.086Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

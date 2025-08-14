@@ -1,6 +1,8 @@
 import React from 'react';
 jest.mock('../firebase.js', ()=>({
-  auth: jest.fn()
+  auth: {
+    currentUser: null
+  }
 }));
 
 
@@ -31,11 +33,13 @@ import "@testing-library/jest-dom";
 import {  act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
-import { createUserWithEmailAndPassword, onAuthStateChanged , reload} from "firebase/auth";
+import { createUserWithEmailAndPassword,sendEmailVerification, onAuthStateChanged , reload} from "firebase/auth";
 import { fetchData } from "../utilities/fetchData";
 import BusinessSignup from '../Business/BusinessSignUp';
 import {  setDoc } from "firebase/firestore";
 import { geoCode } from '../utilities/geoCode.mjs';
+import { auth, db } from "../firebase.js"; 
+
 
 
 async function fillInForm(email, companyId){
@@ -76,14 +80,19 @@ describe('Sign up form for enterprises', ()=>{
        email: "test_1@mail.com"
       }})
 
-    setDoc.mockResolvedValue(
-      {doc: {geoLocation: {lat: 0.0, lng: 0.9}, email:  "test_1@mail.com", }}
-    )
+    // setDoc.mockResolvedValue(
+    //   {doc: {geoLocation: {lat: 0.0, lng: 0.9}, email:  "test_1@mail.com", }}
+    // )
+
+      setDoc.mockRejectedValue((new Error('GeoCode is missing')))
+
   onAuthStateChanged.mockImplementation((auth, cb) => {
   emailVer = cb;
+   return () => {};
 });
 
-reload.mockResolvedValue(undefined);   
+
+
   
   })
 
@@ -132,35 +141,41 @@ it('Shows error when user enters wrong email and company id', async()=>{
  expect(await screen.findByText(/We sent you an email verification link to your email address. Click on the button below once verification has been completed./i)).toBeInTheDocument();   
 await confirmEmail()  
 emailVer({emailVerified: true})
-
  expect(await screen.findByText(/Account created successfully!/i)).toBeInTheDocument();   
 
 
 })
 
+
+
 it('', async()=>{
-
-
-     render (
-          <MemoryRouter initialEntries={['/business_signup']}   >
+  
+  const errSpy = jest.spyOn(console, 'error').mockImplementation();
+  reload.mockRejectedValueOnce((new Error('GeoCode is missing')))
+  render (
+    <MemoryRouter initialEntries={['/business_signup']}>
               <Routes>
                 <Route path="/business_signup" element={<BusinessSignup/>}/>
               </Routes>
             </MemoryRouter>
         )
+        await fillInForm("test_1@mail.com", "RF238E2");
+        await submit()
+        emailVer({ emailVerified: true });
+        await confirmEmail()  
 
- await fillInForm("test_1@mail.com", "RF238E2");
+    await waitFor(async () => {
+      expect(errSpy).toHaveBeenCalledWith(
+       'Error occured:', 'GeoCode is missing'
+       );
 
- await submit()
- await confirmEmail()  
+  })
+    
+ 
+  errSpy.mockRestore();
 
-  emailVer({ emailVerified: true });
-
-
-  expect(await screen.getByText('Email address could not be verified')).toBeInTheDocument()
 
 })
-
 
 
 })

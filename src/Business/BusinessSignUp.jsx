@@ -49,7 +49,7 @@ function BusinessSignup() {
     !geoCodedLoc ? setGeoCode( 'Wrong address') : setGeoCode(geoCodedLoc)
       foundEnterprise.length === 0 &&  setSignUpError('No record of your company has been found. Try again.')
    
-    if (geoCodedLoc && foundEnterprise.length > 0){
+    if (geoCodedLoc && foundEnterprise.length > 0 ){
 
       const userCredential = await createUserWithEmailAndPassword(
       auth,
@@ -67,7 +67,7 @@ function BusinessSignup() {
     }
   
   } catch (error) {
-    throw error
+     console.error('Form could not be submitted:', error.message)
     
   }
 };
@@ -76,14 +76,19 @@ function BusinessSignup() {
 async function checkVerification(){
   const user = auth.currentUser
   setChecking(true)
- if (!user) return
+  if (!user) {
+
+    return
+ }
  try{
    await reload(user)
    if(!user.emailVerified){
     setVerificationError(true)
+    setVerified(false)
    } else{
-     
- setVerified(true)
+    
+      setVerified(true)
+    
        await setDoc(doc(db, "businesses", user.uid), {
        businessName: formData.businessName,
        firstName: formData.firstName,
@@ -100,8 +105,8 @@ async function checkVerification(){
       console.log("Business user created and stored in Firestore");
    }
 
- } catch(err){
-  console.error(err)
+ } catch(error){
+     console.error('Error occured:', error.message)
  } finally{
   setChecking(false)
  }
@@ -272,13 +277,13 @@ async function checkVerification(){
       <button type='submit'  data-testid="submit" className='submit-btn'>{isSubmitting? "Checking your company details":'Submit'}</button>
     </form>):
     <>
-        {!verified && <div className='py-20'> 
+        {!verified&& ! verificationError&& <div className='py-20'> 
       <p className='p-6'>We sent you an email verification link to your email address. Click on the button below once verification has been completed.</p>
      <button data-testid='email-verification' className='py-3 bg-primary-dark rounded-md px-4 text-secondary-light' onClick={checkVerification} disabled={checking}>
-    { checking && !verified ? "Checking your request" : "I have completed verififcation"}
+    { checking ? "Checking your request" : "I have completed verififcation"}
     </button>
        </div>}
-      {!verificationError && verified &&
+      {verified && ! verificationError &&
       
         <div className='flex align-middle pt-20 '>
         <div className='p-10 border  border-primary-dark rounded-md'>  
@@ -290,7 +295,8 @@ async function checkVerification(){
         </div>
   </div>}
   
- { verificationError && <p>Email address could not be verified</p>}
+ {verificationError &&<p>Email address could not be verified</p>}
+ 
 
   
   </>}

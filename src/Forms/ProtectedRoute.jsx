@@ -8,7 +8,7 @@ function ProtectedRoute({ children }) {
   if (!user) {
     return <Navigate to="/signin" replace />;
   }
-
+// children is a placeholder for components that are nested inside ProtectedRoute
   return children;
 }
 

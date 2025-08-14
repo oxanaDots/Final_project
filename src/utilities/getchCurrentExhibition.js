@@ -10,7 +10,6 @@ export async function fetchCurrentExhibition(){
           where('expireAt', '>', currentDay))
           
           const currentExhibitionSnapShot = await getDocs(querry)
-          console.log(currentExhibitionSnapShot)
 
           const currentExhibition = currentExhibitionSnapShot.docs.map(doc => ({...doc.data(), docId: doc.id}))
           return currentExhibition

@@ -32,7 +32,6 @@ function SignIn() {
       setUser({ ...userData, id: user.uid });
       navigate('/artist_dashboard');
     }  else  if (user.email === 'admin1234@test.com'){
-      setUser()
       setUser(user)
         navigate('/admin')
       }
@@ -47,32 +46,19 @@ function SignIn() {
      // custom firebase authentication error messages 
      let customMessage = ''
      switch (err.code){
-       case "auth/user-not-found":
-         customMessage = "No account found with this email.";
-         break;
-         case "auth/wrong-password":
-           customMessage = "Incorrect password.";
-           break;
-           case "auth/too-many-requests":
-             customMessage = "Too many attempts. Please try again later.";
-             break;
              case "auth/invalid-email":
                customMessage = "Email address is invalid.";
                break;
-               case 'auth/invalid-credential':
-                 customMessage = "Email or password is incorrect.";
-                 break;
                  default:
                    customMessage = err.message || "Signin failed.";
                   }
                   
-                  reset({ email: '', password: '' }, { keepErrors: true }); 
                   setError("firebase", {
                     type: "manual",
                     message: customMessage,
                   });
                   
-                  console.log(data)
+                  
                   
                   
   }
