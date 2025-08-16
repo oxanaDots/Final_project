@@ -33,9 +33,10 @@ export const artistProcessSignUp = functions.auth.user().onCreate(async (user) =
 })
 
 
-export const businessProcessSignUp = onDocumentCreated('businesses/{uid}', async (event) => {
-  const user = await auth.getUser(event.params.uid);
-  const enterpriseDoc = event.data;
+export const businessProcessSignUp = functions.firestore.document('businesses/{uid}').onCreate(async(snapshot, context)=>{
+  const enterpriseDoc = snapshot;
+  const uid = context.params.uid 
+  const user = await auth.getUser(uid);
 try{
 
   let customClaims = {};

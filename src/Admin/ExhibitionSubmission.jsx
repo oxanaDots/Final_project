@@ -7,7 +7,7 @@ import { db, storage } from '../firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faXmark, faCheck} from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'firebase/storage';
-import { getBlob } from 'firebase/storage';
+import { getDownloadURL , getBlob} from 'firebase/storage';
 
 function ExhibitionSubmission() {
   const linkParams = useMatch('/admin/exhibition_submission/:id');
@@ -21,14 +21,26 @@ function ExhibitionSubmission() {
 console.log('imgaes',currentExhibition.images)
 
   useEffect(()=>{
+    let active = true
     async function helper(){
       try{
         
-        const urls = await Promise.all(
-       currentExhibition.images.map(async (path) => URL.createObjectURL(await getBlob(ref(storage, path))))
-         );
+     const urls = await Promise.all(
+          currentExhibition.images.map(async (p) => {
+            const blob = await getBlob(ref(storage, p))
+            return URL.createObjectURL(blob);
+          })
+        );
+      if (!active) { 
+        newUrls.forEach(URL.revokeObjectURL)
+        return
+      }
+
        setPaths(urls);
-  
+   return () => {
+      active = false;
+     
+    };
       } catch(err){
         console.error(err)
       }
@@ -91,11 +103,10 @@ console.log(currentExhibition)
 
    })
   return (
-    <div className='grid justify-center py-8'>
+    <div className='flex flex-col justify-center py-8'>
    {!statusB ? 
-    <>
-    <div className='grid justify-center grid-cols-[30%_40%]'>
-       <h2>Review exhibition</h2>
+    <div className='flex  flex-col justify-center items-center'>
+    <div className='grid justify-center grid-cols-[30%_50%]'>
       <ExhibitionItem 
      status = 'current'
     //  links={currentExhibition.links}
@@ -103,13 +114,13 @@ console.log(currentExhibition)
      title={currentExhibition.title}
      medium={currentExhibition.medium}
      descr={currentExhibition.descr}/>
-    <section className='flex justify-center  gap-4 px-6 '>
+    <section className='grid justify-center  gap-4 grid-cols-3 grid-rows-3 px-6 '>
     {currentExhibition.images && currentExhibition.images.map((link, index)=> (
-            <div className='  justify-center place-self-center rounded-sm border ' key={index}>
-                {paths && paths.map((path)=> <img
+            <div className='  justify-center col-1 rounded-sm border ' key={index}>
+                <img
                 className='object-cover w-full h-full border-ternary-medium'
-                src={path}
-                /> )}
+                src={paths[index]}
+                /> 
             </div>
         ))}
     </section>
@@ -123,7 +134,7 @@ console.log(currentExhibition)
         <FontAwesomeIcon icon={faXmark}/>
     </button>
     </div>
-    </>
+    </div>
      : <div className='bg-ternary-light px-8 py-6'>
         <h2 className='py-6 text-ternary-dark font-semibold text-lg'>Submission updated!</h2>
         <button data-testid="return-to-admin" onClick={()=> navigate('/admin')} className='submit-btn'>Return to my dashboard</button>

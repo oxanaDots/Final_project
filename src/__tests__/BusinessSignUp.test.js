@@ -69,7 +69,7 @@ async function confirmEmail(){
 
 }
 describe('Sign up form for enterprises', ()=>{
-  let emailVer
+ 
   beforeEach(()=>{
    geoCode.mockResolvedValue({lat: 0.0, lng: 0.9})
    
@@ -99,7 +99,7 @@ describe('Sign up form for enterprises', ()=>{
 
  
 
-it('Shows error when user enters wrong email and company id', async()=>{
+it("Displays an error when the email and company id don't match records of registered eneteprises", async()=>{
   
    
      render(
@@ -117,7 +117,7 @@ it('Shows error when user enters wrong email and company id', async()=>{
   
   })
 
-  it('Shows successfull account registration message on email verification', async ()=>{
+  it('Shows successful account registration message on email verification', async ()=>{
  auth.currentUser = { uid: '123', email: 'test_1@mail.com', emailVerified: false };
 
   reload.mockImplementation(async (user) => { user.emailVerified = true; });
@@ -157,7 +157,7 @@ it('Catches an error on rejected reload', async()=>{
           
         })
 
-     await waitFor(async () => {
+     await waitFor( () => {
       expect(errSpy).toHaveBeenCalledWith(
        'Error happened:', 'user is undefined'
        );

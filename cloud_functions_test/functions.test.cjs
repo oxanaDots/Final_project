@@ -116,8 +116,9 @@ let myFunctions
 await admin.firestore().doc(`businesses/${uid}`).set({ role: 'business', email });
 
 const snap = test.firestore.makeDocumentSnapshot({ role: 'business', email }, `businesses/${uid}`);
+console.log(snap)
 const wrapped = test.wrap(myFunctions.businessProcessSignUp);
-await wrapped(snap, {params:{uid}})
+await wrapped(snap, { params: { uid: uid } })
  const data = await admin.auth().getUser(uid);
   assert.strictEqual(data.customClaims.business, true);
 

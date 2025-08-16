@@ -7,7 +7,7 @@
 // }))
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import {  render, screen } from "@testing-library/react";
+import {  render, screen, renderHook, act } from "@testing-library/react";
 import { UserAuthContext, AuthContext, AuthProvider } from "../Forms/UserAuthContext";
 
 
@@ -57,18 +57,18 @@ describe('UserAuthContext', ()=>{
 
     })
 
-       it ('Updates user state on click', async()=>{
+       it ('Sets user to null', async()=>{
+    // render a mock component or components inside AuthProvider so the content of a component
+    const wrapper = ({ children }) => <AuthProvider>{children}</AuthProvider>;
+// run AuthProvider in this test environment and returns result
+  const { result } = renderHook(() => UserAuthContext(), { wrapper });
+console.log('result', result)
 
-     const setUser = jest.fn()
-    const value = {user:null, setUser}
-        render(
-             <AuthContext.Provider value={value}>
-              <Helper/>
-           </AuthContext.Provider>
-        )
-         expect(screen.getByTestId("name")).toBeNull();
+  act(() => result.current.setUser(null));
+  expect(result.current.user).toBeNull();
+});
 
 
 
-    })
+ 
 })

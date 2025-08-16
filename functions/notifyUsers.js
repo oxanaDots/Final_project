@@ -3,7 +3,7 @@ import * as logger from "firebase-functions/logger";
 import { createTransport } from "nodemailer";
 import { getDate } from "./utility/getDate.js";
 import {  db } from './firebase.js'
-
+// import { query, where } from "mongoose";
 const transporter = createTransport({
   service: "gmail",
   auth: {
@@ -80,4 +80,36 @@ try{
 })
 
 
+// export const notifyAboutNewExhibitions = onDocumentUpdated('exhibitions/{docId}', async(event)=> {
+// try{
+//      const newValue = event.data.after.data();
+//      const querry = query(
+//         collection(db, 'exhibitions'),
+//         where('status', '==', 'accepted'))
+
+//    const acceptedExh = await getDocs(querry)
+//   const businessesSNap = await getDocs(collection(db, 'businesses'));
+//   const cities = businessesSNap.docs.map(doc => ({ ...doc.data().email }));
+ 
+
+//    let text
+//    if(newValue.status === 'accepted' && acceptedExh.length === 1){
+//       text = 'Exhibitions are available to display'
+//    }
+
+   
+//     const mailOptions = {
+//     from: "noreply@art-hosting.firebaseapp.com",
+//     to: email,
+//     subject: "Exhibition submission update",
+//     text: text
+//   };
+
+//     await transporter.sendMail(mailOptions);
+//   logger.info("Emails sent");
+// } catch(err){
+//     console.error(err)
+// }
+
+// })
 // firebase deploy --only functions:notifyArtists --project art-hosting
