@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.43% </span>
+                <span class="strong">86.04% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>37/46</span>
+                <span class='fraction'>37/43</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70% </span>
+                <span class="strong">58.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/10</span>
+                <span class='fraction'>7/12</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">81.39% </span>
+                <span class="strong">85.36% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>35/43</span>
+                <span class='fraction'>35/41</span>
             </div>
         
             
@@ -219,15 +219,15 @@
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -355,17 +355,17 @@ function ExhibitionSubmission() {
    const [paths, setPaths] = useState([])
   const navigate = useNavigate()
 &nbsp;
+console.log('imgaes',currentExhibition.images)
 &nbsp;
   useEffect(()=&gt;{
     async function helper(){
-      const images = currentExhibition.images
       try{
-          for (const path of images){
-        const pathRef = <span class="cstat-no" title="statement not covered" >ref(storage,  path)</span>
-        const blob = <span class="cstat-no" title="statement not covered" >await getBlob(pathRef)</span>
-        const objectUrl = <span class="cstat-no" title="statement not covered" >URL.createObjectURL(blob);</span>
-<span class="cstat-no" title="statement not covered" >        setPaths(<span class="fstat-no" title="function not covered" >(l</span>inks)=&gt; <span class="cstat-no" title="statement not covered" >[...links, objectUrl])</span></span>
-      }
+        
+        const urls = await Promise.all(
+       currentExhibition.images.map(<span class="fstat-no" title="function not covered" >as</span>ync (path) =&gt; <span class="cstat-no" title="statement not covered" >URL.createObjectURL(await getBlob(ref(storage, path))))</span>
+         );
+<span class="cstat-no" title="statement not covered" >       setPaths(urls);</span>
+  
       } catch(err){
         console.error(err)
       }
@@ -373,7 +373,7 @@ function ExhibitionSubmission() {
     helper()
   }, [])
 &nbsp;
-  console.log(paths)
+  console.log('paths', paths)
 &nbsp;
 console.log(currentExhibition)
    async function reviewSubmission(status){
@@ -440,10 +440,10 @@ console.log(currentExhibition)
      title={currentExhibition.title}
      medium={currentExhibition.medium}
      descr={currentExhibition.descr}/&gt;
-    &lt;section className='grid grid-cols-2 justify-center   col-1 gap-4 px-6 '&gt;
+    &lt;section className='flex justify-center  gap-4 px-6 '&gt;
     {currentExhibition.images &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >currentExhibition.images.map(<span class="fstat-no" title="function not covered" >(l</span>ink, index)=&gt; (</span>
-<span class="cstat-no" title="statement not covered" >            &lt;div className='  aspect-square overflow-hidden  justify-center place-self-center rounded-sm border ' key={index}&gt;</span>
-                {paths.map(<span class="fstat-no" title="function not covered" >(p</span>ath)=&gt; <span class="cstat-no" title="statement not covered" >&lt;img</span>
+<span class="cstat-no" title="statement not covered" >            &lt;div className='  justify-center place-self-center rounded-sm border ' key={index}&gt;</span>
+                {paths &amp;&amp; paths.map(<span class="fstat-no" title="function not covered" >(p</span>ath)=&gt; <span class="cstat-no" title="statement not covered" >&lt;img</span>
                 className='object-cover w-full h-full border-ternary-medium'
                 src={path}
                 /&gt; )}
@@ -478,7 +478,7 @@ export default ExhibitionSubmission;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-16T01:14:22.605Z
+                at 2025-08-16T02:53:47.176Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
