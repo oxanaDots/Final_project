@@ -18,17 +18,17 @@ function ExhibitionSubmission() {
    const [paths, setPaths] = useState([])
   const navigate = useNavigate()
 
+console.log('imgaes',currentExhibition.images)
 
   useEffect(()=>{
     async function helper(){
-      const images = currentExhibition.images
       try{
-          for (const path of images){
-        const pathRef = ref(storage,  path)
-        const blob = await getBlob(pathRef)
-        const objectUrl = URL.createObjectURL(blob);
-        setPaths((links)=> [...links, objectUrl])
-      }
+        
+        const urls = await Promise.all(
+       currentExhibition.images.map(async (path) => URL.createObjectURL(await getBlob(ref(storage, path))))
+         );
+       setPaths(urls);
+  
       } catch(err){
         console.error(err)
       }
@@ -36,7 +36,7 @@ function ExhibitionSubmission() {
     helper()
   }, [])
 
-  console.log(paths)
+  console.log('paths', paths)
 
 console.log(currentExhibition)
    async function reviewSubmission(status){
@@ -103,10 +103,10 @@ console.log(currentExhibition)
      title={currentExhibition.title}
      medium={currentExhibition.medium}
      descr={currentExhibition.descr}/>
-    <section className='grid grid-cols-2 justify-center   col-1 gap-4 px-6 '>
+    <section className='flex justify-center  gap-4 px-6 '>
     {currentExhibition.images && currentExhibition.images.map((link, index)=> (
-            <div className='  aspect-square overflow-hidden  justify-center place-self-center rounded-sm border ' key={index}>
-                {paths.map((path)=> <img
+            <div className='  justify-center place-self-center rounded-sm border ' key={index}>
+                {paths && paths.map((path)=> <img
                 className='object-cover w-full h-full border-ternary-medium'
                 src={path}
                 /> )}

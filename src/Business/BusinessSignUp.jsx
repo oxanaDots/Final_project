@@ -21,25 +21,36 @@ function BusinessSignup() {
  console.log(formData)
  console.log(geoCode)
  
-// track if email has been verified by user by calling onAuthStateChanged observer 
-  useEffect(() => {
-    const callToAuth = onAuthStateChanged(auth, async (user) => {
-      if (!user) return setVerified(false);
-      await reload(user);
-      setVerified(user.emailVerified === true);
-    });
-    return callToAuth;
-  }, []);
+// // track if email has been verified by user by calling onAuthStateChanged observer 
+//   useEffect(() => {
+//     const callToAuth = onAuthStateChanged(auth, async (user) => {
+     
+//       if (!user) {
+//         setVerified(false);
+//         return
+//       }
+//       try
+        
+//         await reload(user);
+//         setVerified(user.emailVerified === true);
+//       } catch(error){
+//         console.error('Error occured:', error.message)
+//       }
+//     });
+//     return callToAuth;
+//   }, []);
 
 
 
   // submit user request and eail verification request
   async function onSubmit (data) {
+
+    
   try {
     // const enterprisesData = await fetchData('https://final-project-red-delta.vercel.app/api/enterprises')
      const enterprisesData = await fetchData('http://localhost:3001/api/enterprises')
      setFormData(data)
-   
+   console.log(data)
    const geoCodedLoc = await geoCode(`${data.location}, ${data.postcode}`)
    console.log(geoCodedLoc)
    const foundEnterprise = enterprisesData && enterprisesData.filter(item => item.email === data.email && item.companyID === data.companyID)
@@ -56,11 +67,8 @@ function BusinessSignup() {
       data.email,
       data.password
     );
-
       await sendEmailVerification(userCredential.user)
 
-      
-  
       setSubmitted(true)
     } else{
       return
@@ -77,7 +85,6 @@ async function checkVerification(){
   const user = auth.currentUser
   setChecking(true)
   if (!user) {
-
     return
  }
  try{
@@ -106,7 +113,7 @@ async function checkVerification(){
    }
 
  } catch(error){
-     console.error('Error occured:', error.message)
+     console.error('Error happened:', error.message)
  } finally{
   setChecking(false)
  }
@@ -119,13 +126,7 @@ async function checkVerification(){
  <div className=' flex  w-[40rem] justify-center items-center'>
       {!submitted ? (
         <form 
-        onAnimationStart={e => {
-      if (e.animationName === 'onAutoFillStart') {
-        const input = e.target;
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-        input.focus();
-      }
-    }}
+ 
       data-testid="signupForm" className=' flex flex-col w-[90vw] items-left p-4 justify-center text-center '  onSubmit={handleSubmit(onSubmit)}>
             <legend className="text-xl text-center font-semibold mb-4">Create an Account</legend>
                 { signUpError.length > 0 && 

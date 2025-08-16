@@ -26,11 +26,20 @@ function renderHelper(){
 describe('Protected route', ()=>{
 
     
-    it('Navigates to /signin on access of non existent user', async()=>{
+    it('Redirects to a sign in page when one of the protected routes is accessed', async()=>{
     UserAuthContext.mockReturnValue({user: null});
      renderHelper()
    
   expect(await screen.findByText('Sign In')).toBeInTheDocument();
+
+
+  })
+
+     it('Redirects to an Artist Dashboard if the user is signed in', async()=>{
+    UserAuthContext.mockReturnValue({user: true});
+     renderHelper()
+   
+  expect(await screen.findByText('Artist Dashboard')).toBeInTheDocument();
 
 
   })

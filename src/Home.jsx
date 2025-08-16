@@ -44,9 +44,10 @@ const docs = [...businesses.values()]
  }, [])
    
   useEffect(()=>{
+    let active = true
 
      function helper(){
-       if (userLocation && businesses){
+       if (userLocation && businesses && active){
             const mappedGeos = docs.map((item) => item.geoLocation)
             const orderedLocations = orderByDistance(userLocation, mappedGeos)
             const arr = []
@@ -64,6 +65,10 @@ const docs = [...businesses.values()]
         }
     }
      helper()
+
+    return () => {
+    active = false;
+  };
     }, [userLocation, businesses])
   
     
@@ -86,7 +91,7 @@ const docs = [...businesses.values()]
 
 
   useEffect(() => {
- 
+ let active = true
    setLoading(true)
   
     async function helper(){
@@ -94,8 +99,11 @@ const docs = [...businesses.values()]
       try{
     
          const currentExhibition = await fetchCurrentExhibition()
-          setCurrentExhibition(currentExhibition[0])
-          setExhibitions([currentExhibition[0]])
+         if (active){
+           setCurrentExhibition(currentExhibition[0])
+           setExhibitions([currentExhibition[0]])
+
+         }
 
        
       }catch(err){
@@ -105,6 +113,9 @@ const docs = [...businesses.values()]
       }
     }
     helper()
+     return () => {
+    active = false;
+  };
    
   }, []);
 
@@ -113,7 +124,7 @@ const docs = [...businesses.values()]
 
 
   useEffect(()=>{
-
+let active = true
 
     async function helper(){
 
@@ -123,20 +134,22 @@ const docs = [...businesses.values()]
         if (currentExhibition && exhibitions.length > 0){
           
           const upcomingExhibitions = await fetchUpcomingExhibitions(expireDate)
-          setExhibitions((prev)=>  [...prev, ...upcomingExhibitions])
+          if (active){
+            setExhibitions((prev)=>  [...prev, ...upcomingExhibitions])
+
+          }
         }
-      
-
-
-    
-      } catch(err){
+     } catch(err){
         console.error(err)
       }
     }
 
     helper()
+     return () => {
+    active = false;
+  };
  
-  }, [currentExhibition])
+  }, [currentExhibition, expireDate])
 
 
 

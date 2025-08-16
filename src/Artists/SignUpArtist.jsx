@@ -56,13 +56,7 @@ const [links, setLinks] = useState([])
 <div className=' flex  w-[40rem] justify-center items-center'>
     <form 
     autoComplete='on'
-     onAnimationStart={e => {
-        if (e.animationName === 'onAutoFillStart') {
-          const input = e.target;
-          input.dispatchEvent(new Event('input', { bubbles: true }));
-          input.focus();
-        }
-      }}
+  
 
     className=' flex-col w-[90vw] flex items-left p-4 justify-center text-center '  onSubmit={handleSubmit(onSubmit)}>
           <legend className="text-xl text-center font-semibold mb-4">Create an Account</legend>

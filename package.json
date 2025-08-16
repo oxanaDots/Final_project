@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "test": "react-scripts test --coverage ",
-    "testind":"react-scripts test",
+    "test:coverage": "react-scripts test --coverage --watchAll=false  --collectCoverageFrom='!src/App.jsx' --collectCoverageFrom='!src/main.jsx' --collectCoverageFrom='!src/cors.json' --collectCoverageFrom='!src/services.json' ",
+    "test":"react-scripts test --coverage",
     "preview": "vite preview",
     "server": "node api/enterprises.cjs"
   },

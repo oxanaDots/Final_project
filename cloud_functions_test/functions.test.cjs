@@ -97,28 +97,31 @@ let myFunctions
 
  
   const user = test.auth.makeUserRecord({ uid, email, customClaims});
-  const wrapped  = test.wrap(myFunctions.processSignUp);
+  const wrapped  = test.wrap(myFunctions.artistProcessSignUp);
   await wrapped(user);
   assert.strictEqual(user.customClaims.artist, true);
 
  
     })
 
-       it('Sets custom claim on business sign up', async ()=> {
+  it('Sets custom claim on business sign up', async ()=> {
       
  
-  const uid = 'business1';
+  const uid = 'uniqueId';
   const email = 'business1@example.com';
   
 
-  const customClaims = {"business": true}
-  await admin.auth().createUser({ uid, email});
+ await admin.auth().createUser({ uid, email});
 
- 
-  const user = test.auth.makeUserRecord({ uid, email, customClaims});
-  const wrapped  = test.wrap(myFunctions.processSignUp);
-  await wrapped(user);
-  assert.strictEqual(user.customClaims.business, true);
+await admin.firestore().doc(`businesses/${uid}`).set({ role: 'business', email });
+
+const snap = test.firestore.makeDocumentSnapshot({ role: 'business', email }, `businesses/${uid}`);
+const wrapped = test.wrap(myFunctions.businessProcessSignUp);
+await wrapped(snap, {params:{uid}})
+ const data = await admin.auth().getUser(uid);
+  assert.strictEqual(data.customClaims.business, true);
+
+
 
  
     })
