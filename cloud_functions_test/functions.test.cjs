@@ -75,7 +75,7 @@ let myFunctions
   }
 
 
-  it('Sends an artist an email notification about updated status of their exhibition submission', async ()=>{
+  it('Should send artist an email notification about updated status of their exhibition submission', async ()=>{
       const{ sentEmail, afterSnap, artistSnap} = await  helper('accepted', "artist_test_1@example.com"
 , 'artist1', 'exhibitionId')
      
@@ -85,7 +85,7 @@ let myFunctions
 
 
 
-     it('Sets custom claim on artist sign up', async ()=> {
+     it('Shoud set custom authentication token on artist sign up', async ()=> {
       
  
   const uid  = 'artist2';
@@ -104,7 +104,7 @@ let myFunctions
  
     })
 
-  it('Sets custom claim on business sign up', async ()=> {
+  it('Shoud set custom authentication token on enterprise sign up', async ()=> {
       
  
   const uid = 'uniqueId';
@@ -120,15 +120,15 @@ console.log(snap)
 const wrapped = test.wrap(myFunctions.businessProcessSignUp);
 await wrapped(snap, { params: { uid: uid } })
  const data = await admin.auth().getUser(uid);
-  assert.strictEqual(data.customClaims.business, true);
-
-
+  assert.strictEqual(data.customClaims.business, true)
 
  
     })
 
+    
 
-     it('Sends a welcome email to an enterprise on successful account registration', async ()=>{
+
+     it('Should send a welcome email to an enterprise on successful account registration', async ()=>{
       const user = test.firestore.makeDocumentSnapshot({enterPriseName:"test", email: 'test@mail.com'})
      const wrapped = test.wrap(myFunctions.sendWelcomeEmail)
      await wrapped(user)

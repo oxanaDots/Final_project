@@ -21,26 +21,14 @@ function ExhibitionSubmission() {
 console.log('imgaes',currentExhibition.images)
 
   useEffect(()=>{
-    let active = true
     async function helper(){
       try{
         
-     const urls = await Promise.all(
-          currentExhibition.images.map(async (p) => {
-            const blob = await getBlob(ref(storage, p))
-            return URL.createObjectURL(blob);
-          })
-        );
-      if (!active) { 
-        newUrls.forEach(URL.revokeObjectURL)
-        return
-      }
-
+      const urls = await Promise.all(
+  currentExhibition.images.map((path) => getDownloadURL(ref(storage, path)))
+);
        setPaths(urls);
-   return () => {
-      active = false;
-     
-    };
+  
       } catch(err){
         console.error(err)
       }

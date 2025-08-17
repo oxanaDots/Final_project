@@ -84,9 +84,7 @@ function BusinessSignup() {
 async function checkVerification(){
   const user = auth.currentUser
   setChecking(true)
-  if (!user) {
-    return
- }
+
  try{
    await reload(user)
    if(!user.emailVerified){

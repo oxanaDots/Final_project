@@ -23,9 +23,7 @@ jest.mock("firebase/auth", () => ({
 }));
 
 jest.mock('../utilities/geoCode.mjs', () => ({
-  geoCode: jest.fn(async () => {
-    return {lat: 0.0, lng: 0.9};
-  }),
+  geoCode: jest.fn(),
 }));
 
 
@@ -43,13 +41,13 @@ import { auth, db } from "../firebase.js";
 
 
 
-async function fillInForm(email, companyId){
+async function fillInForm(email, companyId, location =  "Green street"){
    await userEvent.type(screen.getByPlaceholderText(/business name/i), "test");
       await userEvent.type(screen.getByPlaceholderText(/company id/i), companyId);
       await userEvent.type(screen.getByPlaceholderText(/first name/i), "test");
       await userEvent.type(screen.getByPlaceholderText(/last name/i), "test");
       await userEvent.type(screen.getByPlaceholderText(/email address/i), email);
-      await userEvent.type(screen.getByPlaceholderText(/business address/i), "Green street");
+      await userEvent.type(screen.getByPlaceholderText(/business address/i),location);
       await userEvent.type(screen.getByPlaceholderText(/postcode/i), "E1 38CD");
       await userEvent.type(screen.getByPlaceholderText(/phone number/i), "07889546333");
       await userEvent.type(screen.getByPlaceholderText(/^password$/i), "Password123");
@@ -130,9 +128,9 @@ it("Displays an error when the email and company id don't match records of regis
  await fillInForm("test_1@mail.com", "RF238E2");
 
  await submit()
- expect(await screen.findByText(/We sent you an email verification link to your email address. Click on the button below once verification has been completed./i)).toBeInTheDocument();   
+ expect(await screen.findByText('We sent you an email verification link to your email address. Click on the button below once verification has been completed.')).toBeInTheDocument();   
 await confirmEmail()  
- expect(await screen.findByText(/Account created successfully!/i)).toBeInTheDocument();   
+ expect(await screen.findByText('Account created successfully!')).toBeInTheDocument();   
 
 
 })
@@ -209,9 +207,24 @@ it('Displays error UI on unverified email', async()=>{
   await submit();
   await confirmEmail();
 
-  expect(await screen.findByText(/Email address could not be verified/i)).toBeInTheDocument();   
+  expect(await screen.findByText('Email address could not be verified')).toBeInTheDocument();   
 
 
+
+})
+
+it('', async()=>{
+geoCode.mockRejectedValueOnce(new Error('geocode failed'))
+ render(
+    <MemoryRouter>
+      <BusinessSignup/>
+    </MemoryRouter>);
+
+  await fillInForm("test_1@mail.com", "RF238E2", 'wrong' );
+   await submit()
+
+   expect(await screen.findByText('Make sure you entered correct location.')).toBeInTheDocument();   
+   
 
 })
 

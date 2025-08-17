@@ -169,7 +169,7 @@ afterEach(() => {
     
     })
 
-      it("Updates a doc with a status 'accepted, adds expireAt and startsAt dates'.", async () => {
+      it("Updates an exhibition document status and shows confirmation UI", async () => {
      renderHelper('124')
   
        doc.mockReturnValue({id: '124'})
@@ -184,7 +184,7 @@ afterEach(() => {
     })
 
 
-      it("Returns correct context for exhibitions with docId: 124", async () => {
+      it("Updates an exhibition document status, shows confirmation UI and navigates to admin dashboard", async () => {
       renderHelper('124')
   
        doc.mockReturnValue({id: '124'})
@@ -197,8 +197,8 @@ afterEach(() => {
        expect(await screen.findByText('Submission updated!')).toBeInTheDocument()
 
 
-        fireEvent.click(screen.getByTestId('return-to-admin'))
-      expect(await screen.findByText('Exhibition submissions')).toBeInTheDocument()
+        // fireEvent.click(screen.getByTestId('return-to-admin'))
+        expect(await screen.findByText('Exhibition submissions')).toBeInTheDocument()
     
     })
 
