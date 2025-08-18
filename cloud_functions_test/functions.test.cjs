@@ -19,10 +19,6 @@ const test = require('firebase-functions-test')({
 const nodemailermock = require('nodemailer-mock');
 const transport = nodemailermock.createTransport({});
 
-if (!admin.apps.length) {
-  admin.initializeApp({ projectId: 'art-hosting' });
-}
-
 
 
 

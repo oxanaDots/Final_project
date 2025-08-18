@@ -7,7 +7,7 @@ import { db, storage } from '../firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faXmark, faCheck} from '@fortawesome/free-solid-svg-icons';
 import { ref } from 'firebase/storage';
-import { getDownloadURL , getBlob} from 'firebase/storage';
+import { getDownloadURL } from 'firebase/storage';
 
 function ExhibitionSubmission() {
   const linkParams = useMatch('/admin/exhibition_submission/:id');

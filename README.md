@@ -1,13 +1,40 @@
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+Vite is an optimisation build tool uwhich enable fast server start by making use of ES modules. The source files are served as native ES modules, instead of using bundlers to optimise files.
+Vite's Hot Module Replacement enables update of changed modules only, resulting in fast server start. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+React is a Javascript framework which, unlike Javascript, uses a decleartive syntax instead of an imperative syntax. When using Js, to arrive at the desired UI, the DOM elements need to be selected and traversed manually. React abstracts away from DOM, to arrive at the desride UI, we describe what UI should look like using jsx syntax, instead of telling the program what to do  and how to do it.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# FP
+# starting the server
+
+nmp install
+npm run dev
+
+# starting Firebase emulators
+
+firebase init emulators
+<!-- select the following emulators: Authentication emulator, Firestore emulator, Storage emulator, Functions emulator -->
+firebase emulators:start
+
+# running security test results, all cd commands must be run from the project root 
+
+cd security_rules_test
+npm test
+
+# running cloud functions test results
+ cd ..
+ cd cloud_functions_test
+ npm test
+
+ # running unit tests for frontend components
+cd ..
+npm run test:coverage
+
+
+
+
+
+
+

@@ -157,19 +157,14 @@ let active = true
  return (
    <div className='m-0'>
     {loading ? <Spiner/>:
-    <div className='flex  m-0 flex-col justify-center items-center bg-primary-medium'>
+    <div className='flex  m-0 flex-col h-full justify-center items-center bg-primary-medium'>
     <NavMenu/>
 
-<h1 className='text-3xl  font-semibold'>Main Heading</h1>
-   <section className='grid grid-cols-[25%_30%_25%] pt-6 pb-20 justify-center items-baseline  gap-20'>
+{/* <h1 className='text-3xl  font-semibold'>Main Heading</h1> */}
+   <section className='grid grid-cols-[50%_50%] width-full pt-6 pb-20 justify-center items-baseline  gap-20'>
 
 
-    <div className='grid-cols-1'>
-<h3 className='text-xl py-3'>Subheading</h3>
-<p className='text-xs py-3'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-   <div>   <NavLink to='/specify_role'><button className='submit-btn'>Create an Account</button></NavLink>
-   </div>
-   </div>
+
 
   <div className='grid-cols-2'> 
    
