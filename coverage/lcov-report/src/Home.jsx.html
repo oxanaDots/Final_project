@@ -23,23 +23,23 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">94.44% </span>
+                <span class="strong">94.36% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>68/72</span>
+                <span class='fraction'>67/71</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.78% </span>
+                <span class="strong">82.05% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>31/37</span>
+                <span class='fraction'>32/39</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.83% </span>
+                <span class="strong">95.65% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>23/24</span>
+                <span class='fraction'>22/23</span>
             </div>
         
             
@@ -304,12 +304,7 @@
 <a name='L239'></a><a href='#L239'>239</a>
 <a name='L240'></a><a href='#L240'>240</a>
 <a name='L241'></a><a href='#L241'>241</a>
-<a name='L242'></a><a href='#L242'>242</a>
-<a name='L243'></a><a href='#L243'>243</a>
-<a name='L244'></a><a href='#L244'>244</a>
-<a name='L245'></a><a href='#L245'>245</a>
-<a name='L246'></a><a href='#L246'>246</a>
-<a name='L247'></a><a href='#L247'>247</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L242'></a><a href='#L242'>242</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -335,9 +330,9 @@
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">70x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -482,11 +477,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -581,9 +571,9 @@ import { orderByDistance, getDistance, convertDistance } from 'geolib'
   const [index, setIndex] = useState(0)
   const [userLocation, setUserLocation] = useState({})
 &nbsp;
-const images = Array.from({length: 10}, (_, i)=&gt; `image${i}.jpg`)
 const docs = [...businesses.values()]
 &nbsp;
+console.log('use', userLocation)
 // get user's current location in latlong and show busiensses closest to user's location
       useEffect(()=&gt;{
        navigator.geolocation.getCurrentPosition(<span class="fstat-no" title="function not covered" >re</span>s=&gt;{
@@ -712,23 +702,18 @@ let active = true
 &nbsp;
 &nbsp;
  return (
-   &lt;div className='m-0'&gt;
+   &lt;div className='m-0 h-full'&gt;
     {loading ? &lt;Spiner/&gt;:
-    &lt;div className='flex  m-0 flex-col justify-center items-center bg-primary-medium'&gt;
+    &lt;div className='flex h-full m-0 flex-col justify-center  bg-primary-medium'&gt;
     &lt;NavMenu/&gt;
 &nbsp;
-&lt;h1 className='text-3xl  font-semibold'&gt;Main Heading&lt;/h1&gt;
-   &lt;section className='grid grid-cols-[25%_30%_25%] pt-6 pb-20 justify-center items-baseline  gap-20'&gt;
+{/* &lt;h1 className='text-3xl  font-semibold'&gt;Main Heading&lt;/h1&gt; */}
+   &lt;section className='grid grid-cols-2 w-[70%] h-full pt-28 pb-20 self-center justify-center items-baseline  gap-20'&gt;
 &nbsp;
 &nbsp;
-    &lt;div className='grid-cols-1'&gt;
-&lt;h3 className='text-xl py-3'&gt;Subheading&lt;/h3&gt;
-&lt;p className='text-xs py-3'&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&lt;/p&gt;
-   &lt;div&gt;   &lt;NavLink to='/specify_role'&gt;&lt;button className='submit-btn'&gt;Create an Account&lt;/button&gt;&lt;/NavLink&gt;
-   &lt;/div&gt;
-   &lt;/div&gt;
 &nbsp;
-  &lt;div className='grid-cols-2'&gt; 
+&nbsp;
+  &lt;div className='grid-cols-2 self-center'&gt; 
    
     &lt;div className='flex text-xs items-center align-middle  p-2 bg-white justify-between text-ternary-medium'&gt;
       &lt;div  
@@ -779,8 +764,8 @@ let active = true
 &nbsp;
      &lt;h2 className='text-xs font-semibold'&gt;{item.businessName}&lt;/h2&gt;
     &lt;div className='flex justify-end flex-col gap-2'&gt;
-    {useLocation ?&lt;h2 className='text-xs border self-end flex flex-col rounded-md border-ternary-dark py-1 px-2'&gt;{item.distance} miles&lt;/h2&gt;
-    : <span class="branch-1 cbranch-no" title="branch not covered" >null}</span>
+    {userLocation.latitude &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >userLocation.longitude </span>?<span class="branch-0 cbranch-no" title="branch not covered" >&lt;h2 className='text-xs border self-end flex flex-col rounded-md border-ternary-dark py-1 px-2'&gt;{item.distance} miles&lt;/h2&gt;</span>
+    : null}
     &lt;h2&gt;{item.location}, {item.postcode}&lt;/h2&gt;
    
      &lt;/div&gt;
@@ -808,7 +793,7 @@ export default Home;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-17T01:05:52.211Z
+                at 2025-08-19T19:51:44.434Z
             </div>
         <script src="../prettify.js"></script>
         <script>

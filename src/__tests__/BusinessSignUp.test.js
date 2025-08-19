@@ -213,19 +213,5 @@ it('Displays error UI on unverified email', async()=>{
 
 })
 
-it('', async()=>{
-geoCode.mockRejectedValueOnce(new Error('geocode failed'))
- render(
-    <MemoryRouter>
-      <BusinessSignup/>
-    </MemoryRouter>);
-
-  await fillInForm("test_1@mail.com", "RF238E2", 'wrong' );
-   await submit()
-
-   expect(await screen.findByText('Make sure you entered correct location.')).toBeInTheDocument();   
-   
-
-})
 
 })

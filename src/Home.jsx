@@ -24,9 +24,9 @@ import { orderByDistance, getDistance, convertDistance } from 'geolib'
   const [index, setIndex] = useState(0)
   const [userLocation, setUserLocation] = useState({})
 
-const images = Array.from({length: 10}, (_, i)=> `image${i}.jpg`)
 const docs = [...businesses.values()]
 
+console.log('use', userLocation)
 // get user's current location in latlong and show busiensses closest to user's location
       useEffect(()=>{
        navigator.geolocation.getCurrentPosition(res=>{
@@ -155,18 +155,18 @@ let active = true
 
 
  return (
-   <div className='m-0'>
+   <div className='m-0 h-full'>
     {loading ? <Spiner/>:
-    <div className='flex  m-0 flex-col h-full justify-center items-center bg-primary-medium'>
+    <div className='flex h-full m-0 flex-col justify-center  bg-primary-medium'>
     <NavMenu/>
 
 {/* <h1 className='text-3xl  font-semibold'>Main Heading</h1> */}
-   <section className='grid grid-cols-[50%_50%] width-full pt-6 pb-20 justify-center items-baseline  gap-20'>
+   <section className='grid grid-cols-2 w-[70%] h-full pt-28 pb-20 self-center justify-center items-baseline  gap-20'>
 
 
 
 
-  <div className='grid-cols-2'> 
+  <div className='grid-cols-2 self-center'> 
    
     <div className='flex text-xs items-center align-middle  p-2 bg-white justify-between text-ternary-medium'>
       <div  
@@ -217,7 +217,7 @@ let active = true
 
      <h2 className='text-xs font-semibold'>{item.businessName}</h2>
     <div className='flex justify-end flex-col gap-2'>
-    {useLocation ?<h2 className='text-xs border self-end flex flex-col rounded-md border-ternary-dark py-1 px-2'>{item.distance} miles</h2>
+    {userLocation.latitude && userLocation.longitude ?<h2 className='text-xs border self-end flex flex-col rounded-md border-ternary-dark py-1 px-2'>{item.distance} miles</h2>
     : null}
     <h2>{item.location}, {item.postcode}</h2>
    
