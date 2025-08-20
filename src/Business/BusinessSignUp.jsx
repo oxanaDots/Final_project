@@ -280,6 +280,7 @@ async function checkVerification(){
      <button data-testid='email-verification' className='py-3 bg-primary-dark rounded-md px-4 text-secondary-light' onClick={checkVerification} disabled={checking}>
     { checking ? "Checking your request" : "I have completed verififcation"}
     </button>
+     {verificationError &&<p>Email address could not be verified</p>}
        </div>}
       {verified && ! verificationError &&
       
