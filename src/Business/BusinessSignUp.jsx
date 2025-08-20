@@ -294,10 +294,14 @@ async function checkVerification(){
         </div>
   </div>}
   
- {verificationError &&<p>Email address could not be verified</p>}
- <Link to='/business_signup'>
+ {verificationError &&
+ <><p>Email address could not be verified</p>
+  <Link to='/business_signup'>
   <button className='submit-btn'>Start again</button>
 </Link>
+</>
+ }
+
  
 
   
