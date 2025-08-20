@@ -1,39 +1,4 @@
-QueryDocumentSnapshot {
-  _fieldsProto: {
-    role: { stringValue: 'business' },
-    email: { stringValue: 'business1@example.com' }
-  },
-  _ref: DocumentReference {
-    _firestore: Firestore {
-      _settings: [Object],
-      _settingsFrozen: false,
-      _serializer: [Serializer],
-      _projectId: 'art-hosting',
-      _databaseId: '(default)',
-      registeredListenersCount: 0,
-      bulkWritersCount: 0,
-      _backoffSettings: [Object],
-      _clientPool: [ClientPool]
-    },
-    _path: QualifiedResourcePath {
-      segments: [Array],
-      projectId: 'art-hosting',
-      databaseId: '(default)'
-    },
-    _converter: {
-      toFirestore: [Function: toFirestore],
-      fromFirestore: [Function: fromFirestore]
-    }
-  },
-  _serializer: Serializer {
-    createReference: [Function (anonymous)],
-    createInteger: [Function (anonymous)],
-    allowUndefined: false
-  },
-  _readTime: Timestamp { _seconds: 1755382512, _nanoseconds: 231000000 },
-  _createTime: Timestamp { _seconds: 1755382512, _nanoseconds: 231000000 },
-  _updateTime: Timestamp { _seconds: 1755382512, _nanoseconds: 231000000 }
-}
+
 {
   "stats": {
     "suites": 1,

@@ -21,25 +21,6 @@ function BusinessSignup() {
  console.log(formData)
  console.log(geoCode)
  
-// // track if email has been verified by user by calling onAuthStateChanged observer 
-//   useEffect(() => {
-//     const callToAuth = onAuthStateChanged(auth, async (user) => {
-     
-//       if (!user) {
-//         setVerified(false);
-//         return
-//       }
-//       try
-        
-//         await reload(user);
-//         setVerified(user.emailVerified === true);
-//       } catch(error){
-//         console.error('Error occured:', error.message)
-//       }
-//     });
-//     return callToAuth;
-//   }, []);
-
 
 
   // submit user request and eail verification request
@@ -47,8 +28,7 @@ function BusinessSignup() {
 
     
   try {
-    // const enterprisesData = await fetchData('https://final-project-red-delta.vercel.app/api/enterprises')
-     const enterprisesData = await fetchData('http://localhost:3001/api/enterprises')
+    const enterprisesData = await fetchData('https://final-project-red-delta.vercel.app/api/enterprises')
      setFormData(data)
    console.log(data)
    const geoCodedLoc = await geoCode(`${data.location}, ${data.postcode}`)
