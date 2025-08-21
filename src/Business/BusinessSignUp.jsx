@@ -21,24 +21,6 @@ function BusinessSignup() {
  console.log(formData)
  console.log(geoCode)
  
-// track if email has been verified by user by calling onAuthStateChanged observer 
-  useEffect(() => {
-    const callToAuth = onAuthStateChanged(auth, async (user) => {
-     
-      if (!user) {
-        setVerified(false);
-        return
-      }
-      try{
-        
-        await reload(user);
-        setVerified(user.emailVerified === true);
-      } catch(error){
-        console.error('Error occured:', error.message)
-      }
-    });
-    return callToAuth;
-  }, [])
 
 
 
@@ -295,7 +277,7 @@ async function checkVerification(){
   </div>}
   
  {verificationError &&
- <div className='flex flex-col gap-'>
+ <div className='flex flex-col gap-6'>
  <p>Email address could not be verified</p>
   <Link to='/business_signup'>
   <button className='submit-btn'>Start again</button>
